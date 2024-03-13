@@ -1,27 +1,58 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: rgb(229, 231, 235);
+}
+
+.wrapper {
+  display:flex;
+  flex-wrap: wrap;
+  width: 1600px;
+  margin: 0 auto;
+}
+
+.car-card {
+  width: 15%;
+  overflow: hidden;
+  background: white;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-right: 24px;
+  margin-top: 24px;
+}
+
+.car-card-img {
+  width: 100%;
+  transition: all 100ms ease-in;
+}
+
+.car-card-img:hover {
+  transform: scale(1.05);
+}
+
+.car-card-content {
+  padding: 16px;
+}
+
+.car-card-city{
+  color: rgb(190, 191, 195);
+}
+
+.car-card-info {
+  margin-top: 12px;
+}
+
+.car-card-price {
+  margin-top: 12px;
+}
+
+.car-card-labels {
+  margin-top: 12px;
+  border-top: 1px solid rgb(190, 191, 195);
+  padding-top: 12px;
+}
+
+.car-card-label{
+  background: rgb(243, 244, 246);
+  padding: 4px 8px;
+  margin-right: 12px;
+  border-radius: 12px;
 }
