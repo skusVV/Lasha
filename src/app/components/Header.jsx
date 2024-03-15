@@ -1,5 +1,26 @@
 "use client"
+import { useState } from 'react';
+
+const defaultModels = [
+    {
+        name: 'Audi',
+        selected: false
+    },
+    {
+        name: 'BMW',
+        selected: true
+    },
+    {
+        name: 'Totyota',
+        selected: false
+    }
+]
+// TODO
+// Refactor all selects by my example.
+// the same you can do with buttons
 export const Header = () => {
+    const [models, setModels] = useState(defaultModels);
+
     return (
         <header>
         <div>
@@ -56,11 +77,18 @@ export const Header = () => {
                   <button>Other</button>
               </div>
               <div className="specifications">
-                  <select action="" className="currency-change" id="top-button" aria-placeholder="">
-                      <option htmlFor="">Audi</option>
-                      <option htmlFor="">Mercedess</option>
-                      <option htmlFor="">BMW</option>
-                      <option htmlFor="">Toyota</option>
+                  <select action="" className="currency-change" id="top-button">
+                    {
+                        models.map((model, index) => {
+                            return (
+                                <option htmlFor=""
+                                 key={index} 
+                                 selected={model.selected}>
+                                    {model.name}
+                                </option>
+                            )
+                        })
+                    }
                   </select>
                   <select action="" className="currency-change" id="top-button">
                       <option htmlFor="">2024</option>
@@ -90,6 +118,7 @@ export const Header = () => {
                       <option htmlFor="">Electric</option>
                       <option htmlFor="">Space</option>
                   </select>
+                  <button>Filter</button>
               </div>
           </div>
       </header>

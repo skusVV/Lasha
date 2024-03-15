@@ -4,6 +4,7 @@ import { Header } from './components/Header';
 import { CarsList } from './components/CarsList';
 
 const cars = [
+  // TODO - we need more cars here, 
   {
     img: 'https://static.my.ge/myauto/photos/1/8/5/2/1/thumbs/101125811_1.jpg?v=6',
     city: 'Tbilisi',
@@ -12,7 +13,7 @@ const cars = [
     model: 'Sedona',
     price: 30800,
     currency: '$',
-    labels: ['Minivan', 'Petrol']
+    labels: ['Minivan', 'Petrol'],
   },
   {
     img: 'https://static.my.ge/myauto/photos/3/0/8/3/1/thumbs/102138035_1.jpg?v=1',
