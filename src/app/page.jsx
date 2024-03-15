@@ -1,3 +1,4 @@
+"use client"
 import { renderCar } from './components/car';
 import { Header } from './components/Header';
 import { CarsList } from './components/CarsList';
@@ -72,7 +73,7 @@ export default function Home() {
     <>
       <Header />
       <div className="wrapper">
-        <CarsList cars={cars} />
+        <CarsList cars={cars} anything="dasda" passAnythingElse={{}} />
       </div>
     </>
   )
