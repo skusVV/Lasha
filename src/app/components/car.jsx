@@ -1,6 +1,6 @@
-export const renderCar = (car) => {
+export const renderCar = (car, key) => {
     return (
-      <div className="car-card">
+      <div className="car-card" key={key}>
         <img className="car-card-img" src={car.img} />
         <div className="car-card-content" >
           <div className="car-card-city">{car.city}</div>
