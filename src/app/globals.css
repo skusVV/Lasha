@@ -58,24 +58,26 @@ body {
 }
 
 
-{{/* HEADER RELATED */}}
+/* {{HEADER RELATED}} */
 
 .container {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    background-color: #454545; 
-    color: white 
+    background-color: #222222; 
+    color: white;
 }
 
 .container-left {
     display: flex;
-    align-items: center
+    align-items: center;
+    margin-left: 200px;
 }
 
 .container-right {
     display: flex;
-    align-items: center
+    align-items: center;
+    margin-right: 200px;
 }
 
 #top-button {
@@ -87,7 +89,11 @@ body {
     font: inherit;
     outline: inherit;
     border-radius: 5px; 
-    border-bottom: 1px solid lightgrey
+    margin-right: 20px;
+    margin-top: 15px;
+    border: none;
+    border: 1px solid #ccc;
+    color: #bcbcbc;
 }
 
 .search-box {
@@ -97,19 +103,22 @@ body {
     color: white; 
     padding: 10px 15px;
     font: inherit;
-    outline: none 
+    outline: none;
+    margin-left: 20px;
+    margin-top: 15px;
 }
 
 .search-box::placeholder {
-    color: white 
+    color: #bcbcbc 
 }
 
 .search-box:focus {
-    border-color: rgba(255, 255, 255, 0.5) 
+    border-color: white
 }
 
 button:hover {
-    background-color: rgba(255, 255, 255, 0.1) 
+  color: orangered;
+  border-top: white;
 }
 
 button .currency-change {
@@ -133,8 +142,8 @@ button .currency-change {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    background-color: #454545;
-    color: white
+    background-color: #222222;
+    color: white;
 }
 
 .nav-buttons {
@@ -142,10 +151,28 @@ button .currency-change {
     border: none;
     padding: 10px;
     margin-bottom: 10px;
-    color: white
+    color: #bcbcbc;
+    margin-left: 7px;
 }
 
+.nav-left{
+  margin-top: 20px;
+  margin-left: 200px;
+}
+
+.nav-right{
+  margin-top: 20px;
+  margin-right: 215px;
+}
+
+.language select option {
+  background-color: #222222;
+}
+
+
 .detailed-search {
+  margin-left: 200px;
+  margin-right: 200px;
     display: flex;
     flex-wrap: wrap; 
     justify-content: flex-start; 
@@ -153,20 +180,23 @@ button .currency-change {
     padding: 20px;
     margin-top: 20px;
     background-color: #f9f9f9;
-    border-radius: 5px;
-    background-color: #454545
+    border-radius: 20px;
+    background-color: #222222;
 }
 
 .detailed-search button {
+  margin-top: 20px;
+  color: #bcbcbc;
     display: block;
-    margin-bottom: 10px;
     margin-right: 50px;
     margin-left: 20px;
     border: none
 }
 
 .detailed-search button {
-    cursor: pointer
+  background-color: #222222;
+    cursor: pointer;
+    border-radius: 5px
 }
 
 .detailed-search select {
@@ -181,14 +211,24 @@ button .currency-change {
     grid-template-rows: repeat(3, auto);
     gap: 10px;
     justify-content: center; 
-    align-items: center 
+    align-items: center;
 }
 
 .detailed-search .specifications select {
     width: 100%;
     color: white;
+    border-radius: 5px;
 }
 
 .specifications select option {
-    background-color: #454545;
+    background-color: #222222;
+}
+
+.specifications button{
+  height: 25px;
+  width: 100px;
+  border-radius: 10px;
+  color: white;
+  background-color: orangered;
+  border-radius: 5px;
 }

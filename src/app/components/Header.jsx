@@ -4,17 +4,40 @@ import { useState } from 'react';
 const defaultModels = [
     {
         name: 'Audi',
+        type: 'Car',
         selected: false
     },
     {
         name: 'BMW',
+        type: 'Car',
         selected: true
     },
     {
         name: 'Totyota',
+        type: 'Car',
+        selected: false
+    },
+    {
+        name: 'Mazda',
+        type: 'Car',
+        selected: false
+    },
+    {
+        name: 'Ducati',
+        type: 'Bike',
         selected: false
     }
 ]
+const years = [];
+for (let year = 2006; year <= 2024; year++) {
+    years.push(year);
+}
+const carModels = ['Sedan', 'Hatchback', 'Jeep'];
+const carPrices = ['0-5000', '5001-10000', '10001-15000', '15001-20000']
+const location = ['Tbilis', 'Batumi', 'Outside Country', 'Space']
+const carFuel = ['Petrol', 'Hybrid', 'Electric', 'Diesel']
+
+
 // TODO
 // Refactor all selects by my example.
 // the same you can do with buttons
@@ -36,7 +59,7 @@ export const Header = () => {
                 <div className="container-right">
                     <div className="add-product">
                         <i className="fas fa-plus"></i>
-                        <button className="add-item" id="top-button">Add Product</button>
+                        <button className="add-item" id="top-button">Sell</button>
                     </div>
                     <div className="language">
                         <i className="fas fa-globe"></i>
@@ -72,12 +95,12 @@ export const Header = () => {
         </div>
           <div className="detailed-search">
               <div className="outside-vehicle">
-                  <button>Automobile</button>
+                  <button>Car</button>
                   <button>Motorcycle</button>
                   <button>Other</button>
               </div>
               <div className="specifications">
-                  <select action="" className="currency-change" id="top-button">
+                  <select action="" className="model-change" id="top-button">
                     {
                         models.map((model, index) => {
                             return (
@@ -90,35 +113,32 @@ export const Header = () => {
                         })
                     }
                   </select>
-                  <select action="" className="currency-change" id="top-button">
-                      <option htmlFor="">2024</option>
-                      <option htmlFor="">2023</option>
-                      <option htmlFor="">2022</option>
-                      <option htmlFor="">2021</option>
+                  <select action="" className="year-change" id="top-button">
+                    {years.map((year, index) => (
+                        <option key={index}>{year}</option>
+                    ))}
                   </select>
-                  <select action="" className="currency-change" id="top-button">
-                      <option htmlFor="">Sedan</option>
-                      <option htmlFor="">Hatchback</option>
-                      <option htmlFor="">idk any else</option>
-                      <option htmlFor="">Jeep or smth</option>
+                  <select action="" className="model-change" id="top-button">
+                    {carModels.map((carModels, index) => (
+                        <option key={index}>{carModels}</option>
+                    ))}
                   </select>
-                  <select action="" className="currency-change" id="top-button">
-                      <option htmlFor="">0-5000</option>
-                      <option htmlFor="">5001-10000</option> 
+                  <select action="" className="price-change" id="top-button">
+                    {carPrices.map((carPrices, index) => (
+                        <option key={index}>{carPrices}</option>
+                    ))}
                   </select>
-                  <select action="" className="currency-change" id="top-button">
-                      <option htmlFor="">Tbilisi</option>
-                      <option htmlFor="">Batumi</option>
-                      <option htmlFor="">Outside Country</option>
-                      <option htmlFor="">Space</option>
+                  <select action="" className="location-change" id="top-button">
+                    {location.map((location, index) => (
+                        <option key={index}>{location}</option>
+                    ))}
                   </select>
-                  <select action="" className="currency-change" id="top-button">
-                      <option htmlFor="">Petrol</option>
-                      <option htmlFor="">Diesel</option>
-                      <option htmlFor="">Electric</option>
-                      <option htmlFor="">Space</option>
+                  <select action="" className="fuel-change" id="top-button">
+                    {carFuel.map((carFuel, index) => (
+                        <option key={index}>{carFuel}</option>
+                    ))}
                   </select>
-                  <button>Filter</button>
+                  <button className='filterButton'>Filter</button>
               </div>
           </div>
       </header>
