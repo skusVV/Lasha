@@ -1,48 +1,59 @@
 "use client"
 import { useState } from 'react';
+import {carModels, carFuel, carPrices, location, defaultModels} from '../constants/constants';
 
-const defaultModels = [
-    {
-        name: 'Audi',
-        type: 'Car',
-        selected: false
-    },
-    {
-        name: 'BMW',
-        type: 'Car',
-        selected: true
-    },
-    {
-        name: 'Totyota',
-        type: 'Car',
-        selected: false
-    },
-    {
-        name: 'Mazda',
-        type: 'Car',
-        selected: false
-    },
-    {
-        name: 'Ducati',
-        type: 'Bike',
-        selected: false
-    }
-]
+
 const years = [];
 for (let year = 2006; year <= 2024; year++) {
     years.push(year);
 }
-const carModels = ['Sedan', 'Hatchback', 'Jeep'];
-const carPrices = ['0-5000', '5001-10000', '10001-15000', '15001-20000']
-const location = ['Tbilis', 'Batumi', 'Outside Country', 'Space']
-const carFuel = ['Petrol', 'Hybrid', 'Electric', 'Diesel']
+
+// const person = {
+//     name: 'das',
+//     age: 'das'
+// };
+
+// const { name } = person;
+// const name = person.name;
+// TODO Read about distructure
 
 
 // TODO
 // Refactor all selects by my example.
 // the same you can do with buttons
-export const Header = () => {
+export const Header = ({ onFilter, onClear }) => {
     const [models, setModels] = useState(defaultModels);
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const onModelChange = e => {
+        const newModels = models.map(model => {
+            if(model.name === e.target.value) {
+                return { ...model, selected: true};
+            }
+
+            return { ...model, selected: false};
+        });
+        setModels(newModels);
+    }
+    const onClickSearch = () => {
+        const model = models.find(item => item.selected === true).name;
+
+        onFilter({ model: model});
+    }
+
+    const onClickClear = () => {
+        setModels(defaultModels);
+        onClear();
+    }
+
+    const onSearch = (e) => {
+        if(e.key === 'Enter') {
+            console.log('Search:', searchTerm);
+            // TODO - If you will have time.
+        }
+      
+    }
+
 
     return (
         <header>
@@ -52,7 +63,7 @@ export const Header = () => {
                     <div className="search">
                         <img src="logo.png" className="logo" alt="" />
                         <i className="fa-solid fa-magnifying-glass" id="glass-icon"></i>
-                        <input type="search-box" name="" id="" className="search-box" placeholder="Search" />
+                        <input onChange={(e) => setSearchTerm(e.target.value)} onKeyDown={onSearch} value={searchTerm} type="search-box" name="" id="" className="search-box" placeholder="Search" />
                     </div>
                 </div>
 
@@ -100,7 +111,7 @@ export const Header = () => {
                   <button>Other</button>
               </div>
               <div className="specifications">
-                  <select action="" className="model-change" id="top-button">
+                  <select action="" className="model-change" id="top-button" onChange={onModelChange}>
                     {
                         models.map((model, index) => {
                             return (
@@ -138,7 +149,8 @@ export const Header = () => {
                         <option key={index}>{carFuel}</option>
                     ))}
                   </select>
-                  <button className='filterButton'>Filter</button>
+                  <button onClick={onClickSearch} className='filterButton'>Filter</button>
+                  <button onClick={onClickClear} className='filterButton'>Clear</button>
               </div>
           </div>
       </header>
