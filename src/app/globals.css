@@ -1,5 +1,5 @@
 body {
-  background: rgb(229, 231, 235);
+  background: #333333
 }
 
 .wrapper {
@@ -12,11 +12,12 @@ body {
 .car-card {
   width: 15%;
   overflow: hidden;
-  background: white;
+  background: #222222;
   border-radius: 25px;
   cursor: pointer;
   margin-right: 24px;
   margin-top: 24px;
+  color: white;
 }
 
 .car-card-img {
@@ -53,7 +54,8 @@ body {
 }
 
 .car-card-label{
-  background: rgb(243, 244, 246);
+  background: #222222;
+  border: 1px solid white;
   padding: 4px 8px;
   margin-right: 12px;
   border-radius: 12px;
@@ -140,7 +142,6 @@ button .currency-change {
 }
 
 .nav-bar {
-    border-top: white;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -158,11 +159,13 @@ button .currency-change {
 }
 
 .nav-left{
+  border-top: 1px solid rgb(190, 191, 195);
   margin-top: 20px;
   margin-left: 200px;
 }
 
 .nav-right{
+  border-top: 1px solid rgb(190, 191, 195);
   margin-top: 20px;
   margin-right: 215px;
 }

@@ -1,7 +1,6 @@
 "use client"
 import { useState } from 'react';
-import {carModels, carFuel, carPrices, location, defaultModels} from '../constants/constants';
-
+import {carModels, carFuel, carPrices, location, defaultModels, logo, carPrice} from '../constants/constants';
 
 const years = [];
 for (let year = 2006; year <= 2024; year++) {
@@ -61,7 +60,7 @@ export const Header = ({ onFilter, onClear }) => {
             <div className="container">
                 <div className="container-left">
                     <div className="search">
-                        <img src="logo.png" className="logo" alt="" />
+                        <img src={logo} className='logo'/>
                         <i className="fa-solid fa-magnifying-glass" id="glass-icon"></i>
                         <input onChange={(e) => setSearchTerm(e.target.value)} onKeyDown={onSearch} value={searchTerm} type="search-box" name="" id="" className="search-box" placeholder="Search" />
                     </div>
@@ -75,10 +74,8 @@ export const Header = ({ onFilter, onClear }) => {
                     <div className="language">
                         <i className="fas fa-globe"></i>
                         <select action="" className="currency-change" id="top-button">
-                            <option htmlFor="">Georgian</option>
-                            <option htmlFor="">English</option>
-                            <option htmlFor="">USD - $</option>
-                            <option htmlFor="">GEL - ₾</option>
+                            <option value="">$ - USD</option>
+                            <option value="">₾ - GEL</option>
                         </select>
                     </div>
                     <div className="log-in">

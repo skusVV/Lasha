@@ -116,6 +116,22 @@ export const carPrices = ['0-5000', '5001-10000', '10001-15000', '15001-20000']
 export const location = ['Tbilis', 'Batumi', 'Outside Country', 'Space']
 export const carFuel = ['Petrol', 'Hybrid', 'Electric', 'Diesel'];
 
+export const carPrice = [
+  {
+    name:'All',
+    selected: true
+  },{
+    name: '< 5000',
+    selected: false
+  },{
+    name: '< 10000',
+    selected: false
+  },{
+    name: '< 15000',
+    selected: false
+  }
+]
+
 export const defaultModels = [
   {
     name: '---',
@@ -142,3 +158,5 @@ export const defaultModels = [
       selected: false
   }
 ]
+
+export const logo = ('./logo.jpeg')
