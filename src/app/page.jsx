@@ -5,12 +5,26 @@ import { Header } from './components/Header';
 import { CarsList } from './components/CarsList';
 import { cars } from './constants/constants'; // IT AWAYS 10 items, it aways full list
 
+// const filterByCarMadeBy = (filter) => {
+//   return cars.filter(car => car.madeBy.toLowerCase() === filter.model.toLowerCase() || filter.model === '---' );
+// }
+
 
 export default function Home() {
   const [carsList, setCarsList] = useState(cars); // carsList it dynamic, it can change.
   const onFilter = (filter) => {
-    const newCarsList = cars.filter(car => car.madeBy.toLowerCase() === filter.model.toLowerCase() || filter.model === '---' );
-    setCarsList(newCarsList);
+    const newCars = cars
+      .filter(car => car.madeBy.toLowerCase() === filter.model.toLowerCase() || filter.model === '---' )
+      .filter(car => car.price > filter.price.min && car.price < filter.price.max || filter.price.max === null)
+      .filter(car => car.year === filter.year || filter.year === null);
+      // Chain more filters
+    setCarsList(newCars);
+    // The same as below
+    // const carListFilteredMyModel = cars.filter(car => car.madeBy.toLowerCase() === filter.model.toLowerCase() || filter.model === '---' );
+    // const carListFilteredByPrice = carListFilteredMyModel.filter(car => car.price > filter.price.min && car.price < filter.price.max || filter.price.max === null);
+    // const carListFilteredByYear = carListFilteredByPrice.filter(car => car.year === filter.year || filter.year === null)
+  
+    // setCarsList(carListFilteredByYear);
   }
 
   const onFiltersClear = () => {

@@ -1,20 +1,6 @@
 "use client"
 import { useState } from 'react';
-import {carModels, carFuel, carPrices, location, defaultModels, logo, carPrice} from '../constants/constants';
-
-const years = [];
-for (let year = 2006; year <= 2024; year++) {
-    years.push(year);
-}
-
-// const person = {
-//     name: 'das',
-//     age: 'das'
-// };
-
-// const { name } = person;
-// const name = person.name;
-// TODO Read about distructure
+import {carModels, carFuel, defaultCarPrices, location, defaultModels, logo, defaultYears} from '../constants/constants';
 
 
 // TODO
@@ -22,7 +8,8 @@ for (let year = 2006; year <= 2024; year++) {
 // the same you can do with buttons
 export const Header = ({ onFilter, onClear }) => {
     const [models, setModels] = useState(defaultModels);
-    const [prices, setPrices] = useState(carPrices)
+    const [prices, setPrices] = useState(defaultCarPrices);
+    const [years, setYears] = useState(defaultYears);
     const [searchTerm, setSearchTerm] = useState('');
 
     const onModelChange = e => {
@@ -45,20 +32,36 @@ export const Header = ({ onFilter, onClear }) => {
         });
         setPrices(newPrices);
       }
-      
-    
 
+      const onYearChange = (e) => {
+        const newYears = years.map(year => {
+            if (year.label == e.target.value) {
+                return { ...year, selected: true };
+            }
+            return { ...year, selected: false };
+        });
+        setYears(newYears);
+      }
 
     const onClickSearch = () => {
         const model = models.find(item => item.selected === true).name;
-        const price = prices.find(item => item.selected === true).name;
-        onFilter({ model: model});
-        onFilter({ price: price})
+        const price = prices.find(item => item.selected === true);
+        const year = years.find(item => item.selected === true).value;
+        console.log('year', year);
+        onFilter({
+            model: model,
+            price: {
+                min: price.minValue, 
+                max: price.maxValue
+            },
+            year: year
+        });
     }
 
     const onClickClear = () => {
         setModels(defaultModels);
-        setPrices(carPrices)
+        setPrices(defaultCarPrices);
+        setYears(defaultYears);
         onClear();
     }
 
@@ -138,9 +141,9 @@ export const Header = ({ onFilter, onClear }) => {
                         })
                     }
                   </select>
-                  <select action="" className="year-change" id="top-button">
+                  <select action="" className="year-change" id="top-button" onChange={onYearChange}>
                     {years.map((year, index) => (
-                        <option key={index}>{year}</option>
+                        <option key={index} selected={year.selected}>{year.label}</option>
                     ))}
                   </select>
                   <select action="" className="model-change" id="top-button">
@@ -149,8 +152,8 @@ export const Header = ({ onFilter, onClear }) => {
                     ))}
                   </select>
                   <select action="" className="price-change" id="top-button" onChange={onPriceChange}>
-                    {carPrices.map((carPrices, index) => (
-                        <option key={index}>{carPrices}</option>
+                    {prices.map((carPrice, index) => (
+                        <option key={index} selected={carPrice.selected}>{carPrice.name}</option>
                     ))}
                   </select>
                   <select action="" className="location-change" id="top-button">

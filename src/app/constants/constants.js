@@ -8,6 +8,7 @@ export const cars = [
       model: 'Prius',
       price: 17300,
       currency: '$',
+      fuelType: '', // TODO add for every car 'Petrol', 'Hybrid', 'Electric', 'Diesel'
       labels: ['Sedan', 'Hybrid', 'Automatic', 'AWD', '4Door']
     },
     {
@@ -111,26 +112,87 @@ export const cars = [
     }
   ];
 
+  // HOMEWORK
 export const carModels = ['Sedan', 'Hatchback', 'Jeep'];
-export const carPrices = ['0-5000', '72500', '10001-15000', '15001-20000']
 export const location = ['Tbilisi', 'Batumi', 'Outside Country', 'Space'];
 export const carFuel = ['Petrol', 'Hybrid', 'Electric', 'Diesel'];
 
-export const carPrice = [
+export const defaultYears = [
+  {
+    label:'All',
+    value: null,
+    selected: true
+  },
+  {
+    label:'2012',
+    value: 2012,
+    selected: false
+  },
+  {
+    label:'2013',
+    value: 2013,
+    selected: false
+  },
+  {
+    label:'2014',
+    value: 2014,
+    selected: false
+  },
+  {
+    label:'2015',
+    value: 2015,
+    selected: false
+  },
+  {
+    label:'2016',
+    value: 2016,
+    selected: false
+  },
+  {
+    label:'2017',
+    value: 2017,
+    selected: false
+  },
+  {
+    label:'2018',
+    value: 2018,
+    selected: false
+  },
+  {
+    label:'2019',
+    value: 2019,
+    selected: false
+  },
+]
+
+export const defaultCarPrices = [
   {
     name:'All',
+    maxValue: null,
     selected: true
-  },{
-    name: '5000',
-    value: 5000,
+  },
+  {
+    name: '0-5000',
+    minValue: 0,
+    maxValue: 5000,
     selected: false
-  },{
-    name: '10000',
-    value: 10000,
+  },
+  {
+    name: '5001 - 10000',
+    minValue: 5001,
+    maxValue: 10000,
     selected: false
-  },{
-    name: '15000',
-    value: 15000,
+  },
+  {
+    name: '10001-15000',
+    minValue: 10001,
+    maxValue: 15000,
+    selected: false
+  },
+  {
+    name: '15000-20000',
+    minValue: 15001,
+    maxValue: 20000,
     selected: false
   }
 ]
