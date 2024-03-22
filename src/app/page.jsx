@@ -8,7 +8,7 @@ import { cars } from './constants/constants'; // IT AWAYS 10 items, it aways ful
 // const filterByCarMadeBy = (filter) => {
 //   return cars.filter(car => car.madeBy.toLowerCase() === filter.model.toLowerCase() || filter.model === '---' );
 // }
-
+// https://medium.com/@sarthakastic/routing-in-next-js-13-470282a985ed
 
 export default function Home() {
   const [carsList, setCarsList] = useState(cars); // carsList it dynamic, it can change.

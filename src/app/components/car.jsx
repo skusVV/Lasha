@@ -1,12 +1,9 @@
 "use client"
+import Link from 'next/link'
 
 export const renderCar = (car, key) => {
-    const clickHandler = () => {
-      console.log('click: ', car.model)
-    }
-
     return (
-      <div className="car-card" key={key} onClick={clickHandler}>
+      <Link className="car-card" key={key} href={`/car-details/${car.id}`}>
         <img className="car-card-img" src={car.img} />
         <div className="car-card-content" >
           <div className="car-card-city">{car.city}</div>
@@ -20,6 +17,6 @@ export const renderCar = (car, key) => {
             }
           </div>
         </div>
-       </div>
+       </Link>
     )
   }

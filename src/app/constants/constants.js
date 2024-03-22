@@ -1,5 +1,6 @@
 export const cars = [
     {
+      id: 1,
       img: 'https://static.my.ge/myauto/photos/3/0/8/3/1/thumbs/102138035_1.jpg?v=1',
       type: 'Car',
       city: 'On a way',
@@ -12,6 +13,7 @@ export const cars = [
       labels: ['Sedan', 'Hybrid', 'Automatic', 'AWD', '4Door']
     },
     {
+      id: 2,
       img: 'https://static.my.ge/myauto/photos/3/1/9/3/1/large/102139135_1.jpg?v=0',
       type: 'Car',
       city: 'Tbilisi',
@@ -21,8 +23,13 @@ export const cars = [
       price: 72500,
       currency: '$',
       labels: ['Jeep', 'Petrol', 'Tiptronic', 'AWD', '4Door']
+      // mainSpecification: {
+      //   Manufacturer: 'Toyota',
+      //   Model: 'COrrola'
+      // }
     },
     {
+      id: 3,
       img: 'https://static.my.ge/myauto/photos/0/0/1/7/4/large/100471007_1.jpg?v=5',
       type: 'Car',
       city: 'Tbilisi',
@@ -34,6 +41,7 @@ export const cars = [
       labels: ['Jeep', 'Petrol', 'Tiptronic', 'AWD', '4Door']
     },
     {
+      id: 4,
       img: 'https://static.my.ge/myauto/photos/1/2/5/6/0/large/102065215_2.jpg?v=2',
       type: 'Car',
       city: 'Tbilisi',
@@ -45,6 +53,7 @@ export const cars = [
       labels: ['Sedan', 'Hybrid', 'Tiptronic', 'FWD', '4Door']
     },
     {
+      id: 5,
       img: 'https://static.my.ge/myauto/photos/1/2/2/3/2/large/102232215_1.jpg?v=1',
       type: 'Car',
       city: 'Tbilisi',
@@ -56,6 +65,7 @@ export const cars = [
       labels: ['Sedan', 'Petrol', 'Manual', 'FWD', '4Door']
     },
     {
+      id: 6,
       img: 'https://static.my.ge/myauto/photos/2/2/2/1/1/large/98112226_1.jpg?v=56',
       type: 'Car',
       city: 'Tbilisi',
@@ -67,6 +77,7 @@ export const cars = [
       labels: ['Jeep', 'Petrol', 'Automatic', 'AWD', '4Door']
     },
     {
+      id: 6,
       img: 'https://static.my.ge/myauto/photos/1/6/7/7/8/large/101877619_1.jpg?v=1',
       type: 'Car',
       city: 'Tbilisi',
