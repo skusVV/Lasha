@@ -112,8 +112,8 @@ export const cars = [
   ];
 
 export const carModels = ['Sedan', 'Hatchback', 'Jeep'];
-export const carPrices = ['0-5000', '5001-10000', '10001-15000', '15001-20000']
-export const location = ['Tbilis', 'Batumi', 'Outside Country', 'Space']
+export const carPrices = ['0-5000', '72500', '10001-15000', '15001-20000']
+export const location = ['Tbilisi', 'Batumi', 'Outside Country', 'Space'];
 export const carFuel = ['Petrol', 'Hybrid', 'Electric', 'Diesel'];
 
 export const carPrice = [
@@ -121,13 +121,16 @@ export const carPrice = [
     name:'All',
     selected: true
   },{
-    name: '< 5000',
+    name: '5000',
+    value: 5000,
     selected: false
   },{
-    name: '< 10000',
+    name: '10000',
+    value: 10000,
     selected: false
   },{
-    name: '< 15000',
+    name: '15000',
+    value: 15000,
     selected: false
   }
 ]

@@ -22,6 +22,7 @@ for (let year = 2006; year <= 2024; year++) {
 // the same you can do with buttons
 export const Header = ({ onFilter, onClear }) => {
     const [models, setModels] = useState(defaultModels);
+    const [prices, setPrices] = useState(carPrices)
     const [searchTerm, setSearchTerm] = useState('');
 
     const onModelChange = e => {
@@ -34,14 +35,30 @@ export const Header = ({ onFilter, onClear }) => {
         });
         setModels(newModels);
     }
+
+    const onPriceChange = (e) => {
+        const newPrices = prices.map(price => {
+            if (price.name == e.target.value) {
+                return { ...price, selected: true };
+            }
+            return { ...price, selected: false };
+        });
+        setPrices(newPrices);
+      }
+      
+    
+
+
     const onClickSearch = () => {
         const model = models.find(item => item.selected === true).name;
-
+        const price = prices.find(item => item.selected === true).name;
         onFilter({ model: model});
+        onFilter({ price: price})
     }
 
     const onClickClear = () => {
         setModels(defaultModels);
+        setPrices(carPrices)
         onClear();
     }
 
@@ -131,7 +148,7 @@ export const Header = ({ onFilter, onClear }) => {
                         <option key={index}>{carModels}</option>
                     ))}
                   </select>
-                  <select action="" className="price-change" id="top-button">
+                  <select action="" className="price-change" id="top-button" onChange={onPriceChange}>
                     {carPrices.map((carPrices, index) => (
                         <option key={index}>{carPrices}</option>
                     ))}
