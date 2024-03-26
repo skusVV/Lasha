@@ -1,9 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
-  background: #333333
+  background: #333333;
 }
 
 .wrapper {
-  display:flex;
+  display: flex;
   flex-wrap: wrap;
   width: 1600px;
   margin: 0 auto;
@@ -35,7 +39,7 @@ body {
   padding: 16px;
 }
 
-.car-card-city{
+.car-card-city {
   color: rgb(190, 191, 195);
 }
 
@@ -53,7 +57,7 @@ body {
   padding-top: 12px;
 }
 
-.car-card-label{
+.car-card-label {
   background: #222222;
   border: 1px solid white;
   padding: 4px 8px;
@@ -61,63 +65,62 @@ body {
   border-radius: 12px;
 }
 
-
 /* {{HEADER RELATED}} */
 
 .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    background-color: #222222; 
-    color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: #222222;
+  color: white;
 }
 
 .container-left {
-    display: flex;
-    align-items: center;
-    margin-left: 200px;
+  display: flex;
+  align-items: center;
+  margin-left: 200px;
 }
 
 .container-right {
-    display: flex;
-    align-items: center;
-    margin-right: 200px;
+  display: flex;
+  align-items: center;
+  margin-right: 200px;
 }
 
 #top-button {
-    display: flex;
-    align-items: center;
-    background-color: transparent;
-    cursor: pointer;
-    padding: 10px 15px; 
-    font: inherit;
-    outline: inherit;
-    border-radius: 5px; 
-    margin-right: 20px;
-    margin-top: 15px;
-    border: none;
-    border: 1px solid #ccc;
-    color: #bcbcbc;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 10px 15px;
+  font: inherit;
+  outline: inherit;
+  border-radius: 5px;
+  margin-right: 20px;
+  margin-top: 15px;
+  border: none;
+  border: 1px solid #ccc;
+  color: #bcbcbc;
 }
 
 .search-box {
-    background-color: transparent; 
-    border: 1px solid grey; 
-    border-radius: 5px; 
-    color: white; 
-    padding: 10px 15px;
-    font: inherit;
-    outline: none;
-    margin-left: 20px;
-    margin-top: 15px;
+  background-color: transparent;
+  border: 1px solid grey;
+  border-radius: 5px;
+  color: white;
+  padding: 10px 15px;
+  font: inherit;
+  outline: none;
+  margin-left: 20px;
+  margin-top: 15px;
 }
 
 .search-box::placeholder {
-    color: #bcbcbc 
+  color: #bcbcbc;
 }
 
 .search-box:focus {
-    border-color: white
+  border-color: white;
 }
 
 button:hover {
@@ -126,45 +129,45 @@ button:hover {
 }
 
 button .currency-change {
-    margin-left: 5px
+  margin-left: 5px;
 }
 
 .add-product {
-    margin-left: auto
+  margin-left: auto;
 }
 
 .language {
-    margin-left: auto
+  margin-left: auto;
 }
 
 .log-in {
-    margin-left: auto
+  margin-left: auto;
 }
 
 .nav-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    background-color: #222222;
-    color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: #222222;
+  color: white;
 }
 
 .nav-buttons {
-    background-color: transparent;
-    border: none;
-    padding: 10px;
-    margin-bottom: 10px;
-    color: #bcbcbc;
-    margin-left: 7px;
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+  margin-bottom: 10px;
+  color: #bcbcbc;
+  margin-left: 7px;
 }
 
-.nav-left{
+.nav-left {
   border-top: 1px solid rgb(190, 191, 195);
   margin-top: 20px;
   margin-left: 200px;
 }
 
-.nav-right{
+.nav-right {
   border-top: 1px solid rgb(190, 191, 195);
   margin-top: 20px;
   margin-right: 215px;
@@ -174,62 +177,61 @@ button .currency-change {
   background-color: #222222;
 }
 
-
 .detailed-search {
   margin-left: 200px;
   margin-right: 200px;
-    display: flex;
-    flex-wrap: wrap; 
-    justify-content: flex-start; 
-    border: 1px solid #ccc;
-    padding: 20px;
-    margin-top: 20px;
-    background-color: #f9f9f9;
-    border-radius: 20px;
-    background-color: #222222;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #f9f9f9;
+  border-radius: 20px;
+  background-color: #222222;
 }
 
 .detailed-search button {
   margin-top: 20px;
   color: #bcbcbc;
-    display: block;
-    margin-right: 50px;
-    margin-left: 20px;
-    border: none
+  display: block;
+  margin-right: 50px;
+  margin-left: 20px;
+  border: none;
 }
 
 .detailed-search button {
   background-color: #222222;
-    cursor: pointer;
-    border-radius: 5px
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 .detailed-search select {
-    display: block;
-    width: 100%;
-    margin-bottom: 10px
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .detailed-search .specifications {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, auto);
-    gap: 10px;
-    justify-content: center; 
-    align-items: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, auto);
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
 }
 
 .detailed-search .specifications select {
-    width: 100%;
-    color: white;
-    border-radius: 5px;
+  width: 100%;
+  color: white;
+  border-radius: 5px;
 }
 
 .specifications select option {
-    background-color: #222222;
+  background-color: #222222;
 }
 
-.specifications button{
+.specifications button {
   height: 25px;
   width: 100px;
   border-radius: 10px;
