@@ -17,7 +17,7 @@ export default function Home() {
       .filter(car => car.madeBy.toLowerCase() === filter.model.toLowerCase() || filter.model === '---' )
       .filter(car => car.price > filter.price.min && car.price < filter.price.max || filter.price.max === null)
       .filter(car => car.year === filter.year || filter.year === null);
-      // Chain more filters
+      .filter(car => car.model.toLowerCase() === filter.type.toLowerCase() || filter.type === 'All' );   // Chain more filters
     setCarsList(newCars);
     // The same as below
     // const carListFilteredMyModel = cars.filter(car => car.madeBy.toLowerCase() === filter.model.toLowerCase() || filter.model === '---' );

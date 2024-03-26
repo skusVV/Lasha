@@ -10,6 +10,7 @@ export const Header = ({ onFilter, onClear }) => {
     const [models, setModels] = useState(defaultModels);
     const [prices, setPrices] = useState(defaultCarPrices);
     const [years, setYears] = useState(defaultYears);
+    const [types, setType] = useState(carModels)
     const [searchTerm, setSearchTerm] = useState('');
 
     const onModelChange = e => {
@@ -33,7 +34,7 @@ export const Header = ({ onFilter, onClear }) => {
         setPrices(newPrices);
       }
 
-      const onYearChange = (e) => {
+    const onYearChange = (e) => {
         const newYears = years.map(year => {
             if (year.label == e.target.value) {
                 return { ...year, selected: true };
@@ -41,12 +42,26 @@ export const Header = ({ onFilter, onClear }) => {
             return { ...year, selected: false };
         });
         setYears(newYears);
-      }
+    }
+
+      
+    const onTypeChange = (e) => {
+        const newType = carModels.map(type => {
+            if (type === e.target.value) {
+                return { ...type, selected: true };
+            } else {
+                return { ...type, selected: false };
+            }
+        });
+        setType(newType);
+    }
+    
 
     const onClickSearch = () => {
         const model = models.find(item => item.selected === true).name;
         const price = prices.find(item => item.selected === true);
         const year = years.find(item => item.selected === true).value;
+        const type = types.find(item => item.selected === true)
         console.log('year', year);
         onFilter({
             model: model,
@@ -54,7 +69,8 @@ export const Header = ({ onFilter, onClear }) => {
                 min: price.minValue, 
                 max: price.maxValue
             },
-            year: year
+            year: year,
+            type: type,
         });
     }
 
@@ -62,6 +78,7 @@ export const Header = ({ onFilter, onClear }) => {
         setModels(defaultModels);
         setPrices(defaultCarPrices);
         setYears(defaultYears);
+        setType(carModels)
         onClear();
     }
 
@@ -140,32 +157,32 @@ export const Header = ({ onFilter, onClear }) => {
                             )
                         })
                     }
-                  </select>
-                  <select action="" className="year-change" id="top-button" onChange={onYearChange}>
-                    {years.map((year, index) => (
-                        <option key={index} selected={year.selected}>{year.label}</option>
-                    ))}
-                  </select>
-                  <select action="" className="model-change" id="top-button">
-                    {carModels.map((carModels, index) => (
-                        <option key={index}>{carModels}</option>
-                    ))}
-                  </select>
-                  <select action="" className="price-change" id="top-button" onChange={onPriceChange}>
-                    {prices.map((carPrice, index) => (
-                        <option key={index} selected={carPrice.selected}>{carPrice.name}</option>
-                    ))}
-                  </select>
-                  <select action="" className="location-change" id="top-button">
-                    {location.map((location, index) => (
-                        <option key={index}>{location}</option>
-                    ))}
-                  </select>
-                  <select action="" className="fuel-change" id="top-button">
-                    {carFuel.map((carFuel, index) => (
-                        <option key={index}>{carFuel}</option>
-                    ))}
-                  </select>
+                    </select>
+                    <select action="" className="year-change" id="top-button" onChange={onYearChange}>
+                        {years.map((year, index) => (
+                            <option key={index} selected={year.selected}>{year.label}</option>
+                        ))}
+                    </select>
+                    <select action="" className="model-change" id="top-button" onChange={onTypeChange}>
+                        {carModels.map((carModel, index) => (
+                            <option key={index} selected={carModel.selected}>{carModel.name}</option>
+                        ))}
+                    </select>
+                    <select action="" className="price-change" id="top-button" onChange={onPriceChange}>
+                        {prices.map((carPrice, index) => (
+                            <option key={index} selected={carPrice.selected}>{carPrice.name}</option>
+                        ))}
+                    </select>
+                    <select action="" className="location-change" id="top-button">
+                        {location.map((location, index) => (
+                            <option key={index}>{location}</option>
+                        ))}
+                    </select>
+                    <select action="" className="fuel-change" id="top-button">
+                        {carFuel.map((carFuel, index) => (
+                            <option key={index}>{carFuel}</option>
+                        ))}
+                    </select>
                   <button onClick={onClickSearch} className='filterButton'>Filter</button>
                   <button onClick={onClickClear} className='filterButton'>Clear</button>
               </div>

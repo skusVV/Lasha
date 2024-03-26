@@ -9,7 +9,7 @@ export const cars = [
       model: 'Prius',
       price: 17300,
       currency: '$',
-      fuelType: '', // TODO add for every car 'Petrol', 'Hybrid', 'Electric', 'Diesel'
+      fuelType: "Hybrid",
       labels: ['Sedan', 'Hybrid', 'Automatic', 'AWD', '4Door']
     },
     {
@@ -22,6 +22,7 @@ export const cars = [
       model: 'X6',
       price: 72500,
       currency: '$',
+      fuelType: 'Petrol',
       labels: ['Jeep', 'Petrol', 'Tiptronic', 'AWD', '4Door']
       // mainSpecification: {
       //   Manufacturer: 'Toyota',
@@ -38,6 +39,7 @@ export const cars = [
       model: 'X5',
       price: 23500,
       currency: '$',
+      fuelType: 'Petrol',
       labels: ['Jeep', 'Petrol', 'Tiptronic', 'AWD', '4Door']
     },
     {
@@ -50,6 +52,7 @@ export const cars = [
       model: 'Camry',
       price: 19000,
       currency: '$',
+      fuelType: 'Hybrid',
       labels: ['Sedan', 'Hybrid', 'Tiptronic', 'FWD', '4Door']
     },
     {
@@ -62,6 +65,7 @@ export const cars = [
       model: 'GTI',
       price: 23000,
       currency: '$',
+      fuelType: 'Petrol',
       labels: ['Sedan', 'Petrol', 'Manual', 'FWD', '4Door']
     },
     {
@@ -74,10 +78,11 @@ export const cars = [
       model: 'CX-50',
       price: 29500,
       currency: '$',
+      fuelType: 'Petrol',
       labels: ['Jeep', 'Petrol', 'Automatic', 'AWD', '4Door']
     },
     {
-      id: 6,
+      id: 7,
       img: 'https://static.my.ge/myauto/photos/1/6/7/7/8/large/101877619_1.jpg?v=1',
       type: 'Car',
       city: 'Tbilisi',
@@ -86,9 +91,11 @@ export const cars = [
       model: '435',
       price: 15500,
       currency: '$',
+      fuelType: 'Petrol',
       labels: ['Coupe', 'Petrol', 'Tiptronic', 'RWD', '4Door']
     },
     {
+      id: 8,
       img: 'https://static.my.ge/myauto/photos/1/9/2/1/2/large/98212914_1.jpg?v=14',
       type: 'Bike',
       city: 'On The Way',
@@ -97,9 +104,11 @@ export const cars = [
       model: 'Pinagle V4',
       price: 12500,
       currency: '$',
+      fuelType: 'Petrol',
       labels: ['Petrol', '1300cc']
     },
     {
+      id: 9,
       img: 'https://static.my.ge/myauto/photos/9/7/5/3/2/large/101235791_1.jpg?v=0',
       type: 'Bike',
       city: 'On The Way',
@@ -108,9 +117,11 @@ export const cars = [
       model: 'S1000',
       price: 22400,
       currency: '$',
+      fuelType: 'Petrol',
       labels: ['Petrol', '1000cc']
     },
     {
+      id: 10,
       img: 'https://static.my.ge/myauto/photos/6/9/0/8/0/large/101080963_1.jpg?v=4',
       type: 'Other',
       city: 'Tbilisi',
@@ -119,12 +130,13 @@ export const cars = [
       model: 'LG25DT',
       price: 220000,
       currency: '$',
+      fuelType: 'Petrol',
       labels: ['Diesel', '2Door']
     }
   ];
 
   // HOMEWORK
-export const carModels = ['Sedan', 'Hatchback', 'Jeep'];
+// export const carModels = ['Sedan', 'Hatchback', 'Jeep'];
 export const location = ['Tbilisi', 'Batumi', 'Outside Country', 'Space'];
 export const carFuel = ['Petrol', 'Hybrid', 'Electric', 'Diesel'];
 
@@ -174,6 +186,29 @@ export const defaultYears = [
     value: 2019,
     selected: false
   },
+]
+
+export const carModels = [
+  {
+    name: 'All',
+    selected: true,
+  },
+  {
+    name: 'Sedan',
+    selected: false,
+  },
+  {
+    name: 'Hatchback',
+    selected: false,
+  },
+  {
+    name: 'Jeep',
+    selected: false,
+  },
+  {
+    name: 'Coupe',
+    selected: false,
+  }
 ]
 
 export const defaultCarPrices = [
