@@ -1,10 +1,21 @@
 "use client"
-import {cars} from '../../constants/constants';
+// import {cars} from '../../constants/constants';
+import { useState, useEffect } from "react";
+import { api } from '../..//http/backend';
 
 
 export default function CarDetails({ params }) {
-    const car = cars.find(item => item.id === Number(params.id));
-    console.log(car)
+  const [car, setCar] = useState({})
+  // Implement set Car
+    // const car = cars.find(item => item.id === Number(params.id));
+    // console.log(car)
+    useEffect(() => { // Component did Mount
+      api.get(`/api/cars/${params.id}`)
+        .then(res => {
+          setCar(res)
+        })
+    }, []);
+
 
   return (
     <div style={{color: 'white'}}>

@@ -1,49 +1,54 @@
 "use client";
-import { useState } from "react";
-import { renderCar } from "./components/car";
+import { useState, useEffect } from "react";
 import { Header } from "./components/Header";
 import { CarsList } from "./components/CarsList";
-import { cars } from "./constants/constants"; // IT AWAYS 10 items, it aways full list
+import { api } from './http/backend';
 
-// const filterByCarMadeBy = (filter) => {
-//   return cars.filter(car => car.madeBy.toLowerCase() === filter.model.toLowerCase() || filter.model === '---' );
-// }
-// https://medium.com/@sarthakastic/routing-in-next-js-13-470282a985ed
+// GET -- get some resource
+// POST -- CREATE some resource
+// PATCH -- Change some resource
+// DELETE - delete some resource
 
 export default function Home() {
-  const [carsList, setCarsList] = useState(cars); // carsList it dynamic, it can change.
-  const onFilter = (filter) => {
-    console.info(cars, filter);
-    // debugger
-    const newCars = cars
-      .filter(
-        (car) =>
-          car.madeBy.toLowerCase() === filter.model.toLowerCase() ||
-          filter.model === "---"
-      )
-      .filter(
-        (car) =>
-          (car.price > filter.price.min && car.price < filter.price.max) ||
-          filter.price.max === null
-      )
-      .filter((car) => car.year === filter.year || filter.year === null)
-      .filter((car) => car.type === filter.type || filter.type === "All")
-      .filter(
-        (car) =>
-          car.location === filter.location || filter.location === "Anywhere"
-      )
-      .filter((car) => car.fuelType === filter.fuel || filter.fuel === "Any");
-    setCarsList(newCars);
-    // The same as below
-    // const carListFilteredMyModel = cars.filter(car => car.madeBy.toLowerCase() === filter.model.toLowerCase() || filter.model === '---' );
-    // const carListFilteredByPrice = carListFilteredMyModel.filter(car => car.price > filter.price.min && car.price < filter.price.max || filter.price.max === null);
-    // const carListFilteredByYear = carListFilteredByPrice.filter(car => car.year === filter.year || filter.year === null)
+  const [carsList, setCarsList] = useState([]);
 
-    // setCarsList(carListFilteredByYear);
+  useEffect(() => { // Component did Mount
+    api.get('/api/cars')
+      .then(res => {
+        setCarsList(res)
+      })
+  }, []);
+
+  const onFilter = (filter) => {
+    console.log('filter on the UI', filter);
+    let query = '/api/cars?';
+
+    query = query + `fuel=${filter.fuel}`
+    query = query + `&location=${filter.location}`
+    query = query + `&model=${filter.model}`
+    query = query + `&type=${filter.type}`
+    query = query + `&year=${filter.year}`
+    query = query + `&minPrice=${filter.price.min}`
+    query = query + `&maxPrice=${filter.price.max}`
+
+    api.get(query)
+      .then(res => {
+        setCarsList(res)
+      });
+    //   .filter((car) => car.type === filter.type || filter.type === "All")
+    //   .filter(
+    //     (car) =>
+    //       car.location === filter.location || filter.location === "Anywhere"
+    //   )
+    //   .filter((car) => car.fuelType === filter.fuel || filter.fuel === "Any");
+    // setCarsList(newCars);
   };
 
   const onFiltersClear = () => {
-    setCarsList(cars);
+    api.get('/api/cars')
+      .then(res => {
+        setCarsList(res)
+      })
   };
 
   return (
