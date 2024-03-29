@@ -10,6 +10,14 @@ import {
   defaultYears,
 } from "../constants/constants";
 
+const selectMapper = (item, e) => {
+  if (item.name === e.target.value) {
+    return { ...item, selected: true };
+  }
+
+  return { ...item, selected: false };
+}
+
 export const Header = ({ onFilter, onClear }) => {
   const [models, setModels] = useState(defaultModels);
   const [prices, setPrices] = useState(defaultCarPrices);
@@ -19,70 +27,11 @@ export const Header = ({ onFilter, onClear }) => {
   const [fuels, setFuel] = useState(defaultFuel);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const onModelChange = (e) => {
-    const newModels = models.map((model) => {
-      if (model.name === e.target.value) {
-        return { ...model, selected: true };
-      }
+  const onSelectChange = (e, items, setFunction) => {
+    const newItems = items.map(item => selectMapper(item, e));
 
-      return { ...model, selected: false };
-    });
-    setModels(newModels);
-  };
-
-  const onPriceChange = (e) => {
-    const newPrices = prices.map((price) => {
-      if (price.name == e.target.value) {
-        return { ...price, selected: true };
-      }
-      return { ...price, selected: false };
-    });
-    setPrices(newPrices);
-  };
-
-  const onYearChange = (e) => {
-    const newYears = years.map((year) => {
-      if (year.label == e.target.value) {
-        return { ...year, selected: true };
-      }
-      return { ...year, selected: false };
-    });
-    setYears(newYears);
-  };
-
-  const onTypeChange = (e) => {
-    const newType = carModels.map((type) => {
-      if (type.name == e.target.value) {
-        return { ...type, selected: true };
-      } else {
-        return { ...type, selected: false };
-      }
-    });
-    setType(newType);
-  };
-
-  const onLocationChange = (e) => {
-    const newLocation = defaultLocation.map((location) => {
-      if (location.name == e.target.value) {
-        return { ...location, selected: true };
-      } else {
-        return { ...location, selected: false };
-      }
-    });
-    setLoaction(newLocation);
-  };
-
-  const onFuelChange = (e) => {
-    console.log(fuels);
-    const newFuel = defaultFuel.map((fuel) => {
-      if (fuel.name == e.target.value) {
-        return { ...fuel, selected: true };
-      } else {
-        return { ...fuel, selected: false };
-      }
-    });
-    setFuel(newFuel);
-  };
+    setFunction(newItems)
+  }
 
   const onClickSearch = () => {
     const model = models.find((item) => item.selected === true).name;
@@ -192,7 +141,7 @@ export const Header = ({ onFilter, onClear }) => {
             action=""
             className="model-change"
             id="top-button"
-            onChange={onModelChange}
+            onChange={(e) => onSelectChange(e, models, setModels)}
           >
             {models.map((model, index) => {
               return (
@@ -206,11 +155,11 @@ export const Header = ({ onFilter, onClear }) => {
             action=""
             className="year-change"
             id="top-button"
-            onChange={onYearChange}
+            onChange={(e) => onSelectChange(e, years, setYears)}
           >
             {years.map((year, index) => (
               <option key={index} selected={year.selected}>
-                {year.label}
+                {year.name}
               </option>
             ))}
           </select>
@@ -218,7 +167,7 @@ export const Header = ({ onFilter, onClear }) => {
             action=""
             className="model-change"
             id="top-button"
-            onChange={onTypeChange}
+            onChange={(e) => onSelectChange(e, carModels, setType)}
           >
             {carModels.map((carModel, index) => (
               <option key={index} selected={carModel.selected}>
@@ -230,7 +179,7 @@ export const Header = ({ onFilter, onClear }) => {
             action=""
             className="price-change"
             id="top-button"
-            onChange={onPriceChange}
+            onChange={(e) => onSelectChange(e, prices, setPrices)}
           >
             {prices.map((carPrice, index) => (
               <option key={index} selected={carPrice.selected}>
@@ -242,7 +191,7 @@ export const Header = ({ onFilter, onClear }) => {
             action=""
             className="location-change"
             id="top-button"
-            onChange={onLocationChange}
+            onChange={(e) => onSelectChange(e, defaultLocation, setLoaction)}
           >
             {locations.map((location, index) => (
               <option key={index} selected={location.selected}>
@@ -254,7 +203,7 @@ export const Header = ({ onFilter, onClear }) => {
             action=""
             className="fuel-change"
             id="top-button"
-            onChange={onFuelChange}
+            onChange={(e) => onSelectChange(e, defaultFuel, setFuel)}
           >
             {defaultFuel.map((fuel, index) => (
               <option key={index} selected={fuel.selected}>
