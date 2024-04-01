@@ -16,7 +16,7 @@ const selectMapper = (item, e) => {
   }
 
   return { ...item, selected: false };
-}
+};
 
 export const Header = ({ onFilter, onClear }) => {
   const [models, setModels] = useState(defaultModels);
@@ -28,10 +28,10 @@ export const Header = ({ onFilter, onClear }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const onSelectChange = (e, items, setFunction) => {
-    const newItems = items.map(item => selectMapper(item, e));
+    const newItems = items.map((item) => selectMapper(item, e));
 
-    setFunction(newItems)
-  }
+    setFunction(newItems);
+  };
 
   const onClickSearch = () => {
     const model = models.find((item) => item.selected === true).name;
@@ -130,6 +130,7 @@ export const Header = ({ onFilter, onClear }) => {
           </div>
         </div>
       </div>
+
       <div className="detailed-search">
         <div className="outside-vehicle">
           <button>Car</button>

@@ -239,3 +239,15 @@ button .currency-change {
   background-color: orangered;
   border-radius: 5px;
 }
+
+.dark-grey {
+  background-color: #222222;
+}
+
+.selected-car-sell-button {
+  background-color: #50c878;
+}
+
+.selected-car-sell-button :hover {
+  color: white;
+}
