@@ -75,6 +75,33 @@ export const api = ({
                 }, 500);
             });
         }
+
+        if(url.includes('/api/search?')) {
+            const filter = parseQueryString(url);
+            console.log('filter on the backend', filter);
+            const newCars = cars;
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
+
+            //     .filter(
+            //         (car) =>
+            //         car.madeBy.toLowerCase() === filter.model.toLowerCase() ||
+            //         filter.model === "---"
+            //     )
+            //     .filter(
+            //         (car) =>
+            //           (car.price > filter.minPrice && car.price < filter.maxPrice) ||
+            //           filter.maxPrice === null
+            //       )
+            //     .filter((car) => car.year === Number(filter.year) || filter.year === null)
+
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    resolve(
+                        [...newCars]
+                        )
+                }, 500);
+            });
+        }
     },
     // post: (url, body) => {
     //     if(url === '/api/cars') {

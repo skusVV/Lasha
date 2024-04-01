@@ -1,17 +1,31 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useSearchParams } from 'next/navigation'
 import { Header } from "../components/Header";
+import { api } from '../http/backend';
 
 export default function CarDetails({ params }) {
+    const [carsList, setCarsList] = useState([]);
+    const searchParams = useSearchParams()
 
-  useEffect(() => {
-    
-  }, []);
+    useEffect(() => { // Component did Mount
+      const term = searchParams.get('term');
+      api.get('/api/search?term=toyota')
+        .then(res => {
+          setCarsList(res)
+        })
+    }, []);
 
   return (
     <div>
       <Header></Header>
-      search
+      {
+        carsList.map(car => {
+            return (
+                <div>{car.id} {car.madeBy}</div>
+            )
+        })
+      }
     </div>
   );
 }
