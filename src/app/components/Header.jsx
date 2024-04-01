@@ -1,14 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from 'next/navigation'
 import { logo } from "../constants/constants";
 
 export const Header = () => {
     const [searchTerm, setSearchTerm] = useState("");
+    const router = useRouter()
     const onSearch = (e) => {
-        if (e.key === "Enter") {
-          console.log("Search:", searchTerm);
-          // TODO - If you will have time.
+        if (e.key === "Enter" && e.target.value) {
+          router.push(`/search?term=${e.target.value}`)
         }
       };
 

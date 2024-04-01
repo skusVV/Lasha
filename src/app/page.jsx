@@ -14,7 +14,7 @@ export default function Home() {
   const [carsList, setCarsList] = useState([]);
 
   useEffect(() => { // Component did Mount
-    api.get('/api/cars')
+    api.get('/api/random-cars')
       .then(res => {
         setCarsList(res)
       })
@@ -36,13 +36,6 @@ export default function Home() {
       .then(res => {
         setCarsList(res)
       });
-    //   .filter((car) => car.type === filter.type || filter.type === "All")
-    //   .filter(
-    //     (car) =>
-    //       car.location === filter.location || filter.location === "Anywhere"
-    //   )
-    //   .filter((car) => car.fuelType === filter.fuel || filter.fuel === "Any");
-    // setCarsList(newCars);
   };
 
   const onFiltersClear = () => {

@@ -22,23 +22,32 @@ function parseQueryString(url) {
 
 export const api = ({
     get: url => {
-        if(url === '/api/cars') { // whole list
+        if(url === '/api/random-cars') { // Random 6 cars list
             return new Promise(resolve => {
                 setTimeout(() => {
                     resolve(
-                        [...cars].filter((item, i) => i < 6)
+                        [...cars]
+                        .sort(() => Math.random() - Math.random())
+                        .filter((item, i) => i < 6)
                         )
                 }, 500);
             });
         }
-        console.log(url)
+
         if(url.includes('/api/cars/')) { // whole list
-            return new Promise(resolve => {
+            const urlArray = url.split('/');
+            const id = urlArray[urlArray.length - 1];// the last index in the arr is always arr length - 1. 
+
+            return new Promise((resolve, reject) => {
                 setTimeout(() => {
-                    resolve(
-                        cars[1]
-                        )
-                }, 500);
+                    const car = cars.find(item => item.id === Number(id));
+                    if(car) {
+                        resolve(car);
+                    } else {
+                        reject();
+                    }
+                   
+                }, 5000);
             });
         }
 
