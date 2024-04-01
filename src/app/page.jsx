@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Header } from "./components/Header";
+import { Filters } from "./components/Filters";
+import { Header } from './components/Header';
 import { CarsList } from "./components/CarsList";
 import { api } from './http/backend';
 
@@ -53,7 +54,8 @@ export default function Home() {
 
   return (
     <>
-      <Header onFilter={onFilter} onClear={onFiltersClear} />
+      <Header></Header>
+      <Filters onFilter={onFilter} onClear={onFiltersClear} />
       <div className="wrapper">
         <CarsList cars={carsList} anything="dasda" passAnythingElse={{}} />
       </div>
