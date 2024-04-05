@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { logo } from "../constants/constants";
-import { Link } from "next/link";
 
 export const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");

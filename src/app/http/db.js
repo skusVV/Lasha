@@ -121,10 +121,10 @@ export let cars = [
     {
       id: 10,
       img: "https://static.my.ge/myauto/photos/6/9/0/8/0/large/101080963_1.jpg?v=4",
-      location: "Tbilisi", // SHould be searchable
+      location: "Tbilisi",
       year: 2023,
-      madeBy: "Lonking", // SHould be searchable
-      model: "LG25DT", // SHould be searchable
+      madeBy: "Lonking",
+      model: "LG25DT",
       price: 220000,
       currency: "$",
       fuelType: "Petrol", // SHould be searchable

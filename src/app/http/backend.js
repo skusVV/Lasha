@@ -1,6 +1,5 @@
 import { cars } from "./db";
-import { searchParams } from "../search/page";
-import { searchTerm } from "../components/Header";
+// YOU can't import anything from the react code. It is a fake backend. there is no access to UI code.
 
 function parseQueryString(url) {
   // Directly use everything after '?' in the URL
@@ -54,10 +53,21 @@ export const api = {
       });
     }
 
-    if (url.includes("/api/cars?")) {
+    if (url.includes("/api/search?")) {
       const filter = parseQueryString(url);
-      console.log("filter on the backend", filter);
-      const newCars = cars
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
+      let newCars;
+      if(filter.term) {
+        newCars = cars.filter(
+          (car) =>
+            car.madeBy.toLowerCase().includes(filter.term.toLowerCase()) ||
+            car.model.toLowerCase().includes(filter.term.toLowerCase()) ||
+            car.fuelType.toLowerCase().includes(filter.term.toLowerCase()) ||
+            car.location.toUpperCase().includes(filter.term.toUpperCase()) ||
+            car.labels.some(label => label.toLowerCase().includes(filter.term.toLowerCase()))
+        );
+      } else {
+        newCars = cars
         .filter(
           (car) =>
             car.madeBy.toLowerCase() === filter.model.toLowerCase() ||
@@ -71,38 +81,7 @@ export const api = {
         .filter(
           (car) => car.year === Number(filter.year) || filter.year === null
         );
-
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve([...newCars].filter((item, i) => i < 6));
-        }, 500);
-      });
-    }
-
-    if (url.includes("/api/search?")) {
-      const filter = parseQueryString(url);
-      console.log("filter on the backend", filter);
-      // const newCars = cars;
-      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
-
-      const newCars = cars.filter(
-        (car) =>
-          car.madeBy.toLowerCase().includes(filter) ||
-          car.model.toLowerCase().includes(searchParams) ||
-          car.location.toLowerCase().includes(searchParams)
-      );
-
-      //     .filter(
-      //         (car) =>
-      //         car.madeBy.toLowerCase() === filter.model.toLowerCase() ||
-      //         filter.model === "---"
-      //     )
-      //     .filter(
-      //         (car) =>
-      //           (car.price > filter.minPrice && car.price < filter.maxPrice) ||
-      //           filter.maxPrice === null
-      //       )
-      //     .filter((car) => car.year === Number(filter.year) || filter.year === null)
+      }
 
       return new Promise((resolve) => {
         setTimeout(() => {

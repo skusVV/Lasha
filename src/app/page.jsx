@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Filters } from "./components/Filters";
 import { Header } from './components/Header';
 import { CarsList } from "./components/CarsList";
@@ -12,6 +13,7 @@ import { api } from './http/backend';
 
 export default function Home() {
   const [carsList, setCarsList] = useState([]);
+  const router = useRouter();
 
   useEffect(() => { // Component did Mount
     api.get('/api/random-cars')
@@ -22,7 +24,7 @@ export default function Home() {
 
   const onFilter = (filter) => {
     console.log('filter on the UI', filter);
-    let query = '/api/cars?';
+    let query = '';
 
     query = query + `fuel=${filter.fuel}`
     query = query + `&location=${filter.location}`
@@ -31,11 +33,7 @@ export default function Home() {
     query = query + `&year=${filter.year}`
     query = query + `&minPrice=${filter.price.min}`
     query = query + `&maxPrice=${filter.price.max}`
-
-    api.get(query)
-      .then(res => {
-        setCarsList(res)
-      });
+    router.push(`/search?${query}`);
   };
 
   const onFiltersClear = () => {
@@ -49,6 +47,7 @@ export default function Home() {
     <>
       <Header></Header>
       <Filters onFilter={onFilter} onClear={onFiltersClear} />
+      <div style={{ color: 'white', margin: '24px 133px'}}>Featured Cars</div>
       <div className="wrapper">
         <CarsList cars={carsList} anything="dasda" passAnythingElse={{}} />
       </div>

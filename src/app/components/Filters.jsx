@@ -17,7 +17,7 @@ const selectMapper = (item, e) => {
   return { ...item, selected: false };
 };
 
-export const Filters = ({ onFilter, onClear }) => {
+export const Filters = ({ onFilter }) => {
   const [models, setModels] = useState(defaultModels);
   const [prices, setPrices] = useState(defaultCarPrices);
   const [years, setYears] = useState(defaultYears);
@@ -49,16 +49,6 @@ export const Filters = ({ onFilter, onClear }) => {
       location: location,
       fuel: fuel,
     });
-  };
-
-  const onClickClear = () => {
-    setModels(defaultModels);
-    setPrices(defaultCarPrices);
-    setYears(defaultYears);
-    setType(carModels);
-    setLoaction(defaultLocation);
-    setFuel(defaultFuel);
-    onClear();
   };
 
   return (
@@ -146,9 +136,6 @@ export const Filters = ({ onFilter, onClear }) => {
           </select>
           <button onClick={onClickSearch} className="filterButton">
             Filter
-          </button>
-          <button onClick={onClickClear} className="filterButton">
-            Clear
           </button>
         </div>
       </div>
