@@ -1,5 +1,5 @@
 "use client";
-import { renderCar } from "./car";
+import { renderCar } from "./Car/Car";
 
 export const CarsList = (props) => {
   return <>
