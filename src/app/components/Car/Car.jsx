@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link';
-import {StyledCar} from './styles';
+import { StyledCar } from './styles';
 
 export const renderCar = (car, key) => {
     return (
