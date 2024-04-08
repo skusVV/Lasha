@@ -46,50 +46,51 @@ export default function CarDetails({ params }) {
   return (
     <div>
       <Header />
-      <div className="flex flex-wrap justify-center mt-20">
+      <div className="flex flex-wrap justify-between mt-20 p-12 ">
         <div className="search-left">
           <SideFilter />
         </div>
-        <div className="search-right"></div>
-        {carsList.map((car, index) => (
-          <div key={index} className="mx-4 mb-8">
-            <div className="selected-car-container dark-grey p-4 rounded-lg">
-              <div className="flex items-center">
-                <div className="selected-car-container-left">
-                  <a href="./components/page.jsx">
-                    <img
-                      src={car.img}
-                      className="max-h-48 max-w-48 rounded-lg"
-                      alt="Car"
-                    />
-                  </a>
-                </div>
-                <div className="selected-car-container-right ml-4">
-                  <div className="selected-car-info">
-                    <div className="selected-car-details">
-                      <div className="selected-car-year font-bold text-white">
-                        {car.madeBy} {car.model}
+        <div className="search-right">
+          {carsList.map((car, index) => (
+            <div key={index} className="mx-4 mb-8">
+              <div className="selected-car-container dark-grey p-4 rounded-lg">
+                <div className="flex items-center">
+                  <div className="selected-car-container-left">
+                    <a href="./components/page.jsx">
+                      <img
+                        src={car.img}
+                        className="max-h-48 max-w-48 rounded-lg"
+                        alt="Car"
+                      />
+                    </a>
+                  </div>
+                  <div className="selected-car-container-right ml-4">
+                    <div className="selected-car-info">
+                      <div className="selected-car-details">
+                        <div className="selected-car-year font-bold text-white">
+                          {car.madeBy} {car.model}
+                        </div>
+                        <hr className="mt-3 mb-3 border-white w-20" />
+                        <div className="selected-car-madeBy mb-2 font-bold text-white">
+                          {car.year}
+                        </div>
+                        <div className="selected-car-price text-white">
+                          {car.price} {car.currency}
+                        </div>
+                        <div className="selected-car-card-city text-white">
+                          {car.location}
+                        </div>
                       </div>
-                      <hr className="mt-3 mb-3 border-white w-20" />
-                      <div className="selected-car-madeBy mb-2 font-bold text-white">
-                        {car.year}
+                      <div className="selected-car-sell-button rounded-lg mt-4 text-white">
+                        <button className="ml-2 mr-2">More Details</button>
                       </div>
-                      <div className="selected-car-price text-white">
-                        {car.price} {car.currency}
-                      </div>
-                      <div className="selected-car-card-city text-white">
-                        {car.location}
-                      </div>
-                    </div>
-                    <div className="selected-car-sell-button rounded-lg mt-4 text-white">
-                      <button className="ml-2 mr-2">More Details</button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
