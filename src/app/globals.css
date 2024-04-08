@@ -251,3 +251,72 @@ button .currency-change {
 .selected-car-sell-button :hover {
   color: white;
 }
+
+/*                                          SIDE DETAILS SIDE DETIALS SIDE DETAILS SIDE DETAILS                             */
+
+.side-detailed-search {
+  margin-left: 30px;
+  margin-right: 1400px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #f9f9f9;
+  border-radius: 20px;
+  background-color: #222222;
+}
+
+.side-selects select {
+  width: 200px; /* Adjust the width as needed */
+}
+
+.side-detailed-search button {
+  margin-top: 20px;
+  color: #bcbcbc;
+  display: block;
+  margin-right: 50px;
+  margin-left: 20px;
+  border: none;
+}
+
+.side-detailed-search button {
+  background-color: #222222;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.side-detailed-search select {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.side-detailed-search .specifications {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, auto);
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.side-detailed-search .specifications select {
+  width: 100%;
+  color: white;
+  border-radius: 5px;
+}
+
+.side-specifications select option {
+  background-color: #222222;
+}
+
+.side-specifications button {
+  height: 25px;
+  width: 100px;
+  border-radius: 10px;
+  color: white;
+  background-color: orangered;
+  border-radius: 5px;
+}
