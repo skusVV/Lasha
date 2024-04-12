@@ -2,6 +2,7 @@ import { cars } from "./db";
 // YOU can't import anything from the react code. It is a fake backend. there is no access to UI code.
 
 function parseQueryString(url) {
+  console.log('url', url)
   // Directly use everything after '?' in the URL
   const queryString = url.split("?")[1];
   const params = new URLSearchParams(queryString);
@@ -55,10 +56,11 @@ export const api = {
 
     if (url.includes("/api/search?")) {
       const filter = parseQueryString(url);
+      console.log('31231232', filter)
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
-      let newCars;
+      let newCars = cars;
       if(filter.term) {
-        newCars = cars.filter(
+        newCars = newCars.filter(
           (car) =>
             car.madeBy.toLowerCase().includes(filter.term.toLowerCase()) ||
             car.model.toLowerCase().includes(filter.term.toLowerCase()) ||
@@ -66,8 +68,10 @@ export const api = {
             car.location.toUpperCase().includes(filter.term.toUpperCase()) ||
             car.labels.some(label => label.toLowerCase().includes(filter.term.toLowerCase()))
         );
-      } else {
-        newCars = cars
+      } 
+    
+      if(filter.model) {
+        newCars = newCars
         .filter(
           (car) =>
             car.madeBy.toLowerCase() === filter.model.toLowerCase() ||
@@ -80,6 +84,9 @@ export const api = {
         )
         .filter(
           (car) => car.year === Number(filter.year) || filter.year === null
+        )
+        .filter(
+          (car) => car.location === filter.location || filter.location === 'Anywhere'
         );
       }
 
@@ -112,3 +119,13 @@ export const api = {
   //     }
   // }
 };
+
+
+// ?fuel=Any
+// &location=Anywhere
+// &model=---
+// &type=All
+// &year=null
+// &minPrice=undefined
+// &maxPrice=null
+// &term=bmw

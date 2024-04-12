@@ -1,11 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Link from 'next/link';
 import { useSearchParams } from "next/navigation";
-import { Header } from "../components/Header";
 import { api } from "../http/backend";
 import { SideFilter } from "../components/sideFilter";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Footer } from "../components/Footer";
+import { PageWrapper } from "../components/PageWrapper";
 import {
   faTachometerAlt,
   faGasPump,
@@ -19,6 +20,7 @@ import {
 
 export default function CarDetails({ params }) {
   const [carsList, setCarsList] = useState([]);
+  const router = useRouter();
   const searchParams = useSearchParams();
   const term = searchParams.get("term");
   const fuel = searchParams.get("fuel");
@@ -33,31 +35,77 @@ export default function CarDetails({ params }) {
   //   // do something
   // }, []); // empty array we call it only on first render
 
+  const generateQuire = () => {
+    let query = '';
+    // term, fuel, location, model, type, year, minPrice, maxPrice
+    // you should check is there is a value
+    // query = query + `fuel=${fuel}`;
+    // query = query + `&location=${location}`;
+    // query = query + `&model=${model}`;
+    // query = query + `&type=${type}`;
+    // query = query + `&year=${year}`;
+    // query = query + `&minPrice=${filter.price.min}`;
+    // query = query + `&maxPrice=${filter.price.max}`;
+    // query = query + `&term=${term}`;
+    // "fuel=petrol&model=bmw....."
+    return query;
+
+  }
+
   useEffect(() => {
-    console.log("CAll backend to get search value");
-    console.log("maxPrice", maxPrice);
-    console.log("term", term);
-    if (term) {
-      api.get(`/api/search?term=${term}`).then((res) => {
-        setCarsList(res);
-      });
-    } else {
-      api
-        .get(
-          `/api/search?fuel=${fuel}&location=${location}&model=${model}&type=${type}&year=${year}&minPrice=${minPrice}&maxPrice=${maxPrice}`
-        )
-        .then((res) => {
-          setCarsList(res);
-        });
-    }
+    // console.log("CAll backend to get search value");
+    // console.log("maxPrice", maxPrice);
+    // console.log("term", term);
+    const query = generateQuire();
+    api.get(`/api/search?${query}`).then((res) => {
+      setCarsList(res);
+    });
+
+
+    // if (term && !fuel) {
+    //   api.get(`/api/search?term=${term}`).then((res) => {
+    //     setCarsList(res);
+    //   });
+    // } else if (term && fuel) {
+    //   api
+    //   .get(
+    //     `/api/search?fuel=${fuel}&location=${location}&model=${model}&type=${type}&year=${year}&minPrice=${minPrice}&maxPrice=${maxPrice}&term=${term}`
+    //   )
+    //   .then((res) => {
+    //     setCarsList(res);
+    //   });
+    // } else {
+    //   api
+    //     .get(
+    //       `/api/search?fuel=${fuel}&location=${location}&model=${model}&type=${type}&year=${year}&minPrice=${minPrice}&maxPrice=${maxPrice}`
+    //     )
+    //     .then((res) => {
+    //       setCarsList(res);
+    //     });
+    // }
   }, [term, fuel, location, model, type, year, minPrice, maxPrice]); // WE call function inside use effect, for the first render and any time "term" changes
 
+  const onFilter = (filter) => {
+    console.log("filter on the UI", filter);
+    let query = "";
+
+    query = query + `fuel=${filter.fuel}`;
+    query = query + `&location=${filter.location}`;
+    query = query + `&model=${filter.model}`;
+    query = query + `&type=${filter.type}`;
+    query = query + `&year=${filter.year}`;
+    query = query + `&minPrice=${filter.price.min}`;
+    query = query + `&maxPrice=${filter.price.max}`;
+    query = query + `&term=${term}`;
+
+    router.push(`/search?${query}`);
+  };
+
   return (
-    <div>
-      <Header />
+    <PageWrapper>
       <div className="flex flex-wrap justify-between mt-20 p-12 ">
         <div className="search-left">
-          <SideFilter />
+          <SideFilter onFilter={onFilter}/>
         </div>
         <div className="search-right">
           {carsList.map((car, index) => (
@@ -65,13 +113,13 @@ export default function CarDetails({ params }) {
               <div className="selected-car-container dark-grey p-4 rounded-lg">
                 <div className="flex items-center">
                   <div className="selected-car-container-img">
-                    <a href="./components/page.jsx">
+                    <Link href={`/car-details/${car.id}`}>
                       <img
                         src={car.img}
                         className="max-h-48 max-w-48 rounded-lg"
                         alt="Car"
                       />
-                    </a>
+                    </Link>
                   </div>
                   <div className="selected-car-container-left ml-10">
                     <div className="selected-car-info">
@@ -130,9 +178,6 @@ export default function CarDetails({ params }) {
           ))}
         </div>
       </div>
-      <div>
-        <Footer />
-      </div>
-    </div>
+    </PageWrapper>
   );
 }

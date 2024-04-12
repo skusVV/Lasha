@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Filters } from "./components/Filters";
-import { Header } from "./components/Header";
+import { PageWrapper } from "./components/PageWrapper";
 import { CarsList } from "./components/CarsList";
 import { api } from "./http/backend";
 
@@ -43,13 +43,12 @@ export default function Home() {
   };
 
   return (
-    <>
-      <Header></Header>
+    <PageWrapper>
       <Filters onFilter={onFilter} onClear={onFiltersClear} />
       <div style={{ color: "white", margin: "24px 133px" }}>Featured Cars</div>
       <div className="wrapper">
         <CarsList cars={carsList} anything="dasda" passAnythingElse={{}} />
       </div>
-    </>
+    </PageWrapper>
   );
 }

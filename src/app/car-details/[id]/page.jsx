@@ -2,8 +2,10 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "../..//http/backend";
-import { Header } from "../../components/Header";
-import { Footer } from "../../components/Footer";
+// import { Header } from "../../components/Header";
+// import { Footer } from "../../components/Footer";
+import { PageWrapper } from "../../components/PageWrapper";
+
 
 export default function CarDetails({ params }) {
   const [car, setCar] = useState({});
@@ -21,8 +23,7 @@ export default function CarDetails({ params }) {
   }, []);
 
   return (
-    <div>
-      <Header></Header>
+    <PageWrapper>
       {car.id && (
         <div className="flex justify-center mt-20">
           <div className="selected-car-container dark-grey p-4 rounded-lg">
@@ -36,7 +37,6 @@ export default function CarDetails({ params }) {
               </div>
               <div className="selected-car-container-right">
                 <div className="selected-car-info">
-                  CAR with ID: {params.id}
                   <div className="selected-car-details">
                     <div className="selected-car-year font-bold text-white">
                       {car.year}
@@ -59,11 +59,8 @@ export default function CarDetails({ params }) {
               </div>
             </div>
           </div>
-          <div>
-            <Footer />
-          </div>
         </div>
       )}
-    </div>
-  );
+    </PageWrapper>
+  )
 }
