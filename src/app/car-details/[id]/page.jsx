@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "../..//http/backend";
 import { Header } from "../../components/Header";
+import { Footer } from "../../components/Footer";
 
 export default function CarDetails({ params }) {
   const [car, setCar] = useState({});
@@ -57,6 +58,9 @@ export default function CarDetails({ params }) {
                 </div>
               </div>
             </div>
+          </div>
+          <div>
+            <Footer />
           </div>
         </div>
       )}

@@ -10,6 +10,8 @@ export let cars = [
     price: 17300,
     currency: "$",
     fuelType: "Hybrid",
+    milage: "10,000",
+    transmition: "Tiptronic",
     labels: ["Sedan", "Hybrid", "Automatic", "AWD", "4Door"],
   },
   {
@@ -23,6 +25,8 @@ export let cars = [
     price: 72500,
     currency: "$",
     fuelType: "Petrol",
+    milage: "13,500",
+    transmition: "Automatic",
     labels: ["Jeep", "Petrol", "Tiptronic", "AWD", "4Door"],
     // mainSpecification: {
     //   Manufacturer: 'Toyota',
@@ -40,6 +44,8 @@ export let cars = [
     price: 23500,
     currency: "$",
     fuelType: "Petrol",
+    milage: "120,000",
+    transmition: "Automatic",
     labels: ["Jeep", "Petrol", "Tiptronic", "AWD", "4Door"],
   },
   {
@@ -53,6 +59,8 @@ export let cars = [
     price: 19000,
     currency: "$",
     fuelType: "Hybrid",
+    milage: "700",
+    transmition: "Automatic",
     labels: ["Sedan", "Hybrid", "Tiptronic", "FWD", "4Door"],
   },
   {
@@ -66,6 +74,8 @@ export let cars = [
     price: 23000,
     currency: "$",
     fuelType: "Petrol",
+    milage: "14,300",
+    transmition: "Automatic",
     labels: ["Sedan", "Petrol", "Manual", "FWD", "4Door"],
   },
   {
@@ -79,6 +89,8 @@ export let cars = [
     price: 29500,
     currency: "$",
     fuelType: "Petrol",
+    milage: "11,000",
+    transmition: "Automatic",
     labels: ["Jeep", "Petrol", "Automatic", "AWD", "4Door"],
   },
   {
@@ -92,6 +104,8 @@ export let cars = [
     price: 15500,
     currency: "$",
     fuelType: "Petrol",
+    milage: "130,000",
+    transmition: "Tiptronic",
     labels: ["Coupe", "Petrol", "Tiptronic", "RWD", "4Door"],
   },
   {
@@ -104,6 +118,8 @@ export let cars = [
     price: 12500,
     currency: "$",
     fuelType: "Petrol",
+    milage: "36,000",
+    transmition: "Manual",
     labels: ["Petrol", "1300cc"],
   },
   {
@@ -116,6 +132,8 @@ export let cars = [
     price: 22400,
     currency: "$",
     fuelType: "Petrol",
+    milage: "6,000",
+    transmition: "Manual",
     labels: ["Petrol", "1000cc"],
   },
   {
@@ -128,6 +146,8 @@ export let cars = [
     price: 220000,
     currency: "$",
     fuelType: "Petrol", // SHould be searchable
+    milage: "3,000",
+    transmition: "Manual",
     labels: ["Diesel", "2Door"], // SHould be searchable
   },
 ];
