@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import {
   carModels,
@@ -7,6 +8,12 @@ import {
   defaultModels,
   defaultYears,
 } from "../constants/constants";
+import {
+  faCar,
+  faMotorcycle,
+  faTractor,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const selectMapper = (item, e) => {
   if (item.name === e.target.value) {
@@ -61,15 +68,15 @@ export const SideFilter = ({ onFilter }) => {
             referrerpolicy="no-referrer"
           />
           <div className="side-detailed-search">
-            <div className="side-outside-vehicle">
+            <div className="">
               <button>
-                <i className="fas fa-car"></i>
+                <FontAwesomeIcon icon={faCar} />
               </button>
               <button>
-                <i className="fas fa-motorcycle"></i>
+                <FontAwesomeIcon icon={faMotorcycle} />
               </button>
               <button>
-                <i className="fas fa-tractor"></i>
+                <FontAwesomeIcon icon={faTractor} />
               </button>
             </div>
             <div className="side-specifications">
