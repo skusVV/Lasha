@@ -31,62 +31,52 @@ export default function CarDetails({ params }) {
   const minPrice = searchParams.get("minPrice");
   const maxPrice = searchParams.get("maxPrice");
 
-  // useEffect(() => {
-  //   // do something
-  // }, []); // empty array we call it only on first render
+  const generateQuery = () => {
+    let queryArray = [];
+    if(fuel) {
+      queryArray.push(`fuel=${fuel}`)
+    }
 
-  const generateQuire = () => {
-    let query = '';
-    // term, fuel, location, model, type, year, minPrice, maxPrice
-    // you should check is there is a value
-    // query = query + `fuel=${fuel}`;
-    // query = query + `&location=${location}`;
-    // query = query + `&model=${model}`;
-    // query = query + `&type=${type}`;
-    // query = query + `&year=${year}`;
-    // query = query + `&minPrice=${filter.price.min}`;
-    // query = query + `&maxPrice=${filter.price.max}`;
-    // query = query + `&term=${term}`;
-    // "fuel=petrol&model=bmw....."
-    return query;
+    if(model) {
+      queryArray.push(`model=${model}`)
+    }
 
+    if(location) {
+      queryArray.push(`location=${location}`)
+    }
+
+    if(type) {
+      queryArray.push(`type=${type}`)
+    }
+
+    if(year) {
+      queryArray.push(`year=${year}`)
+    }
+
+    if(minPrice) {
+      queryArray.push(`minPrice=${minPrice}`)
+    }
+
+    if(maxPrice) {
+      queryArray.push(`maxPrice=${maxPrice}`)
+    }
+
+    if(term) {
+      queryArray.push(`term=${term}`)
+    }
+
+    return queryArray.join('&');
   }
 
   useEffect(() => {
-    // console.log("CAll backend to get search value");
-    // console.log("maxPrice", maxPrice);
-    // console.log("term", term);
-    const query = generateQuire();
+    const query = generateQuery();
+
     api.get(`/api/search?${query}`).then((res) => {
       setCarsList(res);
     });
-
-
-    // if (term && !fuel) {
-    //   api.get(`/api/search?term=${term}`).then((res) => {
-    //     setCarsList(res);
-    //   });
-    // } else if (term && fuel) {
-    //   api
-    //   .get(
-    //     `/api/search?fuel=${fuel}&location=${location}&model=${model}&type=${type}&year=${year}&minPrice=${minPrice}&maxPrice=${maxPrice}&term=${term}`
-    //   )
-    //   .then((res) => {
-    //     setCarsList(res);
-    //   });
-    // } else {
-    //   api
-    //     .get(
-    //       `/api/search?fuel=${fuel}&location=${location}&model=${model}&type=${type}&year=${year}&minPrice=${minPrice}&maxPrice=${maxPrice}`
-    //     )
-    //     .then((res) => {
-    //       setCarsList(res);
-    //     });
-    // }
   }, [term, fuel, location, model, type, year, minPrice, maxPrice]); // WE call function inside use effect, for the first render and any time "term" changes
 
   const onFilter = (filter) => {
-    console.log("filter on the UI", filter);
     let query = "";
 
     query = query + `fuel=${filter.fuel}`;
