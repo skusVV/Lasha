@@ -159,11 +159,11 @@ export const defaultModels = [
     selected: false,
   },
   {
-    name: "BMW",
+    name: "BMW", // X6, X7 ...
     selected: false,
   },
   {
-    name: "Toyota",
+    name: "Toyota", // Prius, Corrola...
     selected: false,
   },
   {
@@ -175,5 +175,32 @@ export const defaultModels = [
     selected: false,
   },
 ];
+
+export const defaultSelectedCarModels = [
+  {
+    name: "---",
+    selected: true,
+  },
+  {
+    name: "X6",
+    madeByKey: 'BMW',
+    selected: false,
+  },
+  {
+    name: "X7",
+    madeByKey: 'BMW',
+    selected: false,
+  },
+  {
+    name: "Prius",
+    madeByKey: 'Toyota',
+    selected: false,
+  },
+  {
+    name: "Corola",
+    madeByKey: 'Toyota',
+    selected: false,
+  },
+]
 
 export const logo = "./logo.jpeg";

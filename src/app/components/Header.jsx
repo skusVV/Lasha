@@ -2,16 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Filters } from "./Filters";
-import { SideFilter } from "./sideFilter";
-import {
-  carModels,
-  defaultFuel,
-  defaultCarPrices,
-  defaultLocation,
-  defaultModels,
-  defaultYears,
-} from "../constants/constants";
 
 export const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -36,7 +26,7 @@ export const Header = () => {
             <i className="fa-solid fa-magnifying-glass" id="glass-icon"></i>
             <input
               onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyDown={(onSearch, aaa)}
+              onKeyDown={onSearch}
               value={searchTerm}
               type="search-box"
               name=""

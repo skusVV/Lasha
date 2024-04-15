@@ -2,8 +2,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "../..//http/backend";
-// import { Header } from "../../components/Header";
-// import { Footer } from "../../components/Footer";
 import { PageWrapper } from "../../components/PageWrapper";
 
 
