@@ -2,10 +2,23 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Filters } from "./Filters";
+import { SideFilter } from "./sideFilter";
+import {
+  carModels,
+  defaultFuel,
+  defaultCarPrices,
+  defaultLocation,
+  defaultModels,
+  defaultYears,
+} from "../constants/constants";
 
 export const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
+
+  // add the code here
+
   const onSearch = (e) => {
     if (e.key === "Enter" && e.target.value) {
       router.push(`/search?term=${e.target.value}`);
@@ -18,14 +31,12 @@ export const Header = () => {
         <div className="container-left">
           <div className="search">
             <a href="http://localhost:3000/">
-              {/* Replace the href value with your main page URL */}
               <img src="/logo.png" className="logo" />
             </a>
-            {/* <img src="/logo.png" className="logo" /> */}
             <i className="fa-solid fa-magnifying-glass" id="glass-icon"></i>
             <input
               onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyDown={onSearch}
+              onKeyDown={(onSearch, aaa)}
               value={searchTerm}
               type="search-box"
               name=""
