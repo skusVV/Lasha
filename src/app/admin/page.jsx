@@ -15,6 +15,8 @@ import {
 } from "../constants/constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { api } from "./../http/backend";
+import { cars } from "../http/db";
 
 export const StyledFormWrapper = styled.div`
   display: flex;
@@ -38,6 +40,10 @@ export const StyledFormWrapper = styled.div`
     }
   }
 `;
+// 
+// 1. Fetch all cars
+// 2. Render all cars
+// 3. when you click on car, you should create "carData" object and setCarData(carData)
 
 export default function Admin() {
   const [disableModels, setDisableModels] = useState(true);
@@ -46,64 +52,45 @@ export default function Admin() {
   );
   const [carData, setCarData] = useState({
     imageRef: "",
-    carModel: "",
-    location: "",
-    year: "",
     price: "",
-    currency: "",
-    fuel: "",
     millage: "",
-    transmition: "",
     labels: "",
+    carModel: carModels.find(item => item.selected).name,
+    location: defaultLocation.find(item => item.selected).name,
+    year:  defaultYears.find(item => item.selected).name,
+    model: defaultModels.find(item => item.selected).name,
+    currency: defaultCurrency.find(item => item.selected).name,
+    fuel: defaultFuel.find(item => item.selected).name,
+    transmition: defaultTransmition.find(item => item.selected).name,
   });
 
-  // const [secondCar, setSecondCar] = useState([]);
-
-  const [formData, setFormData] = useState([]);
-
   const handleChange = (e) => {
-    // if (e.target.tagName === "INPUT") {
-    //   console.log(`${e.target.placeholder}: ${e.target.value}`);
-    // } else if (e.target.tagName === "SELECT") {
-    //   const index = e.target.selectedIndex;
-    //   const options = e.target.options;
-    //   const name = options[index].text;
-    //   console.log(`${name}: ${e.target.value}`);
-    // }
-    // const { name, value, placeholder } = e.target;
-    // const newData = { [placeholder]: value };
-    // setFormData((prevFormData) => [...prevFormData, newData]);
+    setCarData({
+      ...carData,
+      [e.target.name]: e.target.value
+    });
   };
 
-  const logCar = () => {
-    const formData = [];
-
-    // Iterate over input elements
-    document.querySelectorAll("input").forEach((input) => {
-      formData.push({ [input.placeholder]: input.value });
-    });
-
-    // Iterate over select elements
-    document.querySelectorAll("select").forEach((select) => {
-      const type = select.getAttribute("data-type"); // Get the data-type attribute value
-      const index = select.selectedIndex;
-      const options = select.options;
-      const name = options[index].text;
-      formData.push({ [type]: select.value }); // Use the data-type as key
-    });
-
-    console.log(formData);
+  const logCar = () => { // Rename to save
+    api.post('/api/cars', carData)
+    .then(res => console.log('response from server', res))
   };
 
   return (
     <PageWrapper>
       <div>Create Car</div>
+      <div>
+        <div>car 1 </div>
+        <div>car 2 </div>
+        <div>car 3 </div>
+        <div>car 4 </div>
+      </div>
       <StyledFormWrapper>
         <div className="field">
-          <input type="text" placeholder="Image ref" />
+          <input type="text" placeholder="Image ref" name="imageRef" onChange={handleChange}/>
         </div>
         <div className="field">
-          <select data-type="carType" onChange={handleChange}>
+          <select data-type="carType" name="carModel" onChange={handleChange}>
             {carModels.map((carModel, index) => (
               <option key={index} selected={carModel.selected}>
                 {carModel.name}
@@ -112,7 +99,7 @@ export default function Admin() {
           </select>
         </div>
         <div className="field">
-          <select data-type="location" onChange={handleChange}>
+          <select data-type="location" name="location" onChange={handleChange}>
             {defaultLocation.map((location, index) => (
               <option key={index} selected={location.selected}>
                 {location.name}
@@ -121,7 +108,7 @@ export default function Admin() {
           </select>
         </div>
         <div className="field">
-          <select data-type="year" onChange={handleChange}>
+          <select data-type="year" name="year" onChange={handleChange}>
             {defaultYears.map((year, index) => (
               <option key={index} selected={year.selected}>
                 {year.name}
@@ -133,6 +120,7 @@ export default function Admin() {
         <div className="field">
           <select
             data-type="carMadeBy"
+            name="carMadeBy" 
             onChange={(e) => {
               if (e.target.value === "---") {
                 setDisableModels(true);
@@ -161,6 +149,7 @@ export default function Admin() {
         <div className="field">
           <select
             data-type="model"
+            name="model" 
             disabled={disableModels}
             onChange={handleChange}
           >
@@ -172,10 +161,10 @@ export default function Admin() {
           </select>
         </div>
         <div className="field">
-          <input type="text" placeholder="Price" onChange={handleChange} />
+          <input type="text" placeholder="Price" name="price" onChange={handleChange} />
         </div>
         <div className="field">
-          <select data-type="currency" onChange={handleChange}>
+          <select data-type="currency" name="currency" onChange={handleChange}>
             {defaultCurrency.map((currency, index) => (
               <option key={index} selected={currency.selected}>
                 {currency.name}
@@ -184,7 +173,7 @@ export default function Admin() {
           </select>
         </div>
         <div className="field">
-          <select data-type="fuel" onChange={handleChange}>
+          <select name="fuel" onChange={handleChange}>
             {defaultFuel.map((fuels, index) => (
               <option key={index} selected={fuels.selected}>
                 {fuels.name}
@@ -193,10 +182,10 @@ export default function Admin() {
           </select>
         </div>
         <div className="field">
-          <input type="text" placeholder="Millage" onChange={handleChange} />
+          <input type="text" placeholder="Millage" name="millage" onChange={handleChange} />
         </div>
         <div className="field">
-          <select data-type="transmition" onChange={handleChange}>
+          <select name="transmition" onChange={handleChange}>
             {defaultTransmition.map((transmition, index) => (
               <option key={index} selected={transmition.selected}>
                 {transmition.name}
@@ -205,7 +194,7 @@ export default function Admin() {
           </select>
         </div>
         <div className="field">
-          <input type="text" placeholder="Labels" onChange={handleChange} />
+          <input type="text" placeholder="Labels" name="labels" onChange={handleChange} />
         </div>
 
         <div className="field rounded-sm">
