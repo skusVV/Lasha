@@ -1,4 +1,3 @@
-
 // HOMEWORK
 // export const carModels = ['Sedan', 'Hatchback', 'Jeep'];
 // export const location = ['Tbilisi', 'Batumi', 'Outside Country', 'Space'];
@@ -176,6 +175,36 @@ export const defaultModels = [
   },
 ];
 
+export const defaultCurrency = [
+  {
+    name: "$",
+    selected: true,
+  },
+  {
+    name: "₾",
+    selected: false,
+  },
+];
+
+export const defaultTransmition = [
+  {
+    name: "Any",
+    selected: true,
+  },
+  {
+    name: "Automatic",
+    selected: false,
+  },
+  {
+    name: "Manual",
+    selected: false,
+  },
+  {
+    name: "Tiptronic",
+    selected: false,
+  },
+];
+
 export const defaultSelectedCarModels = [
   {
     name: "---",
@@ -183,24 +212,24 @@ export const defaultSelectedCarModels = [
   },
   {
     name: "X6",
-    madeByKey: 'BMW',
+    madeByKey: "BMW",
     selected: false,
   },
   {
     name: "X7",
-    madeByKey: 'BMW',
+    madeByKey: "BMW",
     selected: false,
   },
   {
     name: "Prius",
-    madeByKey: 'Toyota',
+    madeByKey: "Toyota",
     selected: false,
   },
   {
     name: "Corola",
-    madeByKey: 'Toyota',
+    madeByKey: "Toyota",
     selected: false,
   },
-]
+];
 
 export const logo = "./logo.jpeg";
