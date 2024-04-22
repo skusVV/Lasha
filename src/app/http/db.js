@@ -16,7 +16,7 @@ export let cars = [
   },
   {
     id: 2,
-    img: "https://static.my.ge/myauto/photos/3/1/9/3/1/large/102139135_1.jpg?v=0",
+    img: "https://www.thedrive.com/content/2021/05/BMW_X6M_Comp_Review-1.jpg?quality=85",
     type: "Jeep",
     location: "Tbilisi",
     year: 2021,

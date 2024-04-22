@@ -40,7 +40,7 @@ export const StyledFormWrapper = styled.div`
     }
   }
 `;
-// 
+//
 // 1. Fetch all cars
 // 2. Render all cars
 // 3. when you click on car, you should create "carData" object and setCarData(carData)
@@ -50,44 +50,58 @@ export default function Admin() {
   const [selectedCarModels, setDefaultCarModels] = useState(
     defaultSelectedCarModels.filter((item) => item.selected)
   );
+  const [cars, setCars] = useState([]);
   const [carData, setCarData] = useState({
     imageRef: "",
     price: "",
     millage: "",
     labels: "",
-    carModel: carModels.find(item => item.selected).name,
-    location: defaultLocation.find(item => item.selected).name,
-    year:  defaultYears.find(item => item.selected).name,
-    model: defaultModels.find(item => item.selected).name,
-    currency: defaultCurrency.find(item => item.selected).name,
-    fuel: defaultFuel.find(item => item.selected).name,
-    transmition: defaultTransmition.find(item => item.selected).name,
+    carModel: carModels.find((item) => item.selected).name,
+    location: defaultLocation.find((item) => item.selected).name,
+    year: defaultYears.find((item) => item.selected).name,
+    model: defaultModels.find((item) => item.selected).name,
+    currency: defaultCurrency.find((item) => item.selected).name,
+    fuel: defaultFuel.find((item) => item.selected).name,
+    transmition: defaultTransmition.find((item) => item.selected).name,
   });
 
   const handleChange = (e) => {
     setCarData({
       ...carData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  const logCar = () => { // Rename to save
-    api.post('/api/cars', carData)
-    .then(res => console.log('response from server', res))
+  const saveCar = () => {
+    api
+      .post("/api/cars", carData)
+      .then((res) => console.log("response from server", res));
+  };
+
+  useEffect(() => {
+    const carsFromLocalStorage = localStorage.getItem("CARS");
+    if (carsFromLocalStorage) {
+      const parsedCars = JSON.parse(carsFromLocalStorage);
+      setCars(parsedCars);
+    }
+  }, []);
+
+  const editCar = (car) => {
+    console.log(car);
+    setCarData(car);
   };
 
   return (
     <PageWrapper>
       <div>Create Car</div>
-      <div>
-        <div>car 1 </div>
-        <div>car 2 </div>
-        <div>car 3 </div>
-        <div>car 4 </div>
-      </div>
       <StyledFormWrapper>
         <div className="field">
-          <input type="text" placeholder="Image ref" name="imageRef" onChange={handleChange}/>
+          <input
+            type="text"
+            placeholder="Image ref"
+            name="imageRef"
+            onChange={handleChange}
+          />
         </div>
         <div className="field">
           <select data-type="carType" name="carModel" onChange={handleChange}>
@@ -120,7 +134,7 @@ export default function Admin() {
         <div className="field">
           <select
             data-type="carMadeBy"
-            name="carMadeBy" 
+            name="carMadeBy"
             onChange={(e) => {
               if (e.target.value === "---") {
                 setDisableModels(true);
@@ -149,7 +163,7 @@ export default function Admin() {
         <div className="field">
           <select
             data-type="model"
-            name="model" 
+            name="model"
             disabled={disableModels}
             onChange={handleChange}
           >
@@ -161,7 +175,12 @@ export default function Admin() {
           </select>
         </div>
         <div className="field">
-          <input type="text" placeholder="Price" name="price" onChange={handleChange} />
+          <input
+            type="text"
+            placeholder="Price"
+            name="price"
+            onChange={handleChange}
+          />
         </div>
         <div className="field">
           <select data-type="currency" name="currency" onChange={handleChange}>
@@ -182,7 +201,12 @@ export default function Admin() {
           </select>
         </div>
         <div className="field">
-          <input type="text" placeholder="Millage" name="millage" onChange={handleChange} />
+          <input
+            type="text"
+            placeholder="Millage"
+            name="millage"
+            onChange={handleChange}
+          />
         </div>
         <div className="field">
           <select name="transmition" onChange={handleChange}>
@@ -194,16 +218,41 @@ export default function Admin() {
           </select>
         </div>
         <div className="field">
-          <input type="text" placeholder="Labels" name="labels" onChange={handleChange} />
+          <input
+            type="text"
+            placeholder="Labels"
+            name="labels"
+            onChange={handleChange}
+          />
         </div>
 
-        <div className="field rounded-sm">
-          <FontAwesomeIcon icon={faPlus} />
-          <button className="addCar" onClick={logCar}>
+        <div className="field rounded-sm ">
+          <button className="addCar " onClick={saveCar}>
+            <FontAwesomeIcon icon={faPlus} />
             Add Car
           </button>
         </div>
       </StyledFormWrapper>
+      <div className="text-white ml-20 mt-20">Edit car</div>
+      <div className="adminCarEdit">
+        <div className="flex flex-wrap ml-40 gap-4 mb-20 mt-10">
+          {cars.map((car, index) => (
+            <div
+              key={index}
+              className="w-1/6 border p-4 rounded-lg dark-grey text-white "
+              onClick={() => editCar(car)}
+            >
+              <img src={car.img} className="w-100 mb-2 rounded-lg" />
+              <div className="text-md">
+                {car.year} - {car.madeBy} {car.model}
+              </div>
+              <div className="text-md">
+                {car.price} {car.currency}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </PageWrapper>
   );
 }
