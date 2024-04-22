@@ -36,8 +36,7 @@ function parseQueryString(url) {
 
 export const api = {
   get: (url) => {
-    if (url === "/api/random-cars") {
-      // Random 6 cars list
+    if (url === "/api/random-cars") { // Random 6 cars list
       return new Promise((resolve) => {
         setTimeout(() => {
           resolve(
@@ -49,8 +48,7 @@ export const api = {
       });
     }
 
-    if (url.includes("/api/cars/")) {
-      // whole list
+    if (url.includes("/api/cars/")) { // Get car by ID
       const urlArray = url.split("/");
       const id = urlArray[urlArray.length - 1]; // the last index in the arr is always arr length - 1.
 
@@ -66,7 +64,14 @@ export const api = {
       });
     }
 
-    if (url.includes("/api/search?")) {
+    if (url.includes("/api/cars")) { // All Cars
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(cars)
+        }, 500);
+      });
+    }
+    if (url.includes("/api/search?")) { // search
       const filter = parseQueryString(url);
       console.log('31231232', filter)
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
@@ -150,13 +155,31 @@ export const api = {
   //         return null;
   //     }
   // },
-  // patch: (url, body) => {
-  //     if(url.includes('/api/cars/')) {
-  //         const id = Number(path.split('/')[3]);
-  //         cars = cars.map(car => car.id === id ? body : car);
-  //         return body;
-  //     }
-  // }
+  patch: (url, body) => {
+      if(url.includes('/api/cars/')) {
+          const id = Number(path.split('/')[3]);
+          // FIND a car by id, 
+          // Update that object
+          const updatedCar = {
+            id: body.id,
+            img: body.imageRef,
+            type: body.carModel,
+            location: body.location,
+            year: body.year,
+            madeBy: body.carMadeBy,
+            model: body.carModel,
+            price: body.price,
+            currency: body.currency,
+            fuelType: body.fuel,
+            milage: body.millage,
+            transmition: body.transmition,
+            labels: body.labels.split(','),
+          }
+          // Think how to save this value. But not dublicate
+          // Take on .map function
+
+      }
+  }
 };
 
 

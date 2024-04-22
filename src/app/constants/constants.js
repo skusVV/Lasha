@@ -149,6 +149,7 @@ export const defaultCarPrices = [
 ];
 
 export const defaultModels = [
+  // TODO you should add more Car brands
   {
     name: "---",
     selected: true,
@@ -171,6 +172,10 @@ export const defaultModels = [
   },
   {
     name: "Ducati",
+    selected: false,
+  },
+  {
+    name: "Volkswagen",
     selected: false,
   },
 ];
@@ -206,6 +211,7 @@ export const defaultTransmition = [
 ];
 
 export const defaultSelectedCarModels = [
+  // TODO you should add more Car Models
   {
     name: "---",
     selected: true,

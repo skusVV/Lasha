@@ -52,11 +52,12 @@ export default function Admin() {
   );
   const [cars, setCars] = useState([]);
   const [carData, setCarData] = useState({
+    id: null,
     imageRef: "",
     price: "",
     millage: "",
     labels: "",
-    carModel: carModels.find((item) => item.selected).name,
+    type: carModels.find((item) => item.selected).name,
     location: defaultLocation.find((item) => item.selected).name,
     year: defaultYears.find((item) => item.selected).name,
     model: defaultModels.find((item) => item.selected).name,
@@ -73,22 +74,44 @@ export default function Admin() {
   };
 
   const saveCar = () => {
-    api
+    if(!carData.id) {
+      api
       .post("/api/cars", carData)
       .then((res) => console.log("response from server", res));
+    } else {
+      api
+      .patch(`/api/cars/${carData.id}`, carData)
+      .then((res) => console.log("response from server [Update]", res));
+      // UPDATE
+    }
   };
 
   useEffect(() => {
-    const carsFromLocalStorage = localStorage.getItem("CARS");
-    if (carsFromLocalStorage) {
-      const parsedCars = JSON.parse(carsFromLocalStorage);
-      setCars(parsedCars);
-    }
+    api.get("/api/cars")
+    .then((res) => setCars(res));
   }, []);
 
   const editCar = (car) => {
-    console.log(car);
-    setCarData(car);
+
+    setDefaultCarModels(
+      defaultSelectedCarModels.filter((item) => car.madeBy === item.madeByKey)
+    )
+    setDisableModels(false)
+    setCarData({
+      id: car.id,
+      imageRef: car.img,
+      price: car.price,
+      millage: car.milage,
+      labels: car.labels.join(', '),
+      carModel: car.madeBy,
+      location: car.location,
+      year: car.year,
+      model: car.model,
+      currency: car.currency,
+      fuel: car.fuelType,
+      transmition: car.transmition,
+      type: car.type
+    });
   };
 
   return (
@@ -97,6 +120,7 @@ export default function Admin() {
       <StyledFormWrapper>
         <div className="field">
           <input
+            value={carData.imageRef}
             type="text"
             placeholder="Image ref"
             name="imageRef"
@@ -104,9 +128,9 @@ export default function Admin() {
           />
         </div>
         <div className="field">
-          <select data-type="carType" name="carModel" onChange={handleChange}>
+          <select name="type" onChange={handleChange}>
             {carModels.map((carModel, index) => (
-              <option key={index} selected={carModel.selected}>
+              <option key={index} selected={carData.type === carModel.name}>
                 {carModel.name}
               </option>
             ))}
@@ -115,7 +139,7 @@ export default function Admin() {
         <div className="field">
           <select data-type="location" name="location" onChange={handleChange}>
             {defaultLocation.map((location, index) => (
-              <option key={index} selected={location.selected}>
+              <option key={index} selected={carData.location === location.name}>
                 {location.name}
               </option>
             ))}
@@ -124,7 +148,7 @@ export default function Admin() {
         <div className="field">
           <select data-type="year" name="year" onChange={handleChange}>
             {defaultYears.map((year, index) => (
-              <option key={index} selected={year.selected}>
+              <option key={index} selected={carData.year === year.value}>
                 {year.name}
               </option>
             ))}
@@ -154,7 +178,7 @@ export default function Admin() {
             }}
           >
             {defaultModels.map((model, index) => (
-              <option key={index} selected={model.selected}>
+              <option key={index} selected={carData.carModel === model.name}>
                 {model.name}
               </option>
             ))}
@@ -168,14 +192,16 @@ export default function Admin() {
             onChange={handleChange}
           >
             {selectedCarModels.map((model, index) => (
-              <option key={index} selected={model.selected}>
+              <option key={index} selected={carData.model === model.name}>
                 {model.name}
+                {/* TODO */}
               </option>
             ))}
           </select>
         </div>
         <div className="field">
           <input
+            value={carData.price}
             type="text"
             placeholder="Price"
             name="price"
@@ -185,7 +211,7 @@ export default function Admin() {
         <div className="field">
           <select data-type="currency" name="currency" onChange={handleChange}>
             {defaultCurrency.map((currency, index) => (
-              <option key={index} selected={currency.selected}>
+              <option key={index} selected={carData.currency === currency.name}>
                 {currency.name}
               </option>
             ))}
@@ -194,7 +220,7 @@ export default function Admin() {
         <div className="field">
           <select name="fuel" onChange={handleChange}>
             {defaultFuel.map((fuels, index) => (
-              <option key={index} selected={fuels.selected}>
+              <option key={index} selected={carData.fuel === fuels.name}>
                 {fuels.name}
               </option>
             ))}
@@ -203,6 +229,7 @@ export default function Admin() {
         <div className="field">
           <input
             type="text"
+            value={carData.millage}
             placeholder="Millage"
             name="millage"
             onChange={handleChange}
@@ -211,7 +238,7 @@ export default function Admin() {
         <div className="field">
           <select name="transmition" onChange={handleChange}>
             {defaultTransmition.map((transmition, index) => (
-              <option key={index} selected={transmition.selected}>
+              <option key={index} selected={carData.transmition === transmition.name}>
                 {transmition.name}
               </option>
             ))}
@@ -220,6 +247,7 @@ export default function Admin() {
         <div className="field">
           <input
             type="text"
+            value={carData.labels}
             placeholder="Labels"
             name="labels"
             onChange={handleChange}
@@ -229,7 +257,9 @@ export default function Admin() {
         <div className="field rounded-sm ">
           <button className="addCar " onClick={saveCar}>
             <FontAwesomeIcon icon={faPlus} />
-            Add Car
+            {
+              carData.id ? 'Update' : 'Save'
+            }
           </button>
         </div>
       </StyledFormWrapper>
