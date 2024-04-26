@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+// import { BrowserRouter as Router, Route } from "react-router-dom";
 
 export const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -52,9 +54,9 @@ export const Header = () => {
             </select>
           </div>
           <div className="log-in">
-            <button className="Log-In" id="top-button">
+            <Link href={`/login`} className="logInButton">
               Log In
-            </button>
+            </Link>
           </div>
         </div>
       </div>
