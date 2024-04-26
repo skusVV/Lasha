@@ -81,7 +81,9 @@ export default function Admin() {
     } else {
       api
       .patch(`/api/cars/${carData.id}`, carData)
-      .then((res) => console.log("response from server [Update]", res));
+      .then((res) => {
+        setCars(res);
+      });
       // UPDATE
     }
   };

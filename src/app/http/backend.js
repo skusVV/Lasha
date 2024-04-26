@@ -157,17 +157,17 @@ export const api = {
   // },
   patch: (url, body) => {
       if(url.includes('/api/cars/')) {
-          const id = Number(path.split('/')[3]);
+          const id = Number(url.split('/')[3]);
           // FIND a car by id, 
           // Update that object
           const updatedCar = {
             id: body.id,
             img: body.imageRef,
-            type: body.carModel,
+            type: body.type,
             location: body.location,
             year: body.year,
-            madeBy: body.carMadeBy,
-            model: body.carModel,
+            madeBy: body.carModel,
+            model: body.model,
             price: body.price,
             currency: body.currency,
             fuelType: body.fuel,
@@ -175,6 +175,26 @@ export const api = {
             transmition: body.transmition,
             labels: body.labels.split(','),
           }
+          console.log('body', body)
+          console.log('updatedCar', updatedCar)
+          const carsFromLocalStorage = localStorage.getItem('CARS');
+          const carsArray = JSON.parse(carsFromLocalStorage);
+        // console.log('carsArray', carsArray); // it is a Array
+          const newCars = carsArray.map(item => {
+            if(item.id !== updatedCar.id) {
+              return item;
+            } else {
+              return updatedCar;
+            }
+          });
+          localStorage.setItem('CARS', JSON.stringify(newCars));
+        // console.log('JSON.stringify(newCars)', JSON.stringify(newCars)); // String again
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(newCars);
+          }, 500);
+        });
+        // localStorage.setItem('CARS', JSON.stringify(newCars));
           // Think how to save this value. But not dublicate
           // Take on .map function
 
