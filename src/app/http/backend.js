@@ -35,85 +35,6 @@ function parseQueryString(url) {
 }
 
 export const api = {
-  get: (url) => {
-    if (url === "/api/random-cars") { // Random 6 cars list
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(
-            [...cars]
-              .sort(() => Math.random() - Math.random())
-              .filter((item, i) => i < 6)
-          );
-        }, 500);
-      });
-    }
-
-    if (url.includes("/api/cars/")) { // Get car by ID
-      const urlArray = url.split("/");
-      const id = urlArray[urlArray.length - 1]; // the last index in the arr is always arr length - 1.
-
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          const car = cars.find((item) => item.id === Number(id));
-          if (car) {
-            resolve(car);
-          } else {
-            reject();
-          }
-        }, 500);
-      });
-    }
-
-    if (url.includes("/api/cars")) { // All Cars
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve(cars)
-        }, 500);
-      });
-    }
-    if (url.includes("/api/search?")) { // search
-      const filter = parseQueryString(url);
-      console.log('31231232', filter)
-      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
-      let newCars = cars;
-      if(filter.term) {
-        newCars = newCars.filter(
-          (car) =>
-            car.madeBy.toLowerCase().includes(filter.term.toLowerCase()) ||
-            car.model.toLowerCase().includes(filter.term.toLowerCase()) ||
-            car.fuelType.toLowerCase().includes(filter.term.toLowerCase()) ||
-            car.location.toUpperCase().includes(filter.term.toUpperCase()) ||
-            car.labels.some(label => label.toLowerCase().includes(filter.term.toLowerCase()))
-        );
-      } 
-    
-      if(filter.model) {
-        newCars = newCars
-        .filter(
-          (car) =>
-            car.madeBy.toLowerCase() === filter.model.toLowerCase() ||
-            filter.model === "---"
-        )
-        .filter(
-          (car) =>
-            (car.price > filter.minPrice && car.price < filter.maxPrice) ||
-            filter.maxPrice === null
-        )
-        .filter(
-          (car) => car.year === Number(filter.year) || filter.year === null
-        )
-        .filter(
-          (car) => car.location === filter.location || filter.location === 'Anywhere'
-        );
-      }
-
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve([...newCars]);
-        }, 500);
-      });
-    }
-  },
   post: (url, body) => {
       if(url === '/api/cars') {
         const car = {
@@ -147,14 +68,7 @@ export const api = {
           });
       }
   },
-  // delete: url => {
-  //     if(url.includes('/api/cars/')) {
-  //         const id = Number(path.split('/')[3]);
 
-  //         cars = cars.filter(car => car.id === id);
-  //         return null;
-  //     }
-  // },
   patch: (url, body) => {
       if(url.includes('/api/cars/')) {
           const id = Number(url.split('/')[3]);

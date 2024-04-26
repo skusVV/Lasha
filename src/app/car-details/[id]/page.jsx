@@ -10,8 +10,8 @@ export default function CarDetails({ params }) {
   const router = useRouter();
 
   useEffect(() => {
-    api
-      .get(`/api/cars/${params.id}`)
+    fetch(`http://localhost:3001/api/cars/${params.id}`)
+      .then(res => res.json())
       .then((res) => {
         setCar(res);
       })

@@ -71,7 +71,9 @@ export default function CarDetails({ params }) {
   useEffect(() => {
     const query = generateQuery();
 
-    api.get(`/api/search?${query}`).then((res) => {
+    fetch(`http://localhost:3001/api/search?${query}`)
+    .then(res => res.json())
+    .then((res) => {
       setCarsList(res);
     });
   }, [term, fuel, location, model, type, year, minPrice, maxPrice]); // WE call function inside use effect, for the first render and any time "term" changes

@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { Filters } from "./components/Filters";
 import { PageWrapper } from "./components/PageWrapper";
 import { CarsList } from "./components/CarsList";
-import { api } from "./http/backend";
 
 // GET -- get some resource
 // POST -- CREATE some resource
@@ -16,10 +15,9 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    // Component did Mount
-    api.get("/api/random-cars").then((res) => {
-      setCarsList(res);
-    });
+    fetch('http://localhost:3001/api/random-cars')
+      .then((res) => res.json())
+      .then(res => setCarsList(res))
   }, []);
 
   const onFilter = (filter) => {
@@ -36,15 +34,9 @@ export default function Home() {
     router.push(`/search?${query}`);
   };
 
-  const onFiltersClear = () => {
-    api.get("/api/cars").then((res) => {
-      setCarsList(res);
-    });
-  };
-
   return (
     <PageWrapper>
-      <Filters onFilter={onFilter} onClear={onFiltersClear} />
+      <Filters onFilter={onFilter} />
       <div style={{ color: "white", margin: "24px 133px" }}>Featured Cars</div>
       <div className="wrapper">
         <CarsList cars={carsList} anything="dasda" passAnythingElse={{}} />

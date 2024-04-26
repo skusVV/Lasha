@@ -89,7 +89,8 @@ export default function Admin() {
   };
 
   useEffect(() => {
-    api.get("/api/cars")
+    fetch("http://localhost:3001/api/cars")
+    .then(res => res.json())
     .then((res) => setCars(res));
   }, []);
 
