@@ -1,7 +1,7 @@
 export let cars = [
   {
     id: 1,
-    img: "https://static.my.ge/myauto/photos/3/0/8/3/1/thumbs/102138035_1.jpg?v=1",
+    img: "https://www.sainicoltd.com/vehicle_image/706_a.png",
     type: "Sedan",
     location: "On a way",
     year: 2014,
@@ -35,7 +35,7 @@ export let cars = [
   },
   {
     id: 3,
-    img: "https://static.my.ge/myauto/photos/0/0/1/7/4/large/100471007_1.jpg?v=5",
+    img: "https://hips.hearstapps.com/hmg-prod/amv-prod-cad-assets/wp-content/uploads/2015/04/2015-BMW-X5-M-101.jpg?crop=0.630xw:1.00xh;0.141xw,0&resize=1200:*",
     type: "Jeep",
     location: "Tbilisi",
     year: 2015,
@@ -50,7 +50,7 @@ export let cars = [
   },
   {
     id: 4,
-    img: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.caranddriver.com%2Ftoyota%2Fcamry-2024&psig=AOvVaw0dCjhrDdhA_S1gW8Ux13iI&ust=1711528929880000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCKCD_aDEkYUDFQAAAAAdAAAAABAE",
+    img: "https://miro.medium.com/v2/resize:fit:1358/1*WBPq0AJ8LDrHe5uvymsTZA.jpeg",
     type: "Sedan",
     location: "Tbilisi",
     year: 2018,
@@ -65,7 +65,7 @@ export let cars = [
   },
   {
     id: 5,
-    img: "https://static.my.ge/myauto/photos/1/2/2/3/2/large/102232215_1.jpg?v=1",
+    img: "https://cdn.jdpower.com/JDPA_2022%20Volkswagen%20GTI%20Gray%20Front%20Quarter%20View.jpg",
     type: "Sedan",
     location: "Tbilisi",
     year: 2022,
@@ -80,7 +80,7 @@ export let cars = [
   },
   {
     id: 6,
-    img: "https://static.my.ge/myauto/photos/2/2/2/1/1/large/98112226_1.jpg?v=56",
+    img: "https://smartcdn.gprod.postmedia.digital/driving/wp-content/uploads/2023/02/Mazda-CX-5-McIntosh-8.jpg",
     type: "Jeep",
     location: "Tbilisi",
     year: 2023,
@@ -95,7 +95,7 @@ export let cars = [
   },
   {
     id: 7,
-    img: "https://static.my.ge/myauto/photos/8/4/4/8/5/large/102584487_1.jpg?v=3",
+    img: "https://cs.copart.com/v1/AUTH_svc.pdoc00001/LPP387/f666426dd7b947cf9a211cd9eda500bd_ful.jpg",
     type: "Coupe",
     location: "Tbilisi",
     year: 2015,
@@ -110,7 +110,7 @@ export let cars = [
   },
   {
     id: 8,
-    img: "https://static.my.ge/myauto/photos/1/9/2/1/2/large/98212914_1.jpg?v=14",
+    img: "https://www.bennetts.co.uk/-/media/bikesocial/2021-december-images/2022-ducati-panigale-v4s-review/ducati-panigale-v4s-2022-review-price-spec_045.ashx?h=493&la=en&w=740&hash=96A00ED4A325C83A3274CF35B1A5B574C5196634",
     location: "On The Way",
     type: "Jeep",
     year: 2022,
@@ -140,13 +140,13 @@ export let cars = [
   },
   {
     id: 10,
-    img: "https://static.my.ge/myauto/photos/6/9/0/8/0/large/101080963_1.jpg?v=4",
+    img: "https://www.equipmentjournal.com/wp-content/uploads/2020/09/cat-D9-dozer.jpg",
     location: "Tbilisi",
     // type: "Jeep",
     year: 2023,
-    madeBy: "Lonking",
-    model: "LG25DT",
-    price: 220000,
+    madeBy: "CAT",
+    model: "D9",
+    price: 700000,
     currency: "$",
     fuelType: "Petrol", // SHould be searchable
     milage: "3,000",

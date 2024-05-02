@@ -62,6 +62,17 @@ body {
   margin-left: 20px;
   margin-top: 15px;
 }
+.log-in {
+  background-color: transparent;
+  border: 1px solid;
+  border-radius: 5px;
+  color: white;
+  padding: 10px 15px;
+  font: inherit;
+  outline: none;
+  margin-left: 20px;
+  margin-top: 15px;
+}
 
 .search-box::placeholder {
   color: #bcbcbc;
@@ -190,6 +201,14 @@ button .currency-change {
 
 .dark-grey {
   background-color: #222222;
+}
+
+.light-grey {
+  background-color: #333333;
+}
+
+.dark-white {
+  color: #bcbcbc;
 }
 
 .selected-car-sell-button {

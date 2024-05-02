@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 // import { BrowserRouter as Router, Route } from "react-router-dom";
 
 export const Header = () => {
@@ -40,11 +42,13 @@ export const Header = () => {
         </div>
 
         <div className="container-right">
-          <div className="add-product">
-            <i className="fas fa-plus"></i>
-            <button className="add-item" id="top-button">
-              Sell
-            </button>
+          <div className="add-product mt-5 mr-5">
+            <Link
+              href={`/admin`}
+              className="border rounded-md text-center px-3 py-3 dark-white"
+            >
+              <FontAwesomeIcon icon={faPlus} /> Sell
+            </Link>
           </div>
           <div className="language">
             <i className="fas fa-globe"></i>
@@ -53,8 +57,11 @@ export const Header = () => {
               <option value="">₾ - GEL</option>
             </select>
           </div>
-          <div className="log-in">
-            <Link href={`/login`} className="logInButton">
+          <div className="add-product mt-5">
+            <Link
+              href={`/login`}
+              className="border rounded-md text-center px-3 py-3 dark-white "
+            >
               Log In
             </Link>
           </div>
