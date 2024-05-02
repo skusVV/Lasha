@@ -15,8 +15,6 @@ import {
 } from "../constants/constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { api } from "./../http/backend";
-import { cars } from "../http/db";
 
 export const StyledFormWrapper = styled.div`
   display: flex;
@@ -40,10 +38,9 @@ export const StyledFormWrapper = styled.div`
     }
   }
 `;
-//
-// 1. Fetch all cars
-// 2. Render all cars
-// 3. when you click on car, you should create "carData" object and setCarData(carData)
+// Validation
+// 1. Fields not empty
+
 
 export default function Admin() {
   const [disableModels, setDisableModels] = useState(true);
@@ -74,17 +71,31 @@ export default function Admin() {
   };
 
   const saveCar = () => {
+   // ADD validation code
+   
     if(!carData.id) {
-      api
-      .post("/api/cars", carData)
+      fetch("http://localhost:3001/api/cars", {
+         method: "POST",
+         headers: {
+          "Content-Type": "application/json",
+         },
+         body: JSON.stringify(carData),
+        }
+      )
+      .then(res => res.json())
       .then((res) => console.log("response from server", res));
     } else {
-      api
-      .patch(`/api/cars/${carData.id}`, carData)
+      fetch(`http://localhost:3001/api/cars/${carData.id}`, {
+        method: "PATCH",
+        headers: {
+         "Content-Type": "application/json",
+        },
+        body: JSON.stringify(carData),
+       })
+      .then(res => res.json())
       .then((res) => {
         setCars(res);
       });
-      // UPDATE
     }
   };
 

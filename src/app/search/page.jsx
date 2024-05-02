@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from 'next/link';
 import { useSearchParams } from "next/navigation";
-import { api } from "../http/backend";
 import { SideFilter } from "../components/sideFilter";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PageWrapper } from "../components/PageWrapper";
