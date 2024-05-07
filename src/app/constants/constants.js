@@ -3,6 +3,8 @@
 // export const location = ['Tbilisi', 'Batumi', 'Outside Country', 'Space'];
 // export const carFuel = ['Petrol', 'Hybrid', 'Electric', 'Diesel'];
 
+// TODO move this constants to backend.
+
 export const defaultFuel = [
   {
     name: "Any",

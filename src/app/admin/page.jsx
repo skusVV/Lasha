@@ -15,6 +15,7 @@ import {
 } from "../constants/constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { validateForm } from './validation';
 
 export const StyledFormWrapper = styled.div`
   display: flex;
@@ -70,20 +71,10 @@ export default function Admin() {
   };
 
   const saveCar = () => {
-    if (
-      !carData.imageRef ||
-      !carData.type ||
-      !carData.location ||
-      !carData.year ||
-      !carData.carModel ||
-      !carData.model ||
-      !carData.price ||
-      !carData.currency ||
-      !carData.fuel ||
-      !carData.millage ||
-      !carData.transmition
-    ) {
-      return alert("Please fill in all required fields.");
+    const messages = validateForm(carData);
+
+    if (messages.length) {
+      return alert(messages.join(' \n'));
     }
 
     if (!carData.id) {
@@ -138,6 +129,31 @@ export default function Admin() {
       type: car.type,
     });
   };
+
+  const deleteCar = () => {
+    if(!window.confirm(`Are you sure you want to delete ${carData.carModel} ${carData.model}?`)) {
+      return;
+    }
+
+
+    fetch(`http://localhost:3001/api/cars/${carData.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(() => {
+        const newCars = cars.filter(car => {
+          if(car.id === carData.id) {
+            return false;
+          } else {
+            return true;
+          }
+        });
+
+        setCars(newCars);
+      });
+  }
 
   return (
     <PageWrapper>
@@ -302,6 +318,14 @@ export default function Admin() {
             <FontAwesomeIcon icon={faPlus} />
             {carData.id ? "Update" : "Save"}
           </button>
+
+          {
+            carData.id && 
+            <button className="addCar " onClick={deleteCar}>
+              <FontAwesomeIcon icon={faPlus} />
+            Delete
+          </button>
+          }
         </div>
       </StyledFormWrapper>
       <div className="text-white ml-20 mt-20">Edit car</div>
@@ -310,7 +334,7 @@ export default function Admin() {
           {cars.map((car, index) => (
             <div
               key={index}
-              className="w-1/6 border p-4 rounded-lg dark-grey text-white "
+              className={`w-1/6 border p-4 rounded-lg dark-grey text-white ${car.id === carData.id ? 'selected-car-sell-button' : ''}`}
               onClick={() => editCar(car)}
             >
               <img src={car.img} className="w-100  mb-2 rounded-lg" />

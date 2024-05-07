@@ -126,6 +126,23 @@ app.patch("/api/cars/:id", (req, res) => {
   return res.send(newCars);
 });
 
+app.delete("/api/cars/:id", (req, res) => {
+  const { params } = req;
+  const carId =  Number(params.id);
+  const cars = readCars();
+  const newCars = cars.filter(car => {
+    if(car.id === carId) {
+      return false;
+    } else {
+      return true;
+    }
+  });
+
+  writeCars(newCars);
+
+  return res.send({});
+});
+
 app.get("/api/search", (req, res) => {
   const filter = req.query;
 
