@@ -1,42 +1,42 @@
 const express = require("express");
 const cors = require("cors");
-const { readFileSync, writeFile } = require('fs');
+const { readFileSync, writeFile } = require("fs");
 
 const readCars = () => {
-  const data = readFileSync('./cars.json');
+  const data = readFileSync("./cars.json");
 
   return JSON.parse(data);
-}
+};
 
 const writeCar = (car) => {
   const cars = readCars();
   const newCars = [...cars, car];
 
-  writeFile('./cars.json', JSON.stringify(newCars), (err) => {
+  writeFile("./cars.json", JSON.stringify(newCars), (err) => {
     if (err) {
-      console.log('Failed to write updated data to file');
+      console.log("Failed to write updated data to file");
       return;
     }
-    console.log('Updated file successfully');
+    console.log("Updated file successfully");
   });
-}
+};
 
 const writeCars = (cars) => {
-  writeFile('./cars.json', JSON.stringify(cars), (err) => {
+  writeFile("./cars.json", JSON.stringify(cars), (err) => {
     if (err) {
-      console.log('Failed to write updated data to file');
+      console.log("Failed to write updated data to file");
       return;
     }
-    console.log('Updated file successfully');
+    console.log("Updated file successfully");
   });
-}
+};
 
 const app = express();
 
 app.use(
   express.urlencoded({
     extended: true,
-  }),
+  })
 );
 
 app.use(express.json());
@@ -85,11 +85,11 @@ app.post("/api/cars", (req, res) => {
     fuelType: body.fuel,
     milage: body.millage,
     transmition: body.transmition,
-    labels: body.labels.split(','),
-  }
+    labels: body.labels.split(","),
+  };
 
   writeCar(car);
-  
+
   return res.send(car);
 });
 
@@ -109,25 +109,24 @@ app.patch("/api/cars/:id", (req, res) => {
     fuelType: body.fuel,
     milage: body.millage,
     transmition: body.transmition,
-    labels: body.labels.split(','),
-  }
+    labels: body.labels.split(","),
+  };
   const cars = readCars();
 
-  const newCars = cars.map(item => {
-    if(item.id !== updatedCar.id) {
+  const newCars = cars.map((item) => {
+    if (item.id !== updatedCar.id) {
       return item;
     } else {
       return updatedCar;
     }
   });
 
-  writeCars(newCars)
-  
+  writeCars(newCars);
+
   return res.send(newCars);
 });
 
 app.get("/api/search", (req, res) => {
-
   const filter = req.query;
 
   let newCars = readCars();

@@ -159,11 +159,11 @@ export const defaultModels = [
     selected: false,
   },
   {
-    name: "BMW", // X6, X7 ...
+    name: "BMW",
     selected: false,
   },
   {
-    name: "Toyota", // Prius, Corrola...
+    name: "Toyota",
     selected: false,
   },
   {
@@ -176,6 +176,14 @@ export const defaultModels = [
   },
   {
     name: "Volkswagen",
+    selected: false,
+  },
+  {
+    name: "Honda",
+    selected: false,
+  },
+  {
+    name: "Hyndai",
     selected: false,
   },
 ];
@@ -210,6 +218,25 @@ export const defaultTransmition = [
   },
 ];
 
+export const vehichleType = [
+  {
+    name: "Any",
+    selected: true,
+  },
+  {
+    name: "Car",
+    selected: false,
+  },
+  {
+    name: "Motorcycle",
+    selected: false,
+  },
+  {
+    name: "Other",
+    selected: false,
+  },
+];
+
 export const defaultSelectedCarModels = [
   // TODO you should add more Car Models
   {
@@ -227,6 +254,31 @@ export const defaultSelectedCarModels = [
     selected: false,
   },
   {
+    name: "435",
+    madeByKey: "BMW",
+    selected: false,
+  },
+  {
+    name: "M2",
+    madeByKey: "BMW",
+    selected: false,
+  },
+  {
+    name: "M3",
+    madeByKey: "BMW",
+    selected: false,
+  },
+  {
+    name: "M4",
+    madeByKey: "BMW",
+    selected: false,
+  },
+  {
+    name: "M5",
+    madeByKey: "BMW",
+    selected: false,
+  },
+  {
     name: "Prius",
     madeByKey: "Toyota",
     selected: false,
@@ -235,6 +287,81 @@ export const defaultSelectedCarModels = [
     name: "Corola",
     madeByKey: "Toyota",
     selected: false,
+  },
+  {
+    name: "RAV 4",
+    madeByKey: "Toyota",
+    selected: false,
+  },
+  {
+    name: "Fit",
+    madeByKey: "Honda",
+    selected: false,
+  },
+  {
+    name: "Civic",
+    madeByKey: "Honda",
+    selected: false,
+  },
+  {
+    name: "Type R",
+    madeByKey: "Honda",
+    selected: false,
+  },
+  {
+    name: "GTI",
+    madeByKey: "Volkswagen",
+    selected: false,
+  },
+];
+
+export const defaultSelectedCarModelsTest = [
+  {
+    name: "Any",
+    selected: true,
+  },
+  {
+    name: "BMW",
+    selected: false,
+    models: [
+      { name: "X1", selected: false },
+      { name: "X3", selected: false },
+      { name: "X5", selected: false },
+      { name: "X6", selected: false },
+      { name: "X7", selected: false },
+      { name: "435", selected: false },
+      { name: "M2", selected: false },
+      { name: "M3", selected: false },
+      { name: "M4", selected: false },
+      { name: "M5", selected: false },
+    ],
+  },
+  {
+    name: "Toyota",
+    selected: false,
+    models: [
+      { name: "Prius", selected: false },
+      { name: "Corola", selected: false },
+      { name: "RAV 4", selected: false },
+    ],
+  },
+  {
+    name: "Honda",
+    selected: false,
+    models: [
+      { name: "Fit", selected: false },
+      { name: "Civic", selected: false },
+      { name: "Type R", selected: false },
+    ],
+  },
+  {
+    name: "Volkswagen",
+    selected: false,
+    models: [
+      { name: "GTI", selected: false },
+      { name: "Beetle", selected: false },
+      { name: "Golf", selected: false },
+    ],
   },
 ];
 

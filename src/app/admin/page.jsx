@@ -41,7 +41,6 @@ export const StyledFormWrapper = styled.div`
 // Validation
 // 1. Fields not empty
 
-
 export default function Admin() {
   const [disableModels, setDisableModels] = useState(true);
   const [selectedCarModels, setDefaultCarModels] = useState(
@@ -71,52 +70,64 @@ export default function Admin() {
   };
 
   const saveCar = () => {
-   // ADD validation code
-   
-    if(!carData.id) {
+    if (
+      !carData.imageRef ||
+      !carData.type ||
+      !carData.location ||
+      !carData.year ||
+      !carData.carModel ||
+      !carData.model ||
+      !carData.price ||
+      !carData.currency ||
+      !carData.fuel ||
+      !carData.millage ||
+      !carData.transmition
+    ) {
+      return alert("Please fill in all required fields.");
+    }
+
+    if (!carData.id) {
       fetch("http://localhost:3001/api/cars", {
-         method: "POST",
-         headers: {
+        method: "POST",
+        headers: {
           "Content-Type": "application/json",
-         },
-         body: JSON.stringify(carData),
-        }
-      )
-      .then(res => res.json())
-      .then((res) => console.log("response from server", res));
+        },
+        body: JSON.stringify(carData),
+      })
+        .then((res) => res.json())
+        .then((res) => console.log("response from server", res));
     } else {
       fetch(`http://localhost:3001/api/cars/${carData.id}`, {
         method: "PATCH",
         headers: {
-         "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(carData),
-       })
-      .then(res => res.json())
-      .then((res) => {
-        setCars(res);
-      });
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          setCars(res);
+        });
     }
   };
 
   useEffect(() => {
     fetch("http://localhost:3001/api/cars")
-    .then(res => res.json())
-    .then((res) => setCars(res));
+      .then((res) => res.json())
+      .then((res) => setCars(res));
   }, []);
 
   const editCar = (car) => {
-
     setDefaultCarModels(
       defaultSelectedCarModels.filter((item) => car.madeBy === item.madeByKey)
-    )
-    setDisableModels(false)
+    );
+    setDisableModels(false);
     setCarData({
       id: car.id,
       imageRef: car.img,
       price: car.price,
       millage: car.milage,
-      labels: car.labels.join(', '),
+      labels: car.labels.join(", "),
       carModel: car.madeBy,
       location: car.location,
       year: car.year,
@@ -124,7 +135,7 @@ export default function Admin() {
       currency: car.currency,
       fuel: car.fuelType,
       transmition: car.transmition,
-      type: car.type
+      type: car.type,
     });
   };
 
@@ -139,10 +150,11 @@ export default function Admin() {
             placeholder="Image ref"
             name="imageRef"
             onChange={handleChange}
+            required
           />
         </div>
         <div className="field">
-          <select name="type" onChange={handleChange}>
+          <select name="type" onChange={handleChange} required>
             {carModels.map((carModel, index) => (
               <option key={index} selected={carData.type === carModel.name}>
                 {carModel.name}
@@ -151,7 +163,12 @@ export default function Admin() {
           </select>
         </div>
         <div className="field">
-          <select data-type="location" name="location" onChange={handleChange}>
+          <select
+            data-type="location"
+            name="location"
+            onChange={handleChange}
+            required
+          >
             {defaultLocation.map((location, index) => (
               <option key={index} selected={carData.location === location.name}>
                 {location.name}
@@ -160,7 +177,7 @@ export default function Admin() {
           </select>
         </div>
         <div className="field">
-          <select data-type="year" name="year" onChange={handleChange}>
+          <select data-type="year" name="year" onChange={handleChange} required>
             {defaultYears.map((year, index) => (
               <option key={index} selected={carData.year === year.value}>
                 {year.name}
@@ -173,6 +190,7 @@ export default function Admin() {
           <select
             data-type="carMadeBy"
             name="carMadeBy"
+            required
             onChange={(e) => {
               if (e.target.value === "---") {
                 setDisableModels(true);
@@ -204,6 +222,7 @@ export default function Admin() {
             name="model"
             disabled={disableModels}
             onChange={handleChange}
+            required
           >
             {selectedCarModels.map((model, index) => (
               <option key={index} selected={carData.model === model.name}>
@@ -216,14 +235,20 @@ export default function Admin() {
         <div className="field">
           <input
             value={carData.price}
-            type="text"
+            type="number"
             placeholder="Price"
             name="price"
             onChange={handleChange}
+            required
           />
         </div>
         <div className="field">
-          <select data-type="currency" name="currency" onChange={handleChange}>
+          <select
+            data-type="currency"
+            name="currency"
+            onChange={handleChange}
+            required
+          >
             {defaultCurrency.map((currency, index) => (
               <option key={index} selected={carData.currency === currency.name}>
                 {currency.name}
@@ -232,7 +257,7 @@ export default function Admin() {
           </select>
         </div>
         <div className="field">
-          <select name="fuel" onChange={handleChange}>
+          <select name="fuel" onChange={handleChange} required>
             {defaultFuel.map((fuels, index) => (
               <option key={index} selected={carData.fuel === fuels.name}>
                 {fuels.name}
@@ -242,17 +267,21 @@ export default function Admin() {
         </div>
         <div className="field">
           <input
-            type="text"
+            type="number"
             value={carData.millage}
             placeholder="Millage"
             name="millage"
             onChange={handleChange}
+            required
           />
         </div>
         <div className="field">
-          <select name="transmition" onChange={handleChange}>
+          <select name="transmition" onChange={handleChange} required>
             {defaultTransmition.map((transmition, index) => (
-              <option key={index} selected={carData.transmition === transmition.name}>
+              <option
+                key={index}
+                selected={carData.transmition === transmition.name}
+              >
                 {transmition.name}
               </option>
             ))}
@@ -262,7 +291,7 @@ export default function Admin() {
           <input
             type="text"
             value={carData.labels}
-            placeholder="Labels"
+            placeholder="[Optional] Labels ex. Jeep, Sedan, Not Damaged"
             name="labels"
             onChange={handleChange}
           />
@@ -271,9 +300,7 @@ export default function Admin() {
         <div className="field rounded-sm ">
           <button className="addCar " onClick={saveCar}>
             <FontAwesomeIcon icon={faPlus} />
-            {
-              carData.id ? 'Update' : 'Save'
-            }
+            {carData.id ? "Update" : "Save"}
           </button>
         </div>
       </StyledFormWrapper>
@@ -286,7 +313,7 @@ export default function Admin() {
               className="w-1/6 border p-4 rounded-lg dark-grey text-white "
               onClick={() => editCar(car)}
             >
-              <img src={car.img} className="w-100 mb-2 rounded-lg" />
+              <img src={car.img} className="w-100  mb-2 rounded-lg" />
               <div className="text-md">
                 {car.year} - {car.madeBy} {car.model}
               </div>

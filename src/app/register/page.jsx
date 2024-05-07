@@ -10,9 +10,43 @@ export default function register() {
           <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8  dark-grey rounded-lg">
               <h1 class="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl dark:text-white">
-                Create and account
+                Create an account
               </h1>
               <form class="space-y-4 md:space-y-6" action="#">
+                <div>
+                  <label class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    First Name
+                  </label>
+                  <input
+                    id="firstName"
+                    placeholder="Paul"
+                    class="light-grey text-white bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required=""
+                  />
+                </div>
+                <div>
+                  <label class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Last Name
+                  </label>
+                  <input
+                    id="lastName"
+                    placeholder="Thompson"
+                    class="light-grey text-white bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required=""
+                  />
+                </div>
+                <div>
+                  <label class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Phone
+                  </label>
+                  <input
+                    id="number"
+                    type="number"
+                    placeholder="+123 123 456 789"
+                    class="light-grey text-white bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required=""
+                  />
+                </div>
                 <div>
                   <label
                     for="email"
