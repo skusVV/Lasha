@@ -85,8 +85,8 @@ export default function Admin() {
         },
         body: JSON.stringify(carData),
       })
-        .then((res) => res.json())
-        .then((res) => console.log("response from server", res));
+      .then((res) => res.json())
+      .then((res) => console.log("response from server", res));
     } else {
       fetch(`http://localhost:3001/api/cars/${carData.id}`, {
         method: "PATCH",

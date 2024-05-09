@@ -1,8 +1,45 @@
 "use client";
+import { useState } from "react";
 import { PageWrapper } from "../components/PageWrapper";
 import Link from "next/link";
 
 export default function Cheese() {
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: ""
+  });
+
+  const handleChange = (e) => {
+    console.log('das')
+    setLoginData({
+      ...loginData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('DATA', loginData);
+    // const messages = validateForm(
+    //   registerData.personPhone,
+    //   registerData.personPassword,
+    //   registerData.personRepeatPassword
+    // );
+    // if (messages.length) {
+    //   return alert(messages.join(" \n"));
+    // }
+
+    fetch("http://localhost:3001/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginData),
+      })
+    .then((res) => res.json())
+    .then((res) => console.log("LOGIN", res));
+  };
+
   return (
     <PageWrapper>
       <section class="light-grey">
@@ -21,6 +58,8 @@ export default function Cheese() {
                     Your email
                   </label>
                   <input
+                    value={loginData.email}
+                    onChange={handleChange}
                     type="email"
                     name="email"
                     id="email"
@@ -37,6 +76,8 @@ export default function Cheese() {
                     Password
                   </label>
                   <input
+                    value={loginData.password}
+                    onChange={handleChange}
                     type="password"
                     name="password"
                     id="password"
@@ -48,6 +89,7 @@ export default function Cheese() {
 
                 <div>
                   <button
+                    onClick={handleSubmit}
                     type="submit"
                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >

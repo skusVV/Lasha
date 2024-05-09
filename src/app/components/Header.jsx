@@ -21,7 +21,7 @@ export const Header = () => {
 
   return (
     <div className="">
-      <div className="container">
+      <div className="container" style={{minWidth: '100%'}}>
         <div className="container-left">
           <div className="search">
             <a href="http://localhost:3000/">

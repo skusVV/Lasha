@@ -1,6 +1,6 @@
 "use client";
 import { PageWrapper } from "../components/PageWrapper";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { validateForm } from "./validation";
 import Link from "next/link";
 
@@ -31,7 +31,20 @@ export default function register() {
     if (messages.length) {
       return alert(messages.join(" \n"));
     }
-    console.log("Person:", registerData);
+
+    fetch("http://localhost:3001/api/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(registerData),
+      })
+    .then((res) => res.json())
+    .then((res) => {
+      // TODO I want to be redirected to login page
+      console.log("response from server: USER", res);
+    })
+    .catch(() => alert('Something went wrong'))
   };
 
   return (
