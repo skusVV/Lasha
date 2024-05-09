@@ -1,8 +1,39 @@
 "use client";
 import { PageWrapper } from "../components/PageWrapper";
+import { useState, useEffect } from "react";
+import { validateForm } from "./validation";
 import Link from "next/link";
 
 export default function register() {
+  const [registerData, setRegisterData] = useState({
+    personName: "",
+    personSurname: "",
+    personPhone: "",
+    personGmail: "",
+    personPassword: "",
+    personRepeatPassword: "",
+  });
+
+  const handleChange = (e) => {
+    setRegisterData({
+      ...registerData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const messages = validateForm(
+      registerData.personPhone,
+      registerData.personPassword,
+      registerData.personRepeatPassword
+    );
+    if (messages.length) {
+      return alert(messages.join(" \n"));
+    }
+    console.log("Person:", registerData);
+  };
+
   return (
     <PageWrapper>
       <section class="light-grey">
@@ -19,9 +50,12 @@ export default function register() {
                   </label>
                   <input
                     id="firstName"
+                    name="personName"
+                    value={registerData.personName}
+                    onChange={handleChange}
                     placeholder="Paul"
-                    class="light-grey text-white bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required=""
+                    className="light-grey text-white bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
                   />
                 </div>
                 <div>
@@ -30,9 +64,12 @@ export default function register() {
                   </label>
                   <input
                     id="lastName"
+                    name="personSurname"
+                    value={registerData.personSurname}
+                    onChange={handleChange}
                     placeholder="Thompson"
-                    class="light-grey text-white bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required=""
+                    className="light-grey text-white bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
                   />
                 </div>
                 <div>
@@ -42,9 +79,12 @@ export default function register() {
                   <input
                     id="number"
                     type="number"
+                    name="personPhone"
+                    value={registerData.personPhone}
+                    onChange={handleChange}
                     placeholder="+123 123 456 789"
-                    class="light-grey text-white bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required=""
+                    className="light-grey text-white bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
                   />
                 </div>
                 <div>
@@ -56,11 +96,12 @@ export default function register() {
                   </label>
                   <input
                     type="email"
-                    name="email"
-                    id="email"
-                    class="light-grey text-white bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    name="personGmail"
+                    value={registerData.personGmail}
+                    onChange={handleChange}
                     placeholder="name@gmail.com"
-                    required=""
+                    className="light-grey text-white bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
                   />
                 </div>
                 <div>
@@ -72,11 +113,12 @@ export default function register() {
                   </label>
                   <input
                     type="password"
-                    name="password"
-                    id="password"
+                    name="personPassword"
+                    value={registerData.personPassword}
+                    onChange={handleChange}
                     placeholder="••••••••"
-                    class="light-grey text-white bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required=""
+                    className="light-grey text-white bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
                   />
                 </div>
                 <div>
@@ -87,12 +129,13 @@ export default function register() {
                     Confirm password
                   </label>
                   <input
-                    type="confirm-password"
-                    name="confirm-password"
-                    id="confirm-password"
+                    type="password"
+                    name="personRepeatPassword"
+                    value={registerData.personRepeatPassword}
+                    onChange={handleChange}
                     placeholder="••••••••"
-                    class="light-grey text-white bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required=""
+                    className="light-grey text-white bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
                   />
                 </div>
 
@@ -124,6 +167,7 @@ export default function register() {
                 <div>
                   <button
                     type="submit"
+                    onClick={handleSubmit}
                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     Create Account{" "}
