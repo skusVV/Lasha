@@ -2,15 +2,18 @@
 import { useState } from "react";
 import { PageWrapper } from "../components/PageWrapper";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
+// import { setAuthInfo } from '../auth';
 
 export default function Cheese() {
+  const router = useRouter();
+
   const [loginData, setLoginData] = useState({
     email: "",
     password: ""
   });
 
   const handleChange = (e) => {
-    console.log('das')
     setLoginData({
       ...loginData,
       [e.target.name]: e.target.value,
@@ -19,15 +22,6 @@ export default function Cheese() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('DATA', loginData);
-    // const messages = validateForm(
-    //   registerData.personPhone,
-    //   registerData.personPassword,
-    //   registerData.personRepeatPassword
-    // );
-    // if (messages.length) {
-    //   return alert(messages.join(" \n"));
-    // }
 
     fetch("http://localhost:3001/api/login", {
         method: "POST",
@@ -37,7 +31,10 @@ export default function Cheese() {
         body: JSON.stringify(loginData),
       })
     .then((res) => res.json())
-    .then((res) => console.log("LOGIN", res));
+    .then((res) => {
+      localStorage.setItem('AUTH', JSON.stringify(res));
+      router.push('/', { scroll: false });
+    });
   };
 
   return (
