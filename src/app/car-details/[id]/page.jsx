@@ -48,6 +48,9 @@ export default function CarDetails({ params }) {
                     <div className="selected-car-card-city text-white">
                       {car.location}
                     </div>
+                    <div className="selected-car-card-city text-white">
+                      {car.description}
+                    </div>
                   </div>
                   <div className="selected-car-sell-button rounded-lg mt-20 text-white">
                     <button className="ml-2 mr-2">Contact Seller</button>

@@ -70,4 +70,4 @@ const usersRouter = app => {
     });
 }
 
-module.exports = { usersRouter } 
+module.exports = { usersRouter, readUsers } 

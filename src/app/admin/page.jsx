@@ -16,6 +16,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { validateForm } from './validation';
+import { useRouter } from 'next/navigation';
 
 export const StyledFormWrapper = styled.div`
   display: flex;
@@ -43,6 +44,9 @@ export const StyledFormWrapper = styled.div`
 // 1. Fields not empty
 
 export default function Admin() {
+  const user = JSON.parse(localStorage.getItem('AUTH'));
+  const router = useRouter();
+
   const [disableModels, setDisableModels] = useState(true);
   const [selectedCarModels, setDefaultCarModels] = useState(
     defaultSelectedCarModels.filter((item) => item.selected)
@@ -51,6 +55,7 @@ export default function Admin() {
   const [carData, setCarData] = useState({
     id: null,
     imageRef: "",
+    description: '',
     price: "",
     millage: "",
     labels: "",
@@ -78,7 +83,7 @@ export default function Admin() {
     }
 
     if (!carData.id) {
-      fetch("http://localhost:3001/api/cars", {
+      fetch(`http://localhost:3001/api/cars?userId=${user.id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +93,7 @@ export default function Admin() {
       .then((res) => res.json())
       .then((res) => console.log("response from server", res));
     } else {
-      fetch(`http://localhost:3001/api/cars/${carData.id}`, {
+      fetch(`http://localhost:3001/api/cars/${carData.id}?userId=${user.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -103,7 +108,7 @@ export default function Admin() {
   };
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/cars")
+    fetch(`http://localhost:3001/api/cars?userId=${user.id}`)
       .then((res) => res.json())
       .then((res) => setCars(res));
   }, []);
@@ -116,6 +121,7 @@ export default function Admin() {
     setCarData({
       id: car.id,
       imageRef: car.img,
+      description: car.description,
       price: car.price,
       millage: car.milage,
       labels: car.labels.join(", "),
@@ -155,6 +161,11 @@ export default function Admin() {
       });
   }
 
+  if(!user) {
+    router.push('/');
+    return null;
+  }
+
   return (
     <PageWrapper>
       <div>Create Car</div>
@@ -165,6 +176,16 @@ export default function Admin() {
             type="text"
             placeholder="Image ref"
             name="imageRef"
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="field">
+          <input
+            value={carData.description}
+            type="text"
+            placeholder="description"
+            name="description"
             onChange={handleChange}
             required
           />

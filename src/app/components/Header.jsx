@@ -10,8 +10,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 export const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
-
-  // add the code here
+  const user = JSON.parse(localStorage.getItem('AUTH'));
 
   const onSearch = (e) => {
     if (e.key === "Enter" && e.target.value) {
@@ -19,9 +18,14 @@ export const Header = () => {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem('AUTH');
+    router.refresh();
+  }
+
   return (
     <div className="">
-      <div className="container" style={{minWidth: '100%'}}>
+      <div className="container" style={{ minWidth: '100%' }}>
         <div className="container-left">
           <div className="search">
             <a href="http://localhost:3000/">
@@ -42,14 +46,16 @@ export const Header = () => {
         </div>
 
         <div className="container-right">
-          <div className="add-product mt-5 mr-5">
-            <Link
-              href={`/admin`}
-              className="border rounded-md text-center px-3 py-3 dark-white"
-            >
-              <FontAwesomeIcon icon={faPlus} /> Sell
-            </Link>
-          </div>
+          {
+            user && <div className="add-product mt-5 mr-5">
+              <Link
+                href={`/admin`}
+                className="border rounded-md text-center px-3 py-3 dark-white"
+              >
+                <FontAwesomeIcon icon={faPlus} /> Sell
+              </Link>
+            </div>
+          }
           <div className="language">
             <i className="fas fa-globe"></i>
             <select action="" className="currency-change" id="top-button">
@@ -57,14 +63,26 @@ export const Header = () => {
               <option value="">₾ - GEL</option>
             </select>
           </div>
-          <div className="add-product mt-5">
-            <Link
-              href={`/login`}
-              className="border rounded-md text-center px-3 py-3 dark-white "
-            >
-              Log In
-            </Link>
-          </div>
+          {
+            !user && <div className="add-product mt-5">
+              <Link
+                href={`/login`}
+                className="border rounded-md text-center px-3 py-3 dark-white "
+              >
+                Log In
+              </Link>
+            </div>
+          }
+          {
+            user && <div className="add-product mt-5">
+              <span
+                onClick={logout}
+                className="border rounded-md text-center px-3 py-3 dark-white "
+              >
+                Log out
+              </span>
+            </div>
+          }
         </div>
       </div>
 
