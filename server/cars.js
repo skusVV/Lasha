@@ -1,5 +1,5 @@
 const { readFileSync, writeFile } = require("fs");
-const users = require('./users');
+const users = require("./users");
 
 const readCars = () => {
   const data = readFileSync("./cars.json");
@@ -29,9 +29,7 @@ const writeCars = (cars) => {
   });
 };
 
-
-
-const carsRouter = app => {
+const carsRouter = (app) => {
   app.get("/api/random-cars", (req, res) => {
     const cars = readCars();
 
@@ -51,16 +49,15 @@ const carsRouter = app => {
   app.get("/api/cars", (req, res) => {
     const { userId } = req.query;
     // console.log('readUsers', users);
-    const user = users.readUsers().find(user => user.id === Number(userId));
+    const user = users.readUsers().find((user) => user.id === Number(userId));
     // console.log('user', user);
     const cars = readCars();
 
-    if(user.role === 'Admin') {
+    if (user.role === "Admin") {
       return res.send(cars);
-    } else { // USER
-      return res.send(
-        cars.filter(car => car.userId === user.id)
-      );
+    } else {
+      // USER
+      return res.send(cars.filter((car) => car.userId === user.id));
     }
   });
 
@@ -84,6 +81,13 @@ const carsRouter = app => {
       milage: body.millage,
       transmition: body.transmition,
       labels: body.labels.split(","),
+      exterior: body.exterior,
+      liters: body.liters,
+      doors: body.doors,
+      wheel: body.wheel,
+      interiorColor: body.interiorColor,
+      techInspection: body.techInspection,
+      accidents: body.accidents,
     };
 
     writeCar(car);
@@ -111,6 +115,13 @@ const carsRouter = app => {
       milage: body.millage,
       transmition: body.transmition,
       labels: body.labels.split(","),
+      exterior: body.exterior,
+      liters: body.liters,
+      doors: body.doors,
+      wheel: body.wheel,
+      interiorColor: body.interiorColor,
+      techInspection: body.techInspection,
+      accidents: body.accidents,
     };
     const cars = readCars();
 
@@ -131,7 +142,7 @@ const carsRouter = app => {
     const { params } = req;
     const carId = Number(params.id);
     const cars = readCars();
-    const newCars = cars.filter(car => {
+    const newCars = cars.filter((car) => {
       if (car.id === carId) {
         return false;
       } else {
@@ -184,6 +195,6 @@ const carsRouter = app => {
 
     return res.send(newCars);
   });
-}
+};
 
-module.exports = { carsRouter } 
+module.exports = { carsRouter };
