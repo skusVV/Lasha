@@ -2,9 +2,12 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { PageWrapper } from "../../components/PageWrapper";
+import { getCarPrice } from '../../utils';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 export default function CarDetails({ params }) {
   const [car, setCar] = useState({});
+  const [ currency ] = useLocalStorage('CURRECNY', 'USD');
   const router = useRouter();
 
   useEffect(() => {
@@ -42,7 +45,9 @@ export default function CarDetails({ params }) {
                         {car.madeBy} {car.model}
                       </div>
                       <div className="selected-car-price text-white">
-                        {car.price} {car.currency}
+                        {
+                          getCarPrice(currency, car.price)
+                        }
                       </div>
                       <div className="selected-car-card-city text-white">
                         {car.location}
