@@ -65,7 +65,8 @@ const usersRouter = app => {
              lastName:  user.personSurname,
              phone: user.personPhone,
              email: user.personGmail,
-             id: user.id
+             id: user.id,
+             role: user.role
         });
     });
 }

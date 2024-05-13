@@ -26,6 +26,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { validateForm } from "./validation";
 import { useRouter } from "next/navigation";
 import useLocalStorage from '../hooks/useLocalStorage';
+import { getCarPrice } from '../utils';
 
 export const StyledFormWrapper = styled.div`
   display: flex;
@@ -54,6 +55,7 @@ export const StyledFormWrapper = styled.div`
 
 export default function Admin() {
   const [user] = useLocalStorage('AUTH', null);
+  const [currency] = useLocalStorage('CURRECNY', 'USD');
   const router = useRouter();
 
   const [disableModels, setDisableModels] = useState(true);
@@ -72,7 +74,6 @@ export default function Admin() {
     location: defaultLocation.find((item) => item.selected).name,
     year: defaultYears.find((item) => item.selected).name,
     model: defaultModels.find((item) => item.selected).name,
-    currency: defaultCurrency.find((item) => item.selected).name,
     fuel: defaultFuel.find((item) => item.selected).name,
     transmition: defaultTransmition.find((item) => item.selected).name,
     exterior: defaultExteriorColor.find((item) => item.selected).name,
@@ -147,7 +148,6 @@ export default function Admin() {
       location: car.location,
       year: car.year,
       model: car.model,
-      currency: car.currency,
       fuel: car.fuelType,
       transmition: car.transmition,
       type: car.type,
@@ -409,27 +409,11 @@ export default function Admin() {
                   className="rounded-md w-[300px]"
                   value={carData.price}
                   type="number"
-                  placeholder="Price"
+                  placeholder="Price (Only USD$)"
                   name="price"
                   onChange={handleChange}
                   required
                 />
-                <select
-                  className="rounded-md"
-                  data-type="currency"
-                  name="currency"
-                  onChange={handleChange}
-                  required
-                >
-                  {defaultCurrency.map((currency, index) => (
-                    <option
-                      key={index}
-                      selected={carData.currency === currency.name}
-                    >
-                      {currency.name}
-                    </option>
-                  ))}
-                </select>
               </div>
             </div>
 
@@ -487,7 +471,7 @@ export default function Admin() {
                 {car.year} - {car.madeBy} {car.model}
               </div>
               <div className="text-md">
-                {car.price} {car.currency}
+                {getCarPrice(currency, car.price)}
               </div>
             </div>
           ))}

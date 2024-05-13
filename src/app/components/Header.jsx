@@ -6,13 +6,12 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import useLocalStorage  from '../hooks/useLocalStorage';
-// import { BrowserRouter as Router, Route } from "react-router-dom";
 
 export const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
-  console.log('das', useLocalStorage)
   const [user, setUser] = useLocalStorage('AUTH', null);
+  const [currency, setCurrency] = useLocalStorage('CURRECNY', 'USD');
 
   const onSearch = (e) => {
     if (e.key === "Enter" && e.target.value) {
@@ -24,6 +23,11 @@ export const Header = () => {
     setUser(null);
     router.refresh();
   }
+
+  const handleCurrencyChange = (e) => {
+    setCurrency(e.target.value);
+    router.refresh();
+  };
 
   return (
     <div className="">
@@ -60,9 +64,9 @@ export const Header = () => {
           }
           <div className="language">
             <i className="fas fa-globe"></i>
-            <select action="" className="currency-change" id="top-button">
-              <option value="">$ - USD</option>
-              <option value="">₾ - GEL</option>
+            <select value={currency} className="currency-change" id="top-button"  onChange={handleCurrencyChange}>
+              <option value="USD">$ - USD</option>
+              <option value="GEL">₾ - GEL</option>
             </select>
           </div>
           {
