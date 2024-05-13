@@ -342,7 +342,7 @@ export default function Admin() {
                 <select
                   className="rounded-md"
                   data-type="Ecterior"
-                  name="Exterior"
+                  name="exterior"
                   onChange={handleChange}
                   required
                 >
