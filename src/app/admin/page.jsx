@@ -17,6 +17,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { validateForm } from './validation';
 import { useRouter } from 'next/navigation';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 export const StyledFormWrapper = styled.div`
   display: flex;
@@ -44,7 +45,7 @@ export const StyledFormWrapper = styled.div`
 // 1. Fields not empty
 
 export default function Admin() {
-  const user = JSON.parse(localStorage.getItem('AUTH'));
+  const [user] = useLocalStorage('AUTH', null);
   const router = useRouter();
 
   const [disableModels, setDisableModels] = useState(true);
