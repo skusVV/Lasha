@@ -5,12 +5,14 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import useLocalStorage  from '../hooks/useLocalStorage';
 // import { BrowserRouter as Router, Route } from "react-router-dom";
 
 export const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
-  const user = JSON.parse(localStorage.getItem('AUTH'));
+  console.log('das', useLocalStorage)
+  const [user, setUser] = useLocalStorage('AUTH', null);
 
   const onSearch = (e) => {
     if (e.key === "Enter" && e.target.value) {
@@ -19,7 +21,7 @@ export const Header = () => {
   };
 
   const logout = () => {
-    localStorage.removeItem('AUTH');
+    setUser(null);
     router.refresh();
   }
 
