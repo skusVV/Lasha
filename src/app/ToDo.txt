@@ -1,9 +1,4 @@
-(done) 1 Add validation to the car form. In some fields could be only numbers,
- some are required, some optional (you decide about it).
+Add more fields to car Model - you decide how many
 
-(done) 2 If some field is invalid, user should see what's wrong with this
- - some error message, and hint how to fix it.
-  And Save (Update) button should be disabled.
-
-(done) 3 - [Optional] Add more fields for registration, first name,
- last name, email, phone, and gender.
+In the header, where you have a dropdown to chose currency,
+ add one more to choose language.
