@@ -317,6 +317,200 @@ export const defaultSelectedCarModels = [
   },
 ];
 
+export const defaultExteriorColor = [
+  {
+    name: "Any",
+    selected: true,
+  },
+  {
+    name: "White",
+    selected: false,
+  },
+  {
+    name: "Black",
+    selected: false,
+  },
+  {
+    name: "Blue",
+    selected: false,
+  },
+  {
+    name: "Red",
+    selected: false,
+  },
+  {
+    name: "Yellow",
+    selected: false,
+  },
+  {
+    name: "Green",
+    selected: false,
+  },
+  {
+    name: "Brown",
+    selected: false,
+  },
+];
+
+export const defaultLiters = [
+  {
+    name: "Any",
+    selected: true,
+  },
+  {
+    name: "1.0",
+    selected: false,
+  },
+  {
+    name: "1.5",
+    selected: false,
+  },
+  {
+    name: "2.0",
+    selected: false,
+  },
+  {
+    name: "2.5",
+    selected: false,
+  },
+  {
+    name: "3.0",
+    selected: false,
+  },
+  {
+    name: "4.0",
+    selected: false,
+  },
+  {
+    name: "6.0",
+    selected: false,
+  },
+  {
+    name: "8.0",
+    selected: false,
+  },
+  {
+    name: "12.0",
+    selected: false,
+  },
+];
+
+export const defaultDoors = [
+  {
+    name: "Any",
+    selected: true,
+  },
+  {
+    name: "2",
+    selected: false,
+  },
+  {
+    name: "4",
+    selected: false,
+  },
+  {
+    name: "4+",
+    selected: false,
+  },
+];
+
+export const test = [];
+
+export const defaultWheel = [
+  {
+    name: "Any",
+    selected: true,
+  },
+  {
+    name: "Left",
+    selected: false,
+  },
+  {
+    name: "Right",
+    selected: false,
+  },
+];
+
+export const defaultInteriorColor = [
+  {
+    name: "Any",
+    selected: true,
+  },
+  {
+    name: "White",
+    selected: false,
+  },
+  {
+    name: "Black",
+    selected: false,
+  },
+  {
+    name: "Creame",
+    selected: false,
+  },
+];
+
+export const defaultInteriorMaterial = [
+  {
+    name: "Any",
+    selected: true,
+  },
+  {
+    name: "Leather",
+    selected: false,
+  },
+  {
+    name: "Nylon",
+    selected: false,
+  },
+  {
+    name: "Fabric",
+    selected: false,
+  },
+  {
+    name: "Polyster",
+    selected: false,
+  },
+  {
+    name: "Vinyl",
+    selected: false,
+  },
+];
+
+export const defaultTechInspection = [
+  {
+    name: "Any",
+    selected: true,
+  },
+  {
+    name: "Passed",
+    selected: false,
+  },
+  {
+    name: "Not Checked",
+    selected: false,
+  },
+  {
+    name: "Did not pass",
+    selected: false,
+  },
+];
+
+export const defaultAccident = [
+  {
+    name: "Any",
+    selected: true,
+  },
+  {
+    name: "Yes",
+    selected: false,
+  },
+  {
+    name: "No",
+    selected: false,
+  },
+];
+
 export const defaultSelectedCarModelsTest = [
   {
     name: "Any",
