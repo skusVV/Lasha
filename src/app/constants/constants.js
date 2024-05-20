@@ -414,8 +414,6 @@ export const defaultDoors = [
   },
 ];
 
-export const test = [];
-
 export const defaultWheel = [
   {
     name: "Any",
@@ -502,11 +500,15 @@ export const defaultAccident = [
     selected: true,
   },
   {
-    name: "Yes",
+    name: "None",
     selected: false,
   },
   {
-    name: "No",
+    name: "Collision",
+    selected: false,
+  },
+  {
+    name: "Flooded",
     selected: false,
   },
 ];

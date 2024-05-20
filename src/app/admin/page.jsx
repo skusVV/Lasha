@@ -156,6 +156,7 @@ export default function Admin() {
       doors: car.doors,
       wheel: car.wheel,
       interiorColor: car.interiorColor,
+      interiorMaterial: car.interiorMaterial,
       techInspection: car.techInspection,
       accidents: car.accidents,
     });
@@ -251,6 +252,9 @@ export default function Admin() {
                     handleChange(e);
                   }}
                 >
+                  <option disabled selected>
+                    Select Manufacturer
+                  </option>
                   {defaultModels.map((model, index) => (
                     <option
                       key={index}
@@ -268,8 +272,14 @@ export default function Admin() {
                   onChange={handleChange}
                   required
                 >
+                  <option disabled selected>
+                    Model
+                  </option>
                   {selectedCarModels.map((model, index) => (
-                    <option key={index} selected={carData.model === model.name}>
+                    <option
+                      key={index}
+                      selected={carData.model === model.value}
+                    >
                       {model.name}
                     </option>
                   ))}
@@ -281,10 +291,14 @@ export default function Admin() {
               <div className="align-center w-[600px] content-start space-between space-x-8">
                 <select
                   name="type"
+                  data-type="type"
                   onChange={handleChange}
                   className="rounded-md"
                   required
                 >
+                  <option disabled selected>
+                    Type
+                  </option>
                   {carModels.map((carModel, index) => (
                     <option
                       key={index}
@@ -301,6 +315,9 @@ export default function Admin() {
                   onChange={handleChange}
                   required
                 >
+                  <option disabled selected>
+                    Year
+                  </option>
                   {defaultYears.map((year, index) => (
                     <option key={index} selected={carData.year === year.value}>
                       {year.name}
@@ -321,18 +338,63 @@ export default function Admin() {
                   required
                 />
                 <select
-                  data-type="location"
-                  name="location"
                   className="rounded-md"
+                  data-type="wheel"
+                  name="wheel"
                   onChange={handleChange}
                   required
                 >
+                  <option disabled selected>
+                    Driver Position
+                  </option>
+                  {defaultWheel.map((wheel, index) => (
+                    <option
+                      key={index}
+                      selected={carData.wheel === wheel.value}
+                    >
+                      {wheel.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="field">
+              <div className="align-center w-[600px] content-start space-between space-x-8">
+                <select
+                  className="rounded-md"
+                  data-type="location"
+                  name="location"
+                  onChange={handleChange}
+                  required
+                >
+                  <option disabled selected>
+                    Location
+                  </option>
                   {defaultLocation.map((location, index) => (
                     <option
                       key={index}
-                      selected={carData.location === location.name}
+                      selected={carData.location === location.value}
                     >
                       {location.name}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  className="rounded-md"
+                  data-type="exterior"
+                  name="exterior"
+                  onChange={handleChange}
+                  required
+                >
+                  <option disabled selected>
+                    Exterior Color{" "}
+                  </option>
+                  {defaultExteriorColor.map((exterior, index) => (
+                    <option
+                      key={index}
+                      selected={carData.exterior === exterior.value}
+                    >
+                      {exterior.name}
                     </option>
                   ))}
                 </select>
@@ -347,25 +409,36 @@ export default function Admin() {
                   onChange={handleChange}
                   required
                 >
-                  {defaultExteriorColor.map((exterior, index) => (
+                  <option disabled selected>
+                    Interior Color{" "}
+                  </option>
+                  {defaultInteriorColor.map((interiorColor, index) => (
                     <option
                       key={index}
-                      selected={carData.exterior === exterior.name}
+                      selected={carData.interiorColor === interiorColor.value}
                     >
-                      {exterior.name}
+                      {interiorColor.name}
                     </option>
                   ))}
                 </select>
                 <select
+                  data-type="interiorMaterial"
+                  name="interiorMaterial"
                   className="rounded-md"
-                  data-type="year"
-                  name="year"
                   onChange={handleChange}
                   required
                 >
-                  {defaultYears.map((year, index) => (
-                    <option key={index} selected={carData.year === year.value}>
-                      {year.name}
+                  <option disabled selected>
+                    Interior Material
+                  </option>
+                  {defaultInteriorMaterial.map((interiorMaterial, index) => (
+                    <option
+                      key={index}
+                      selected={
+                        carData.interiorMaterial === interiorMaterial.value
+                      }
+                    >
+                      {interiorMaterial.name}
                     </option>
                   ))}
                 </select>
@@ -374,15 +447,59 @@ export default function Admin() {
             <div className="field">
               <div className="align-center w-[600px] content-start space-between space-x-8">
                 <select
+                  name="liters"
+                  className="rounded-md"
+                  onChange={handleChange}
+                  required
+                >
+                  <option disabled selected>
+                    Engine Capacity
+                  </option>
+                  {defaultLiters.map((liters, index) => (
+                    <option
+                      key={index}
+                      selected={carData.liters === liters.value}
+                    >
+                      {liters.name}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  name="doors"
+                  className="rounded-md"
+                  onChange={handleChange}
+                  required
+                >
+                  <option disabled selected>
+                    Door Ammount
+                  </option>
+                  {defaultDoors.map((doors, index) => (
+                    <option
+                      key={index}
+                      selected={carData.doors === doors.value}
+                    >
+                      {doors.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="field">
+              <div className="align-center w-[600px] content-start space-between space-x-8">
+                <select
                   name="transmition"
                   className="rounded-md"
                   onChange={handleChange}
                   required
                 >
+                  <option disabled selected>
+                    Transmition
+                  </option>
                   {defaultTransmition.map((transmition, index) => (
                     <option
                       key={index}
-                      selected={carData.transmition === transmition.name}
+                      selected={carData.transmition === transmition.value}
                     >
                       {transmition.name}
                     </option>
@@ -390,19 +507,62 @@ export default function Admin() {
                 </select>
                 <select
                   name="fuel"
+                  data-type="fuel"
                   className="rounded-md"
                   onChange={handleChange}
                   required
                 >
+                  <option disabled selected>
+                    Fuel Type
+                  </option>
                   {defaultFuel.map((fuels, index) => (
-                    <option key={index} selected={carData.fuel === fuels.name}>
+                    <option key={index} selected={carData.fuel === fuels.value}>
                       {fuels.name}
                     </option>
                   ))}
                 </select>
               </div>
             </div>
-
+            <div className="field">
+              <div className="align-center w-[600px] content-start space-between space-x-8">
+                <select
+                  name="techInspection"
+                  className="rounded-md"
+                  onChange={handleChange}
+                  required
+                >
+                  <option disabled selected>
+                    Has It Gone Tech Inspection
+                  </option>
+                  {defaultTechInspection.map((techInspection, index) => (
+                    <option
+                      key={index}
+                      selected={carData.techInspection === techInspection.value}
+                    >
+                      {techInspection.name}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  name="accidents"
+                  className="rounded-md"
+                  onChange={handleChange}
+                  required
+                >
+                  <option disabled selected>
+                    Invloved In Accident
+                  </option>
+                  {defaultAccident.map((accidents, index) => (
+                    <option
+                      key={index}
+                      selected={carData.accidents === accidents.value}
+                    >
+                      {accidents.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
             <div className="field">
               <div className="align-center w-[600px] content-start space-x-8">
                 <input

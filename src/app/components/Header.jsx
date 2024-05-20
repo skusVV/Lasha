@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -13,6 +13,14 @@ export const Header = () => {
   const [user, setUser] = useLocalStorage('AUTH', null);
   const [currency, setCurrency] = useLocalStorage('CURRECNY', 'USD');
 
+  const [userRole, setUserRole] = useState("");
+
+  useEffect(() => {
+    if (user) {
+      setUserRole(user.role);
+    }
+  }, [user]);
+
   const onSearch = (e) => {
     if (e.key === "Enter" && e.target.value) {
       router.push(`/search?term=${e.target.value}`);
@@ -22,7 +30,15 @@ export const Header = () => {
   const logout = () => {
     setUser(null);
     router.refresh();
-  }
+  };
+
+  useEffect(() => {
+    if (user) {
+      console.log(user);
+      setUserRole(user.role);
+      console.log(user.role);
+    }
+  }, [user]);
 
   const handleCurrencyChange = (e) => {
     setCurrency(e.target.value);
@@ -31,13 +47,13 @@ export const Header = () => {
 
   return (
     <div className="">
-      <div className="container" style={{ minWidth: '100%' }}>
+      <div className="container" style={{ minWidth: "100%" }}>
         <div className="container-left">
-          <div className="search">
+          <div class="flex justify-center items-center">
             <a href="http://localhost:3000/">
-              <img src="/logo.png" className="logo" />
+              <img src="/logo.png" class="logo" className="mt-3" />
             </a>
-            <i className="fa-solid fa-magnifying-glass" id="glass-icon"></i>
+            <i class="fa-solid fa-magnifying-glass" id="glass-icon"></i>
             <input
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyDown={onSearch}
@@ -45,15 +61,25 @@ export const Header = () => {
               type="search-box"
               name=""
               id=""
-              className="search-box"
+              class="search-box"
               placeholder="Search"
             />
           </div>
         </div>
 
         <div className="container-right">
-          {
-            user && <div className="add-product mt-5 mr-5">
+          {user && userRole === "Admin" && (
+            <div className="add-product mt-5 mr-5">
+              <Link
+                href={`/adminPanel`}
+                className="border rounded-md text-center px-3 py-3 dark-white"
+              >
+                Admin Panel
+              </Link>
+            </div>
+          )}
+          {user && (
+            <div className="add-product mt-5 mr-5">
               <Link
                 href={`/admin`}
                 className="border rounded-md text-center px-3 py-3 dark-white"
@@ -61,7 +87,7 @@ export const Header = () => {
                 <FontAwesomeIcon icon={faPlus} /> Sell
               </Link>
             </div>
-          }
+          )}
           <div className="language">
             <i className="fas fa-globe"></i>
             <select value={currency} className="currency-change" id="top-button"  onChange={handleCurrencyChange}>
@@ -69,8 +95,8 @@ export const Header = () => {
               <option value="GEL">₾ - GEL</option>
             </select>
           </div>
-          {
-            !user && <div className="add-product mt-5">
+          {!user && (
+            <div className="add-product mt-5">
               <Link
                 href={`/login`}
                 className="border rounded-md text-center px-3 py-3 dark-white "
@@ -78,9 +104,9 @@ export const Header = () => {
                 Log In
               </Link>
             </div>
-          }
-          {
-            user && <div className="add-product mt-5">
+          )}
+          {user && (
+            <div className="add-product mt-5">
               <span
                 onClick={logout}
                 className="border rounded-md text-center px-3 py-3 dark-white "
@@ -88,7 +114,7 @@ export const Header = () => {
                 Log out
               </span>
             </div>
-          }
+          )}
         </div>
       </div>
 
