@@ -10,12 +10,15 @@ import {
   faRoad,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import { getWords } from '../../languages/language';
 
 export default function CarDetails({ params }) {
   const [car, setCar] = useState({});
   const [ currency ] = useLocalStorage('CURRECNY', 'USD');
   const router = useRouter();
   const user = JSON.parse(localStorage.getItem("AUTH"));
+  const [ language ] = useLocalStorage('LANGUAGE', 'ENG');
+  const words = getWords(language); 
 
   useEffect(() => {
     fetch(`http://localhost:3001/api/cars/${params.id}`)
@@ -80,7 +83,7 @@ export default function CarDetails({ params }) {
                     <div className="mt-10 ml-10">
                       <button className="selected-car-sell-button rounded-lg text-white w-[150px]">
                         <div className="selected-car-sell-button justify-center mt-1 mb-1">
-                          Contact Seller
+                          {words.contactSeller}
                         </div>
                       </button>
                     </div>

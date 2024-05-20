@@ -6,12 +6,16 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import useLocalStorage  from '../hooks/useLocalStorage';
+import { getWords } from '../languages/language';
 
 export const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
   const [user, setUser] = useLocalStorage('AUTH', null);
   const [currency, setCurrency] = useLocalStorage('CURRECNY', 'USD');
+  const [language, setLanguage] = useLocalStorage('LANGUAGE', 'ENG');
+
+  const words = getWords(language); 
 
   const [userRole, setUserRole] = useState("");
 
@@ -45,6 +49,11 @@ export const Header = () => {
     router.refresh();
   };
 
+  const handleLanguageChange = (e) => {
+    setLanguage(e.target.value);
+    router.refresh();
+  };
+
   return (
     <div className="">
       <div className="container" style={{ minWidth: "100%" }}>
@@ -62,7 +71,7 @@ export const Header = () => {
               name=""
               id=""
               class="search-box"
-              placeholder="Search"
+              placeholder={words.search}
             />
           </div>
         </div>
@@ -90,6 +99,15 @@ export const Header = () => {
           )}
           <div className="language">
             <i className="fas fa-globe"></i>
+            <select value={language} className="currency-change" id="top-button"  onChange={handleLanguageChange}>
+              <option value="ENG">English</option>
+              <option value="GEO">Georgia</option>
+              <option value="ES">Spain</option>
+            </select>
+          </div>
+
+          <div className="language">
+            <i className="fas fa-globe"></i>
             <select value={currency} className="currency-change" id="top-button"  onChange={handleCurrencyChange}>
               <option value="USD">$ - USD</option>
               <option value="GEL">₾ - GEL</option>
@@ -101,7 +119,7 @@ export const Header = () => {
                 href={`/login`}
                 className="border rounded-md text-center px-3 py-3 dark-white "
               >
-                Log In
+                {words.logIn}
               </Link>
             </div>
           )}
@@ -111,7 +129,7 @@ export const Header = () => {
                 onClick={logout}
                 className="border rounded-md text-center px-3 py-3 dark-white "
               >
-                Log out
+                {words.logOut}
               </span>
             </div>
           )}
