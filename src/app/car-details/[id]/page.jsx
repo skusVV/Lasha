@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { PageWrapper } from "../../components/PageWrapper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import { getCarPrice } from '../../utils';
+import useLocalStorage from '../../hooks/useLocalStorage';
 import {
   faLocationDot,
   faRoad,
@@ -12,6 +13,7 @@ import {
 
 export default function CarDetails({ params }) {
   const [car, setCar] = useState({});
+  const [ currency ] = useLocalStorage('CURRECNY', 'USD');
   const router = useRouter();
   const user = JSON.parse(localStorage.getItem("AUTH"));
 
@@ -52,6 +54,11 @@ export default function CarDetails({ params }) {
                       <div className="selected-car-price text-white ">
                         <FontAwesomeIcon icon={faRoad} className="mr-2" />{" "}
                         {car.milage} km
+                      </div>
+                      <div className="selected-car-price text-white">
+                        {
+                          getCarPrice(currency, car.price)
+                        }
                       </div>
                       <div className="selected-car-card-city text-white ml-1 mt-3">
                         <FontAwesomeIcon

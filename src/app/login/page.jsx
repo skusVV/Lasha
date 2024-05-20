@@ -3,10 +3,11 @@ import { useState } from "react";
 import { PageWrapper } from "../components/PageWrapper";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
-// import { setAuthInfo } from '../auth';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 export default function Cheese() {
   const router = useRouter();
+  const [user, setUser] = useLocalStorage('AUTH', null);
 
   const [loginData, setLoginData] = useState({
     email: "",
@@ -32,7 +33,7 @@ export default function Cheese() {
       })
     .then((res) => res.json())
     .then((res) => {
-      localStorage.setItem('AUTH', JSON.stringify(res));
+      setUser(res);
       router.push('/', { scroll: false });
     });
   };
