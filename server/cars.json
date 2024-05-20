@@ -197,5 +197,29 @@
     "milage": "11233333",
     "transmition": "Manual",
     "labels": ["door"]
+  },
+  {
+    "id": 13,
+    "userId": 4,
+    "description": "descriptionThe Toyota Corolla (Japanese: トヨタ・カローラ, Hepburn: Toyota Karōra) is a series of compact cars (formerly subcompact) manufactured and marketed globally by the Japanese automaker Toyota Motor Corporation. Introduced in 1966, the Corolla was the best-selling car worldwide by 1974 and has been one of the best-selling cars in the world since then. In 1997, the Corolla became the best-selling nameplate in the world, surpassing the Volkswagen Beetle.[1] Toyota reached the milestone of 50 million Corollas sold over twelve generations in 2021.",
+    "img": "https://media.ed.edmunds-media.com/toyota/corolla/2023/oem/2023_toyota_corolla_sedan_xse_fq_oem_1_1280.jpg",
+    "type": "Hatchback",
+    "location": "Tbilisi",
+    "year": "2019",
+    "madeBy": "Toyota",
+    "model": "Corola",
+    "price": "90345",
+    "currency": "$",
+    "fuelType": "Hybrid",
+    "milage": "123123",
+    "transmition": "Automatic",
+    "labels": ["label", "               label"],
+    "exterior": "White",
+    "liters": "3.0",
+    "doors": "4",
+    "wheel": "Right",
+    "interiorColor": "Black",
+    "techInspection": "Passed",
+    "accidents": "No"
   }
 ]
