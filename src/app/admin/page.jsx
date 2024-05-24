@@ -25,8 +25,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { validateForm } from "./validation";
 import { useRouter } from "next/navigation";
-import useLocalStorage from '../hooks/useLocalStorage';
-import { getCarPrice } from '../utils';
+import useLocalStorage from "../hooks/useLocalStorage";
+import { getCarPrice } from "../utils";
 
 export const StyledFormWrapper = styled.div`
   display: flex;
@@ -54,8 +54,8 @@ export const StyledFormWrapper = styled.div`
 // 1. Fields not empty
 
 export default function Admin() {
-  const [user] = useLocalStorage('AUTH', null);
-  const [currency] = useLocalStorage('CURRECNY', 'USD');
+  const [user] = useLocalStorage("AUTH", null);
+  const [currency] = useLocalStorage("CURRECNY", "USD");
   const router = useRouter();
 
   const [disableModels, setDisableModels] = useState(true);
@@ -260,6 +260,7 @@ export default function Admin() {
                       key={index}
                       selected={carData.carModel === model.name}
                     >
+                      {index.madeByKey}
                       {model.name}
                     </option>
                   ))}
@@ -630,9 +631,7 @@ export default function Admin() {
               <div className="text-md">
                 {car.year} - {car.madeBy} {car.model}
               </div>
-              <div className="text-md">
-                {getCarPrice(currency, car.price)}
-              </div>
+              <div className="text-md">{getCarPrice(currency, car.price)}</div>
             </div>
           ))}
         </div>

@@ -1,6 +1,7 @@
 export const words = {
-    search: 'Holla',
-    logIn: 'Log in [Spain]',
-    logOut: 'log Out [Spain]',
-    contactSeller: 'Contact Seller [Spain]',
-}
+  search: "Holla",
+  logIn: "Log in [Spain]",
+  logOut: "log Out [Spain]",
+  contactSeller: "Contact Seller [Spain]",
+  language: "language [ESP]",
+};

@@ -5,17 +5,17 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import useLocalStorage  from '../hooks/useLocalStorage';
-import { getWords } from '../languages/language';
+import useLocalStorage from "../hooks/useLocalStorage";
+import { getWords } from "../languages/language";
 
 export const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
-  const [user, setUser] = useLocalStorage('AUTH', null);
-  const [currency, setCurrency] = useLocalStorage('CURRECNY', 'USD');
-  const [language, setLanguage] = useLocalStorage('LANGUAGE', 'ENG');
+  const [user, setUser] = useLocalStorage("AUTH", null);
+  const [currency, setCurrency] = useLocalStorage("CURRECNY", "USD");
+  const [language, setLanguage] = useLocalStorage("LANGUAGE", "ENG");
 
-  const words = getWords(language); 
+  const words = getWords(language);
 
   const [userRole, setUserRole] = useState("");
 
@@ -77,7 +77,7 @@ export const Header = () => {
         </div>
 
         <div className="container-right">
-          {user && userRole === "Admin" && (
+          {user && (
             <div className="add-product mt-5 mr-5">
               <Link
                 href={`/adminPanel`}
@@ -99,7 +99,13 @@ export const Header = () => {
           )}
           <div className="language">
             <i className="fas fa-globe"></i>
-            <select value={language} className="currency-change" id="top-button"  onChange={handleLanguageChange}>
+            <select
+              value={language}
+              className="currency-change"
+              id="top-button"
+              placeholder={words.language}
+              onChange={handleLanguageChange}
+            >
               <option value="ENG">English</option>
               <option value="GEO">Georgia</option>
               <option value="ES">Spain</option>
@@ -108,7 +114,12 @@ export const Header = () => {
 
           <div className="language">
             <i className="fas fa-globe"></i>
-            <select value={currency} className="currency-change" id="top-button"  onChange={handleCurrencyChange}>
+            <select
+              value={currency}
+              className="currency-change"
+              id="top-button"
+              onChange={handleCurrencyChange}
+            >
               <option value="USD">$ - USD</option>
               <option value="GEL">₾ - GEL</option>
             </select>
