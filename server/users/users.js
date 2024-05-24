@@ -1,7 +1,7 @@
 const { readFileSync, writeFile } = require("fs");
 
 const readUsers = () => {
-  const data = readFileSync("./users.json");
+  const data = readFileSync("./users/users.json");
 
   return JSON.parse(data);
 };

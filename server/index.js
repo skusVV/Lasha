@@ -1,8 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const { readFileSync, writeFile } = require("fs");
-const { carsRouter } = require('./cars');
-const {usersRouter} = require('./users');
+const { carsRouter } = require('./cars/cars');
+const {usersRouter} = require('./users/users');
+const { carAttributesRouter } = require('./car-attributes/car-attributes');
 
 
 const app = express();
@@ -23,7 +24,7 @@ app.get("/api/test", (req, res) => {
 
 carsRouter(app);
 usersRouter(app);
-
+carAttributesRouter(app);
 
 
 app.listen(3001, () => {

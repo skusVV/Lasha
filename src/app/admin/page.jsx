@@ -13,7 +13,6 @@ import {
   defaultFuel,
   defaultTransmition,
   defaultExteriorColor,
-  defaultLiters,
   defaultDoors,
   defaultWheel,
   defaultInteriorColor,
@@ -56,6 +55,7 @@ export const StyledFormWrapper = styled.div`
 export default function Admin() {
   const [user] = useLocalStorage("AUTH", null);
   const [currency] = useLocalStorage("CURRECNY", "USD");
+  const [engineCapacity, setEngineCapacity]= useState([]);
   const router = useRouter();
 
   const [disableModels, setDisableModels] = useState(true);
@@ -77,7 +77,7 @@ export default function Admin() {
     fuel: defaultFuel.find((item) => item.selected).name,
     transmition: defaultTransmition.find((item) => item.selected).name,
     exterior: defaultExteriorColor.find((item) => item.selected).name,
-    liters: defaultLiters.find((item) => item.selected).name,
+    liters: engineCapacity.length ? engineCapacity.find((item) => item.selected).name : '',
     doors: defaultDoors.find((item) => item.selected).name,
     wheel: defaultWheel.find((item) => item.selected).name,
     interiorColor: defaultInteriorColor.find((item) => item.selected).name,
@@ -86,6 +86,12 @@ export default function Admin() {
     techInspection: defaultTechInspection.find((item) => item.selected).name,
     accidents: defaultAccident.find((item) => item.selected).name,
   });
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/api/car-attributes/engine-capacity`)
+      .then((res) => res.json())
+      .then((res) => setEngineCapacity(res));
+  }, [])
 
   const handleChange = (e) => {
     setCarData({
@@ -127,6 +133,10 @@ export default function Admin() {
   };
 
   useEffect(() => {
+    if(!user) {
+      router.push("/");
+      return
+    }
     fetch(`http://localhost:3001/api/cars?userId=${user.id}`)
       .then((res) => res.json())
       .then((res) => setCars(res));
@@ -456,7 +466,7 @@ export default function Admin() {
                   <option disabled selected>
                     Engine Capacity
                   </option>
-                  {defaultLiters.map((liters, index) => (
+                  {engineCapacity.map((liters, index) => (
                     <option
                       key={index}
                       selected={carData.liters === liters.value}

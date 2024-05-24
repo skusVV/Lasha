@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PageWrapper } from "../components/PageWrapper";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,7 +13,6 @@ import {
   defaultCurrency,
   defaultFuel,
   defaultExteriorColor,
-  defaultLiters,
   defaultInteriorColor,
   defaultInteriorMaterial,
 } from "../constants/constants";
@@ -23,6 +22,43 @@ export default function AdminPanel() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("tab1");
   const log = () => console.log("cheese");
+  const [engineCapacity, setEngineCapacity]= useState([]);
+  const [locations, setLocations]= useState([]);
+  const [value, setValue]= useState('');
+ 
+  useEffect(() => {
+    fetch(`http://localhost:3001/api/car-attributes/engine-capacity`)
+      .then((res) => res.json())
+      .then((res) => setEngineCapacity(res));
+
+    fetch(`http://localhost:3001/api/car-attributes/locations`)
+      .then((res) => res.json())
+      .then((res) => setLocations(res));
+  }, [])
+
+  const removeItem = id => {
+    if(activeTab === 'engine-capacity') {
+      fetch(`http://localhost:3001/api/car-attributes/engine-capacity/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => res.json())
+      .then((res) => setEngineCapacity(res));
+    }
+
+    if(activeTab === 'locations') {
+      fetch(`http://localhost:3001/api/car-attributes/locations/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => res.json())
+      .then((res) => setLocations(res));
+    }
+  }
 
   const tabs = [
     {
@@ -52,27 +88,56 @@ export default function AdminPanel() {
       )),
     },
     {
-      id: "tab3",
+      id: "locations",
       label: "Locations",
-      content: defaultLocation.map((model, index) => (
+      content: locations.map((model, index) => (
         <div className="ml-5 group transform transition-transform duration-200 hover:scale-105">
           <button key={index}>{model.name}</button>
+          <FontAwesomeIcon icon={faTrashCan} onClick={() => removeItem(model.id)}/>
         </div>
       )),
     },
     {
-      id: "tab4",
+      id: "engine-capacity",
       label: "Engine Capacity",
-      content: defaultLiters.map((model, index) => (
+      content: engineCapacity.map((model, index) => (
         <div className="ml-5 group transform transition-transform duration-200 hover:scale-105">
           <button onClick={log} key={index}>
             {model.name}
           </button>
-          <FontAwesomeIcon icon={faTrashCan} />
+          <FontAwesomeIcon icon={faTrashCan} onClick={() => removeItem(model.id)}/>
         </div>
       )),
     },
   ];
+
+  const handleClick = () => {
+    if(activeTab === 'engine-capacity') {
+      fetch(`http://localhost:3001/api/car-attributes/engine-capacity`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ value }),
+      })
+        .then((res) => res.json())
+        .then((res) => setEngineCapacity(res));
+    }
+
+    if(activeTab === 'locations') {
+      fetch(`http://localhost:3001/api/car-attributes/locations`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ value }),
+      })
+        .then((res) => res.json())
+        .then((res) => setLocations(res));
+    }
+  
+  }
+
   return (
     <PageWrapper>
       <div className="text-white w-[600px] mt-[100px] mb-[100px] mx-auto">
@@ -91,11 +156,13 @@ export default function AdminPanel() {
         </div>
         <div className="p-4 border border-dark-white rounded-lg">
           <div className="flex items-center border border-gray-300 rounded-lg">
-            <div className="p-2">
+            <div className="p-2" onClick={handleClick}>
               <FontAwesomeIcon icon={faPlus} />
             </div>
             <input
               type="text"
+              value={value}
+              onChange={e => setValue(e.target.value)}
               placeholder="Add Item"
               className="flex-1 py-2 pl-2 border-none bg-transparent"
             />
