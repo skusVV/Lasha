@@ -20,7 +20,7 @@ import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 export default function AdminPanel() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState("tab1");
+  const [activeTab, setActiveTab] = useState("manufacturer");
   const log = () => console.log("cheese");
   const [engineCapacity, setEngineCapacity] = useState([]);
   const [locations, setLocations] = useState([]);

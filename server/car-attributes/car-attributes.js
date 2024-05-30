@@ -42,7 +42,10 @@ const carAttributesRouter = (app) => {
       ...attributes,
       manufacturer: [...attributes["manufacturer"], newManufacturer],
     };
+
     writeAttributes(newAttributes, res);
+
+    return res.send(newAttributes["manufacturer"]);
   });
 
   app.delete("/api/car-attributes/manufacturer/:id", (req, res) => {
@@ -56,6 +59,8 @@ const carAttributesRouter = (app) => {
       ),
     };
     writeAttributes(newAttributes, res);
+
+    return res.send(newAttributes["manufacturer"]);
   });
 
   /////////////////////////////////////////////////////////
