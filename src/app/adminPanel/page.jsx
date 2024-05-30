@@ -16,17 +16,22 @@ import {
   defaultInteriorColor,
   defaultInteriorMaterial,
 } from "../constants/constants";
-import { faPlus, faTrash, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 export default function AdminPanel() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("tab1");
   const log = () => console.log("cheese");
-  const [engineCapacity, setEngineCapacity]= useState([]);
-  const [locations, setLocations]= useState([]);
-  const [value, setValue]= useState('');
- 
+  const [engineCapacity, setEngineCapacity] = useState([]);
+  const [locations, setLocations] = useState([]);
+  const [manufacturer, setManufacturer] = useState([]);
+  const [value, setValue] = useState("");
+
   useEffect(() => {
+    fetch(`http://localhost:3001/api/car-attributes/manufacturer`)
+      .then((res) => res.json())
+      .then((res) => setManufacturer(res));
+
     fetch(`http://localhost:3001/api/car-attributes/engine-capacity`)
       .then((res) => res.json())
       .then((res) => setEngineCapacity(res));
@@ -34,56 +39,83 @@ export default function AdminPanel() {
     fetch(`http://localhost:3001/api/car-attributes/locations`)
       .then((res) => res.json())
       .then((res) => setLocations(res));
-  }, [])
+  }, []);
 
-  const removeItem = id => {
-    if(activeTab === 'engine-capacity') {
+  const removeItem = (id) => {
+    if (activeTab === "manufacturer") {
+      fetch(`http://localhost:3001/api/car-attributes/manufacturer/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => setManufacturer(res));
+    }
+
+    if (activeTab === "engine-capacity") {
       fetch(`http://localhost:3001/api/car-attributes/engine-capacity/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
       })
-      .then((res) => res.json())
-      .then((res) => setEngineCapacity(res));
+        .then((res) => res.json())
+        .then((res) => setEngineCapacity(res));
     }
 
-    if(activeTab === 'locations') {
+    if (activeTab === "locations") {
       fetch(`http://localhost:3001/api/car-attributes/locations/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
       })
-      .then((res) => res.json())
-      .then((res) => setLocations(res));
+        .then((res) => res.json())
+        .then((res) => setLocations(res));
     }
-  }
+  };
 
   const tabs = [
     {
-      id: "tab1",
-      label: "Exterior Color",
-      content: defaultModels.map((model, index) => (
-        <div
-          className="ml-5 group transform transition-transform duration-200 hover:scale-105"
-          key={index}
-        >
-          <button onClick={log}>{model.name}</button>
+      id: "manufacturer",
+      label: "Manufacturer",
+      content: manufacturer.map((model, index) => (
+        <div className="ml-5 flex items-center transform transition-transform duration-200 hover:scale-105">
+          <div className="w-1/2">
+            <button onClick={log} key={index} className="mr-2">
+              {model.name}
+            </button>
+          </div>
+          <div className="w-1/2 flex justify-end mr-5 ">
+            <FontAwesomeIcon
+              icon={faTrashCan}
+              onClick={() => removeItem(model.id)}
+              className="cursor-pointer"
+            />
+          </div>
         </div>
       )),
     },
     {
-      id: "tab2",
+      id: "car-models",
       label: "Car Models",
       content: defaultSelectedCarModels.map((model, index) => (
-        <div className="ml-5 group transform transition-transform duration-200 hover:scale-105">
-          {" "}
-          <button key={index}>
-            {model.madeByKey}
-            {" - "}
-            {model.name}
-          </button>
+        <div className="ml-5 flex items-center transform transition-transform duration-200 hover:scale-105">
+          <div className="w-1/2">
+            <button onClick={log} key={index} className="mr-2">
+              {`[${model.madeByKey}]`}
+              {"  "}
+              {model.name}
+            </button>
+          </div>
+          <div className="w-1/2 flex justify-end mr-5 ">
+            <FontAwesomeIcon
+              icon={faTrashCan}
+              onClick={() => removeItem(model.id)}
+              className="cursor-pointer"
+            />
+          </div>
         </div>
       )),
     },
@@ -91,9 +123,19 @@ export default function AdminPanel() {
       id: "locations",
       label: "Locations",
       content: locations.map((model, index) => (
-        <div className="ml-5 group transform transition-transform duration-200 hover:scale-105">
-          <button key={index}>{model.name}</button>
-          <FontAwesomeIcon icon={faTrashCan} onClick={() => removeItem(model.id)}/>
+        <div className="ml-5 flex items-center transform transition-transform duration-200 hover:scale-105">
+          <div className="w-1/2">
+            <button onClick={log} key={index} className="mr-2">
+              {model.name}
+            </button>
+          </div>
+          <div className="w-1/2 flex justify-end mr-5 ">
+            <FontAwesomeIcon
+              icon={faTrashCan}
+              onClick={() => removeItem(model.id)}
+              className="cursor-pointer"
+            />
+          </div>
         </div>
       )),
     },
@@ -101,18 +143,38 @@ export default function AdminPanel() {
       id: "engine-capacity",
       label: "Engine Capacity",
       content: engineCapacity.map((model, index) => (
-        <div className="ml-5 group transform transition-transform duration-200 hover:scale-105">
-          <button onClick={log} key={index}>
-            {model.name}
-          </button>
-          <FontAwesomeIcon icon={faTrashCan} onClick={() => removeItem(model.id)}/>
+        <div className="ml-5 flex items-center transform transition-transform duration-200 hover:scale-105">
+          <div className="w-1/2">
+            <button onClick={log} key={index} className="mr-2">
+              {model.name}
+            </button>
+          </div>
+          <div className="w-1/2 flex justify-end mr-5 ">
+            <FontAwesomeIcon
+              icon={faTrashCan}
+              onClick={() => removeItem(model.id)}
+              className="cursor-pointer"
+            />
+          </div>
         </div>
       )),
     },
   ];
 
   const handleClick = () => {
-    if(activeTab === 'engine-capacity') {
+    if (activeTab === "manufacturer") {
+      fetch(`http://localhost:3001/api/car-attributes/manufacturer`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ value }),
+      })
+        .then((res) => res.json())
+        .then((res) => setManufacturer(res));
+    }
+
+    if (activeTab === "engine-capacity") {
       fetch(`http://localhost:3001/api/car-attributes/engine-capacity`, {
         method: "POST",
         headers: {
@@ -124,7 +186,7 @@ export default function AdminPanel() {
         .then((res) => setEngineCapacity(res));
     }
 
-    if(activeTab === 'locations') {
+    if (activeTab === "locations") {
       fetch(`http://localhost:3001/api/car-attributes/locations`, {
         method: "POST",
         headers: {
@@ -135,8 +197,7 @@ export default function AdminPanel() {
         .then((res) => res.json())
         .then((res) => setLocations(res));
     }
-  
-  }
+  };
 
   return (
     <PageWrapper>
@@ -162,7 +223,7 @@ export default function AdminPanel() {
             <input
               type="text"
               value={value}
-              onChange={e => setValue(e.target.value)}
+              onChange={(e) => setValue(e.target.value)}
               placeholder="Add Item"
               className="flex-1 py-2 pl-2 border-none bg-transparent"
             />
