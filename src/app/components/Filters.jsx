@@ -1,11 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   carModels,
   defaultFuel,
   defaultCarPrices,
   defaultLocation,
-  defaultModels,
   defaultYears,
 } from "../constants/constants";
 
@@ -18,12 +17,26 @@ const selectMapper = (item, e) => {
 };
 
 export const Filters = ({ onFilter }) => {
-  const [models, setModels] = useState(defaultModels);
+  const [models, setModels] = useState([]);
   const [prices, setPrices] = useState(defaultCarPrices);
   const [years, setYears] = useState(defaultYears);
   const [types, setType] = useState(carModels);
-  const [locations, setLoaction] = useState(defaultLocation);
+  const [locations, setLoaction] = useState([]);
   const [fuels, setFuel] = useState(defaultFuel);
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/api/car-attributes/manufacturer`)
+      .then((res) => res.json())
+      .then((res) => {
+        setModels(res)
+      });
+
+    fetch(`http://localhost:3001/api/car-attributes/locations`)
+      .then((res) => res.json())
+      .then((res) => {
+        setLoaction(res)
+      });
+  }, [])
 
   const onSelectChange = (e, items, setFunction) => {
     const newItems = items.map((item) => selectMapper(item, e));

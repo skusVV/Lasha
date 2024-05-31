@@ -1,5 +1,15 @@
 const { readFileSync, writeFile } = require("fs");
-// const users = require("../users/users");
+
+function uuid(){
+  var dt = new Date().getTime();
+  var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = (dt + Math.random()*16)%16 | 0;
+      dt = Math.floor(dt/16);
+      return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+  });
+
+  return uuid;
+}
 
 const readCarAttributes = () => {
   const data = readFileSync("./car-attributes/car-attributes.json");
@@ -33,7 +43,7 @@ const carAttributesRouter = (app) => {
 
     const attributes = readCarAttributes();
     const newManufacturer = {
-      id: attributes["manufacturer"].length + 1,
+      id: uuid(),
       name: value,
       selected: false,
     };
@@ -47,7 +57,7 @@ const carAttributesRouter = (app) => {
   });
 
   app.delete("/api/car-attributes/manufacturer/:id", (req, res) => {
-    const attributeId = Number(req.params.id);
+    const attributeId = req.params.id;
     const attributes = readCarAttributes();
 
     const newAttributes = {
@@ -76,7 +86,7 @@ const carAttributesRouter = (app) => {
       "engine-capacity": [
         ...attributes["engine-capacity"],
         {
-          id: attributes["engine-capacity"].length + 1,
+          id: uuid,
           name: body.value,
           selected: false,
         },
@@ -89,7 +99,7 @@ const carAttributesRouter = (app) => {
 
   app.delete("/api/car-attributes/engine-capacity/:id", (req, res) => {
     const { body } = req;
-    const attributeId = Number(req.params.id);
+    const attributeId = req.params.id;
     const attributes = readCarAttributes();
 
     const newAttributes = {
@@ -118,7 +128,7 @@ const carAttributesRouter = (app) => {
       locations: [
         ...attributes["locations"],
         {
-          id: attributes["locations"].length + 1,
+          id: uuid,
           name: body.value,
           selected: false,
         },
@@ -131,7 +141,7 @@ const carAttributesRouter = (app) => {
 
   app.delete("/api/car-attributes/locations/:id", (req, res) => {
     const { body } = req;
-    const attributeId = Number(req.params.id);
+    const attributeId = req.params.id;
     const attributes = readCarAttributes();
     x;
     const newAttributes = {
