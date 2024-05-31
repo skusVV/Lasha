@@ -9,12 +9,22 @@ const readUsers = () => {
 const writeUser = (user) => {
   const users = readUsers();
   const newUsers = [...users, user];
-  writeFile("./users.json", JSON.stringify(newUsers), (err) => {
+  writeFile("./users/users.json", JSON.stringify(newUsers), (err) => {
     if (err) {
       console.log("[USERS] Failed to write updated data to file");
       return;
     }
     console.log("[USERS] Updated file successfully");
+  });
+};
+
+const modifyUsers = newUsers => {
+  writeFile("./users/users.json", JSON.stringify(newUsers), (err) => {
+    if (err) {
+      console.log("[USERS] Failed to write updated data to file");
+      return;
+    }
+    console.log("[USERS ---] Updated file successfully");
   });
 };
 
@@ -68,7 +78,7 @@ const usersRouter = (app) => {
       phone: user.personPhone,
       email: user.personGmail,
       id: user.id,
-      role: user.role,
+      role: user.role
     });
   });
 
@@ -80,6 +90,29 @@ const usersRouter = (app) => {
     console.log("Hello Admin");
     res.send("Admin panel accessed successfully");
   });
+
+  app.post('/api/favorite', (req, res) => {
+    const { userId, carId } = req.body;
+    const users = readUsers();
+    const user = users.find(user => user.id === Number(userId));
+
+    const isAlreadyExists = user.favorites.some(item => item === Number(carId))
+
+    if(isAlreadyExists) {
+      user.favorites = user.favorites.filter(item => item !== Number(carId))
+    } else {
+      user.favorites.push(Number(carId));
+    }
+    const newUsers = users.map(item => {
+      if(item.id === Number(userId)) {
+        return user;
+      } else {
+        return item;
+      }
+    })
+    modifyUsers(newUsers)
+    res.send(user);
+  })
 };
 
 module.exports = { usersRouter, readUsers };
