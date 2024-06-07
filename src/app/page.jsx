@@ -12,16 +12,16 @@ import { CarsList } from "./components/CarsList";
 
 export default function Home() {
   const [carsList, setCarsList] = useState([]);
+  const user = JSON.parse(localStorage.getItem("AUTH"));
   const router = useRouter();
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/random-cars')
+    fetch(`http://localhost:3001/api/random-cars?userId=${user.id}`)
       .then((res) => res.json())
       .then(res => setCarsList(res))
   }, []);
 
   const onFilter = (filter) => {
-    console.log("filter on the UI", filter);
     let query = "";
 
     query = query + `fuel=${filter.fuel}`;

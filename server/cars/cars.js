@@ -19,6 +19,12 @@ const writeCar = (car) => {
   });
 };
 
+const readUsers = () => {
+  const data = readFileSync("./users/users.json");
+
+  return JSON.parse(data);
+};
+
 const writeCars = (cars) => {
   writeFile("./cars.json", JSON.stringify(cars), (err) => {
     if (err) {
@@ -29,21 +35,33 @@ const writeCars = (cars) => {
   });
 };
 
+const mapCarWithFavorites = (car, userFavorits) => {
+  return { ...car, favorite: userFavorits.includes(car.id)}
+}
+
 const carsRouter = (app) => {
   app.get("/api/random-cars", (req, res) => {
     const cars = readCars();
+    const { userId } = req.query;
+    const users = readUsers();
+    const user = users.find((item) => item.id === Number(userId));
 
     const response = cars
       .sort(() => Math.random() - Math.random())
-      .filter((item, i) => i < 6);
+      .filter((item, i) => i < 6)
+      .map(item => mapCarWithFavorites(item, user.favorites));
     return res.send(response);
   });
 
   app.get("/api/cars/:id", (req, res) => {
+    const { userId } = req.query;
     const cars = readCars();
+    const users = readUsers();
+    const user = users.find((item) => item.id === Number(userId));
     const response = cars.find((item) => item.id === Number(req.params.id));
+    // const res = mapCarWithFavorites(response, user.favorites);
 
-    return res.send(response);
+    return res.send(mapCarWithFavorites(response, user.favorites));
   });
 
   app.get("/api/cars", (req, res) => {

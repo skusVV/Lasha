@@ -78,7 +78,8 @@ const usersRouter = (app) => {
       phone: user.personPhone,
       email: user.personGmail,
       id: user.id,
-      role: user.role
+      role: user.role,
+      favorites: user.favorites
     });
   });
 

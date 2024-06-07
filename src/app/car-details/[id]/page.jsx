@@ -21,7 +21,7 @@ export default function CarDetails({ params }) {
   const words = getWords(language); 
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/cars/${params.id}`)
+    fetch(`http://localhost:3001/api/cars/${params.id}?userId=${user.id}`)
       .then((res) => res.json())
       .then((res) => {
         setCar(res);
