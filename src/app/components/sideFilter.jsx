@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   carModels,
   defaultFuel,
@@ -25,12 +25,26 @@ const selectMapper = (item, e) => {
 };
 
 export const SideFilter = ({ onFilter }) => {
-  const [models, setModels] = useState(defaultModels);
+  const [models, setModels] = useState([]);
   const [prices, setPrices] = useState(defaultCarPrices);
   const [years, setYears] = useState(defaultYears);
   const [types, setType] = useState(carModels);
-  const [locations, setLoaction] = useState(defaultLocation);
+  const [locations, setLoaction] = useState([]);
   const [fuels, setFuel] = useState(defaultFuel);
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/api/car-attributes/manufacturer`)
+      .then((res) => res.json())
+      .then((res) => {
+        setModels(res);
+      });
+
+    fetch(`http://localhost:3001/api/car-attributes/locations`)
+      .then((res) => res.json())
+      .then((res) => {
+        setLoaction(res);
+      });
+  }, []);
 
   const onSelectChange = (e, items, setFunction) => {
     const newItems = items.map((item) => selectMapper(item, e));
@@ -68,18 +82,19 @@ export const SideFilter = ({ onFilter }) => {
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
           />
-          <div className="side-detailed-search">
-            <div className="">
-              <button>
+          <div className="side-detailed-search flex flex-col items-center">
+            <div className="flex justify-center items-center mx-3 mb-2 align-center">
+              <button className="flex items-center justify-center p-2">
                 <FontAwesomeIcon icon={faCar} />
               </button>
-              <button>
+              <button className="flex items-center justify-center p-2">
                 <FontAwesomeIcon icon={faMotorcycle} />
               </button>
-              <button>
+              <button className="flex items-center justify-center p-2">
                 <FontAwesomeIcon icon={faTractor} />
               </button>
             </div>
+
             <div className="side-specifications">
               <div className="side-selects">
                 <select
@@ -136,9 +151,7 @@ export const SideFilter = ({ onFilter }) => {
                   action=""
                   className="location-change"
                   id="top-button"
-                  onChange={(e) =>
-                    onSelectChange(e, defaultLocation, setLoaction)
-                  }
+                  onChange={(e) => onSelectChange(e, locations, setLoaction)}
                 >
                   {locations.map((location, index) => (
                     <option key={index} selected={location.selected}>

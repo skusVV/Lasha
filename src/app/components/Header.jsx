@@ -148,15 +148,47 @@ export const Header = () => {
       </div>
 
       <div className="nav-bar">
-        <div className="nav-left">
-          <button className="nav-buttons">clearance</button>
-          <button className="nav-buttons">VIN check</button>
-          <button className="nav-buttons">Dealers </button>
-          <button className="nav-buttons">Car Showrooms</button>
-          <button className="nav-buttons">Auctions</button>
-          <button className="nav-buttons">Auto Parts</button>
-          <button className="nav-buttons">Catalog</button>
-          <button className="nav-buttons">Blog</button>
+        <div className="nav-left flex flex-align items-center ">
+          <div>
+            {!user && (
+              <Link href="/login" className="nav-button">
+                Favorites
+              </Link>
+            )}
+            <Link href="/favorites" className="nav-button">
+              Favorites
+            </Link>
+          </div>
+
+          <div>
+            {" "}
+            <button className="nav-buttons">VIN check</button>
+          </div>
+          <div>
+            {" "}
+            <button className="nav-buttons">Dealers </button>
+          </div>
+          <div>
+            {" "}
+            <button className="nav-buttons">Car Showrooms</button>
+          </div>
+          <div>
+            {" "}
+            <button className="nav-buttons">Auctions</button>
+          </div>
+
+          <div>
+            {" "}
+            <button className="nav-buttons">Auto Parts</button>
+          </div>
+          <div>
+            {" "}
+            <button className="nav-buttons">Catalog</button>
+          </div>
+          <div>
+            {" "}
+            <button className="nav-buttons">Blog</button>
+          </div>
         </div>
         <div className="nav-right">
           <button className="nav-buttons">Help</button>

@@ -1,4 +1,13 @@
-Add more fields to car Model - you decide how many
+Finish with filters on the Search page
 
-In the header, where you have a dropdown to chose currency,
- add one more to choose language.
+Model tab on the super admin page. It should has a manufacture selector
+ and field for the model name
+
+Fix heart icon
+
+Create a "favorite" page
+
+You need to create a endpoint something like 'api/users/:userId/cars' 
+- this endpoint firstly should get all favorites cars ids. Then get all cars,
+ filter them by your list of ids and return list of cars to user. 
+ Then you can display it on the UI.

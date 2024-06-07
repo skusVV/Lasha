@@ -1,12 +1,15 @@
 const { readFileSync, writeFile } = require("fs");
 
-function uuid(){
+function uuid() {
   var dt = new Date().getTime();
-  var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      var r = (dt + Math.random()*16)%16 | 0;
-      dt = Math.floor(dt/16);
-      return (c=='x' ? r :(r&0x3|0x8)).toString(16);
-  });
+  var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+    /[xy]/g,
+    function (c) {
+      var r = (dt + Math.random() * 16) % 16 | 0;
+      dt = Math.floor(dt / 16);
+      return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
+    }
+  );
 
   return uuid;
 }
@@ -70,6 +73,49 @@ const carAttributesRouter = (app) => {
     return res.send(newAttributes["manufacturer"]);
   });
 
+  ///////////////////////////////////////////////////////////////////
+
+  app.get("/api/car-attributes/carModel", (req, res) => {
+    const attributes = readCarAttributes();
+
+    return res.send(attributes["carModel"]);
+  });
+
+  app.post("/api/car-attributes/carModel", (req, res) => {
+    const { body } = req;
+    const attributes = readCarAttributes();
+    const newAttributes = {
+      ...attributes,
+      carModel: [
+        ...attributes["carModel"],
+        {
+          id: uuid(),
+          name: body.value,
+          madeByKey: body.madeByKey,
+          selected: false,
+        },
+      ],
+    };
+    writeAttributes(newAttributes);
+
+    return res.send(newAttributes["carModel"]);
+  });
+
+  app.delete("/api/car-attributes/carModel/:id", (req, res) => {
+    const attributeId = req.params.id;
+    const attributes = readCarAttributes();
+
+    const newAttributes = {
+      ...attributes,
+      carModel: attributes["carModel"].filter(
+        (item) => item.id !== attributeId
+      ),
+    };
+    writeAttributes(newAttributes);
+
+    return res.send(newAttributes["carModel"]);
+  });
+
   /////////////////////////////////////////////////////////
 
   app.get("/api/car-attributes/engine-capacity", (req, res) => {
@@ -86,7 +132,7 @@ const carAttributesRouter = (app) => {
       "engine-capacity": [
         ...attributes["engine-capacity"],
         {
-          id: uuid,
+          id: uuid(),
           name: body.value,
           selected: false,
         },
@@ -114,6 +160,7 @@ const carAttributesRouter = (app) => {
   });
 
   /////////////////////////////////////////////////////////////////
+
   app.get("/api/car-attributes/locations", (req, res) => {
     const attributes = readCarAttributes();
 
@@ -128,7 +175,7 @@ const carAttributesRouter = (app) => {
       locations: [
         ...attributes["locations"],
         {
-          id: uuid,
+          id: uuid(),
           name: body.value,
           selected: false,
         },
@@ -143,7 +190,7 @@ const carAttributesRouter = (app) => {
     const { body } = req;
     const attributeId = req.params.id;
     const attributes = readCarAttributes();
-    x;
+
     const newAttributes = {
       ...attributes,
       locations: attributes["locations"].filter(

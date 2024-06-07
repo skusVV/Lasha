@@ -4,18 +4,7 @@ import { PageWrapper } from "../components/PageWrapper";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  carModels,
-  defaultLocation,
-  defaultYears,
-  defaultModels,
-  defaultSelectedCarModels,
-  defaultCurrency,
-  defaultFuel,
-  defaultExteriorColor,
-  defaultInteriorColor,
-  defaultInteriorMaterial,
-} from "../constants/constants";
+import { defaultSelectedCarModels } from "../constants/constants";
 import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 export default function AdminPanel() {
@@ -25,12 +14,18 @@ export default function AdminPanel() {
   const [engineCapacity, setEngineCapacity] = useState([]);
   const [locations, setLocations] = useState([]);
   const [manufacturer, setManufacturer] = useState([]);
+  const [carModels, setCarModels] = useState([]);
+  const [selectedManufacturer, setSelectedManufacturer] = useState("");
   const [value, setValue] = useState("");
 
   useEffect(() => {
     fetch(`http://localhost:3001/api/car-attributes/manufacturer`)
       .then((res) => res.json())
       .then((res) => setManufacturer(res));
+
+    fetch(`http://localhost:3001/api/car-attributes/carModel`)
+      .then((res) => res.json())
+      .then((res) => setCarModels(res));
 
     fetch(`http://localhost:3001/api/car-attributes/engine-capacity`)
       .then((res) => res.json())
@@ -51,6 +46,17 @@ export default function AdminPanel() {
       })
         .then((res) => res.json())
         .then((res) => setManufacturer(res));
+    }
+
+    if (activeTab === "carModel") {
+      fetch(`http://localhost:3001/api/car-attributes/carModel/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => setCarModels(res));
     }
 
     if (activeTab === "engine-capacity") {
@@ -98,9 +104,9 @@ export default function AdminPanel() {
       )),
     },
     {
-      id: "car-models",
+      id: "carModel",
       label: "Car Models",
-      content: defaultSelectedCarModels.map((model, index) => (
+      content: carModels.map((model, index) => (
         <div className="ml-5 flex items-center transform transition-transform duration-200 hover:scale-105">
           <div className="w-1/2">
             <button onClick={log} key={index} className="mr-2">
@@ -174,6 +180,18 @@ export default function AdminPanel() {
         .then((res) => setManufacturer(res));
     }
 
+    if (activeTab === "carModel") {
+      fetch(`http://localhost:3001/api/car-attributes/carModel`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ value, madeByKey: selectedManufacturer }),
+      })
+        .then((res) => res.json())
+        .then((res) => setCarModels(res));
+    }
+
     if (activeTab === "engine-capacity") {
       fetch(`http://localhost:3001/api/car-attributes/engine-capacity`, {
         method: "POST",
@@ -215,19 +233,61 @@ export default function AdminPanel() {
             </button>
           ))}
         </div>
+
         <div className="p-4 border border-dark-white rounded-lg">
-          <div className="flex items-center border border-gray-300 rounded-lg">
-            <div className="p-2" onClick={handleClick}>
-              <FontAwesomeIcon icon={faPlus} />
+          {activeTab !== "carModel" && (
+            <div className="flex items-center border border-gray-300 rounded-lg">
+              <div className="p-2" onClick={handleClick}>
+                <FontAwesomeIcon icon={faPlus} />
+              </div>
+              <input
+                type="text"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                placeholder="Add Item"
+                className="flex-1 py-2 pl-2 border-none bg-transparent"
+              />
             </div>
-            <input
-              type="text"
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              placeholder="Add Item"
-              className="flex-1 py-2 pl-2 border-none bg-transparent"
-            />
-          </div>
+          )}
+          {activeTab === "carModel" && (
+            <div className="ml-4 flex align-center items-center border border-gray-300 rounded-lg">
+              <div className="">
+                <select
+                  className="p-2 mr-2 border-none bg-transparent outline-none text-white"
+                  name="carModelSelect"
+                  id="carModelSelect"
+                  onChange={(e) => setSelectedManufacturer(e.target.value)}
+                >
+                  <option disabled selected>
+                    Select Manufacturer
+                  </option>
+                  {manufacturer.map((manufacturer, index) => (
+                    <option
+                      key={index}
+                      className="bg-transparent text-white"
+                      value={manufacturer.value}
+                    >
+                      {manufacturer.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="border-l border-gray-300 h-4"></div>
+              <div className="ml-1 flex align-center items-center">
+                <div className="p-2" onClick={handleClick}>
+                  <FontAwesomeIcon icon={faPlus} />
+                </div>
+                <input
+                  type="text"
+                  value={value}
+                  onChange={(e) => setValue(e.target.value)}
+                  placeholder="Add Item"
+                  className="flex border-none bg-transparent outline-none"
+                />
+              </div>
+            </div>
+          )}
+
           <div className="">
             {tabs.find((tab) => tab.id === activeTab)?.content}
           </div>
