@@ -1,32 +1,4 @@
-const { readFileSync, writeFile } = require("fs");
-
-const readUsers = () => {
-  const data = readFileSync("./users/users.json");
-
-  return JSON.parse(data);
-};
-
-const writeUser = (user) => {
-  const users = readUsers();
-  const newUsers = [...users, user];
-  writeFile("./users/users.json", JSON.stringify(newUsers), (err) => {
-    if (err) {
-      console.log("[USERS] Failed to write updated data to file");
-      return;
-    }
-    console.log("[USERS] Updated file successfully");
-  });
-};
-
-const modifyUsers = newUsers => {
-  writeFile("./users/users.json", JSON.stringify(newUsers), (err) => {
-    if (err) {
-      console.log("[USERS] Failed to write updated data to file");
-      return;
-    }
-    console.log("[USERS ---] Updated file successfully");
-  });
-};
+const { readCars, readUsers, writeUser, modifyUsers } = require('../helpers');
 
 const usersRouter = (app) => {
   app.get("/api/users", (req, res) => {
@@ -113,6 +85,21 @@ const usersRouter = (app) => {
     })
     modifyUsers(newUsers)
     res.send(user);
+  })
+
+  app.get('/api/user/favorites', (req, res) => {
+    const { userId } = req.query;
+    const users = readUsers();
+    const user = users.find(item => item.id === Number(userId));
+
+    if(user.favorites.length === 0){
+      return res.send([]);
+    }
+
+    const cars = readCars();
+    const userCars = cars.filter(car => user.favorites.includes(car.id))
+
+    return res.send(userCars);
   })
 };
 

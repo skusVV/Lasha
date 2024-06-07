@@ -16,7 +16,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/random-cars?userId=${user.id}`)
+    fetch(`http://localhost:3001/api/random-cars?userId=${user?.id || null}`)
       .then((res) => res.json())
       .then(res => setCarsList(res))
   }, []);

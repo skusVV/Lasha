@@ -155,9 +155,11 @@ export const Header = () => {
                 Favorites
               </Link>
             )}
-            <Link href="/favorites" className="nav-button">
+            {
+              !!user && <Link href="/favorites" className="nav-button">
               Favorites
             </Link>
+            }
           </div>
 
           <div>
