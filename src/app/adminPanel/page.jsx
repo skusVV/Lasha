@@ -1,14 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
 import { PageWrapper } from "../components/PageWrapper";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { defaultSelectedCarModels } from "../constants/constants";
 import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 export default function AdminPanel() {
-  const router = useRouter();
   const [activeTab, setActiveTab] = useState("manufacturer");
   const log = () => console.log("cheese");
   const [engineCapacity, setEngineCapacity] = useState([]);
@@ -21,11 +17,11 @@ export default function AdminPanel() {
   useEffect(() => {
     fetch(`http://localhost:3001/api/car-attributes/manufacturer`)
       .then((res) => res.json())
-      .then((res) => setManufacturer(res));
+      .then((res) => setManufacturer(res.filter(item => item.name !== '---')));
 
     fetch(`http://localhost:3001/api/car-attributes/carModel`)
       .then((res) => res.json())
-      .then((res) => setCarModels(res));
+      .then((res) => setCarModels(res.filter(item => item.name !== '---')));
 
     fetch(`http://localhost:3001/api/car-attributes/engine-capacity`)
       .then((res) => res.json())
@@ -106,12 +102,12 @@ export default function AdminPanel() {
     {
       id: "carModel",
       label: "Car Models",
-      content: carModels.map((model, index) => (
+      content: carModels
+       .filter(model => model.madeByKey === selectedManufacturer)
+       .map((model, index) => (
         <div className="ml-5 flex items-center transform transition-transform duration-200 hover:scale-105">
           <div className="w-1/2">
             <button onClick={log} key={index} className="mr-2">
-              {`[${model.madeByKey}]`}
-              {"  "}
               {model.name}
             </button>
           </div>
