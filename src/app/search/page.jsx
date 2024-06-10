@@ -83,7 +83,9 @@ export default function Search() {
       queryArray.push(`term=${term}`);
     }
 
-    queryArray.push(`userId=${user.id}`);
+    if(user) {
+      queryArray.push(`userId=${user.id}`);
+    }
 
     return queryArray.join("&");
   };
