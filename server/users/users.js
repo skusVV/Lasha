@@ -1,4 +1,4 @@
-const { readCars, readUsers, writeUser, modifyUsers, uuid } = require('../helpers');
+const { readUsers, uuid } = require('../helpers');
 const Users = require('../models/User');
 
 const usersRouter = (app) => {
@@ -29,6 +29,7 @@ const usersRouter = (app) => {
       personPassword: body.personPassword,
       role: "User",
     });
+
     await user.save()
     // WE should check if there is such user or not.
     // writeUser(user);
@@ -57,37 +58,21 @@ const usersRouter = (app) => {
     });
   });
 
-  // app.get("/api/adminPanel", (req, res) => {
-  //   const { role } = req.query;
-  //   if (!role || role !== "Admin") {
-  //     return res.status(403).send("Unauthorized");
-  //   }
-  //   console.log("Hello Admin");
-  //   res.send("Admin panel accessed successfully");
-  // });
+  app.post('/api/favorite', async (req, res) => {
+    const { userId, carId } = req.body;
+    const user = await Users.findOne({id: userId});
+    const isAlreadyExists = user.favorites.some(item => item === Number(carId))
 
-  // app.post('/api/favorite', (req, res) => {
-  //   const { userId, carId } = req.body;
-  //   const users = readUsers();
-  //   const user = users.find(user => user.id === Number(userId));
+    if(isAlreadyExists) {
+      user.favorites = user.favorites.filter(item => item !== Number(carId))
+    } else {
+      user.favorites.push(Number(carId));
+    }
 
-  //   const isAlreadyExists = user.favorites.some(item => item === Number(carId))
+    await user.save();
 
-  //   if(isAlreadyExists) {
-  //     user.favorites = user.favorites.filter(item => item !== Number(carId))
-  //   } else {
-  //     user.favorites.push(Number(carId));
-  //   }
-  //   const newUsers = users.map(item => {
-  //     if(item.id === Number(userId)) {
-  //       return user;
-  //     } else {
-  //       return item;
-  //     }
-  //   })
-  //   modifyUsers(newUsers)
-  //   res.send(user);
-  // })
+    res.send(user);
+  })
 
   // app.get('/api/user/favorites', (req, res) => {
   //   const { userId } = req.query;
