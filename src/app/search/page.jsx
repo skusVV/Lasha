@@ -19,7 +19,7 @@ import {
 // WE have render when we first time open the page
 // WE have the re-render when something change inside
 
-export default function CarDetails({ car, params }) {
+export default function Search() {
   const [carsList, setCarsList] = useState([]);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -33,19 +33,18 @@ export default function CarDetails({ car, params }) {
   const maxPrice = searchParams.get("maxPrice");
   const [user] = useLocalStorage("AUTH", null);
 
-  const makeFavorite = (e) => {
+  const makeFavorite = (e, carId) => {
     e.preventDefault();
 
     if (!user) {
       router.push("/login");
     } else {
-      console.log(car);
       fetch(`http://localhost:3001/api/favorite`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userId: user.id, carId: car.id }),
+        body: JSON.stringify({ userId: user.id, carId: carId }),
       }).then((res) => res.json());
     }
   };
@@ -83,6 +82,8 @@ export default function CarDetails({ car, params }) {
     if (term) {
       queryArray.push(`term=${term}`);
     }
+
+    queryArray.push(`userId=${user.id}`);
 
     return queryArray.join("&");
   };
@@ -188,7 +189,7 @@ export default function CarDetails({ car, params }) {
                     <div>
                       {car.favorite && (
                         <FontAwesomeIcon
-                          onClick={makeFavorite}
+                          onClick={e => makeFavorite(e, car.id)}
                           className="car-card-heart"
                           icon={faHeart}
                           style={{ color: "#fd892b" }}
@@ -196,7 +197,7 @@ export default function CarDetails({ car, params }) {
                       )}
                       {!car.favorite && (
                         <FontAwesomeIcon
-                          onClick={makeFavorite}
+                          onClick={e => makeFavorite(e, car.id)}
                           className="car-card-heart"
                           icon={faHeartCrack}
                         />

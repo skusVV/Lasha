@@ -137,8 +137,12 @@ const carsRouter = (app) => {
 
   app.get("/api/search", (req, res) => {
     const filter = req.query;
+    const { userId } = req.query;
+    const users = readUsers();
+    const user = users.find((item) => item.id === Number(userId));
 
     let newCars = readCars();
+    // console.log('car', newCars)
     if (filter.term) {
       newCars = newCars.filter(
         (car) =>
@@ -173,7 +177,7 @@ const carsRouter = (app) => {
         );
     }
 
-    return res.send(newCars);
+    return res.send(newCars.map(item => mapCarWithFavorites(item, user.favorites)));
   });
 
   app.get("/api/favorites", (res) => {
