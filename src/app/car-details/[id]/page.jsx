@@ -3,22 +3,43 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { PageWrapper } from "../../components/PageWrapper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getCarPrice } from '../../utils';
-import useLocalStorage from '../../hooks/useLocalStorage';
+import { getCarPrice } from "../../utils";
+import useLocalStorage from "../../hooks/useLocalStorage";
 import {
   faLocationDot,
   faRoad,
   faUser,
+  faHeart,
+  faHeartCrack,
 } from "@fortawesome/free-solid-svg-icons";
-import { getWords } from '../../languages/language';
+import { getWords } from "../../languages/language";
 
 export default function CarDetails({ params }) {
   const [car, setCar] = useState({});
-  const [ currency ] = useLocalStorage('CURRECNY', 'USD');
+  const [currency] = useLocalStorage("CURRECNY", "USD");
   const router = useRouter();
   const user = JSON.parse(localStorage.getItem("AUTH"));
-  const [ language ] = useLocalStorage('LANGUAGE', 'ENG');
-  const words = getWords(language); 
+  const [language] = useLocalStorage("LANGUAGE", "ENG");
+  const words = getWords(language);
+
+  const makeFavorite = (e) => {
+    e.preventDefault();
+
+    if (!user) {
+      router.push("/login");
+    } else {
+      console.log(car);
+      fetch(`http://localhost:3001/api/favorite`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: user.id, carId: car.id }),
+      })
+        .then((res) => res.json())
+        .then((res) => console.log("USRES response", res));
+    }
+  };
 
   useEffect(() => {
     fetch(`http://localhost:3001/api/cars/${params.id}?userId=${user.id}`)
@@ -47,8 +68,25 @@ export default function CarDetails({ params }) {
                 <div className="selected-car-container-right w-[300px]">
                   <div className="selected-car-info">
                     <div className="selected-car-details ml-10">
-                      <div className="selected-car-year font-bold text-white">
-                        {car.year}
+                      <div className="selected-car-year font-bold text-white flex flex-align">
+                        <div> {car.year}</div>
+                        <div className="selected-car-price text-white ml-10">
+                          {car.favorite && (
+                            <FontAwesomeIcon
+                              onClick={makeFavorite}
+                              className="car-card-heart"
+                              icon={faHeart}
+                              style={{ color: "#fd892b" }}
+                            />
+                          )}
+                          {!car.favorite && (
+                            <FontAwesomeIcon
+                              onClick={makeFavorite}
+                              className="car-card-heart"
+                              icon={faHeartCrack}
+                            />
+                          )}
+                        </div>
                       </div>
                       <hr className="mt-3 mb-3 border-white w-[100px]" />
                       <div className="selected-car-madeBy mb-10 font-bold text-white">
@@ -57,11 +95,6 @@ export default function CarDetails({ params }) {
                       <div className="selected-car-price text-white ">
                         <FontAwesomeIcon icon={faRoad} className="mr-2" />{" "}
                         {car.milage} km
-                      </div>
-                      <div className="selected-car-price text-white">
-                        {
-                          getCarPrice(currency, car.price)
-                        }
                       </div>
                       <div className="selected-car-card-city text-white ml-1 mt-3">
                         <FontAwesomeIcon
@@ -72,16 +105,18 @@ export default function CarDetails({ params }) {
                         {car.location}
                       </div>
                     </div>
-
-                    <div className="flex justify-center items-center border rounded-lg ml-10 mt-20 h-[40px] text-white w-[150px]">
+                    <div className="flex justify-center items-center border rounded-lg ml-10 mt-10 h-[40px] text-white w-[150px]">
                       <div className="mr-3">
                         <FontAwesomeIcon icon={faUser} />
                       </div>
                       {user.name}
                     </div>
 
-                    <div className="mt-10 ml-10">
-                      <button className="selected-car-sell-button rounded-lg text-white w-[150px]">
+                    <div className="mt-10 ml-10 flex flex-col">
+                      <div className="selected-car-price text-white">
+                        {getCarPrice(currency, car.price)}
+                      </div>
+                      <button className="selected-car-sell-button rounded-lg text-white w-[150px] mt-2">
                         <div className="selected-car-sell-button justify-center mt-1 mb-1">
                           {words.contactSeller}
                         </div>

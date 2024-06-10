@@ -1,9 +1,9 @@
 const users = require("../users/users");
-const { readCars, writeCar, readUsers, writeCars } = require('../helpers');
+const { readCars, writeCar, readUsers, writeCars } = require("../helpers");
 
 const mapCarWithFavorites = (car, userFavorits) => {
-  return { ...car, favorite: userFavorits.includes(car.id)}
-}
+  return { ...car, favorite: userFavorits.includes(car.id) };
+};
 
 const carsRouter = (app) => {
   app.get("/api/random-cars", (req, res) => {
@@ -15,7 +15,7 @@ const carsRouter = (app) => {
     const response = cars
       .sort(() => Math.random() - Math.random())
       .filter((item, i) => i < 6)
-      .map(item => mapCarWithFavorites(item, user?.favorites || []));
+      .map((item) => mapCarWithFavorites(item, user?.favorites || []));
     return res.send(response);
   });
 
@@ -32,9 +32,7 @@ const carsRouter = (app) => {
 
   app.get("/api/cars", (req, res) => {
     const { userId } = req.query;
-    // console.log('readUsers', users);
     const user = users.readUsers().find((user) => user.id === Number(userId));
-    // console.log('user', user);
     const cars = readCars();
 
     if (user.role === "Admin") {
@@ -176,6 +174,20 @@ const carsRouter = (app) => {
     }
 
     return res.send(newCars);
+  });
+
+  app.get("/api/favorites", (res) => {
+    const { userId } = req.query;
+    const user = users.readUsers().find((user) => user.id === Number(userId));
+    let favoriteCars = readCars();
+
+    if (filter.term) {
+      favoriteCars = favoriteCars.filter((car) =>
+        user.favorites.includes(car.id)
+      );
+    }
+    console.log("cheese");
+    return res.send(favoriteCars);
   });
 };
 

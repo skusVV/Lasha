@@ -35,20 +35,21 @@ export const renderCar = (car, key) => {
       <Link className="car-card" key={key} href={`/car-details/${car.id}`}>
         <img className="car-card-img" src={car.img} />
         <div className="car-card-content">
-          {
-            car.favorite && <FontAwesomeIcon
+          {car.favorite && (
+            <FontAwesomeIcon
               onClick={makeFavorite}
               className="car-card-heart"
               icon={faHeart}
+              style={{ color: "#fd892b" }}
             />
-          }
-          {
-            !car.favorite && <FontAwesomeIcon
+          )}
+          {!car.favorite && (
+            <FontAwesomeIcon
               onClick={makeFavorite}
               className="car-card-heart"
               icon={faHeartCrack}
             />
-          }
+          )}
           <div className="car-card-city">{car.city}</div>
           <div className="car-card-info">
             {car.year} - {car.madeBy} {car.model}
