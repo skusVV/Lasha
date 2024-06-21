@@ -41,7 +41,10 @@ export default function AdminPanel() {
         },
       })
         .then((res) => res.json())
-        .then((res) => setManufacturer(res));
+        .then((res) => {
+          setValue('');
+          setManufacturer(res);
+        });
     }
 
     if (activeTab === "carModel") {
@@ -52,7 +55,10 @@ export default function AdminPanel() {
         },
       })
         .then((res) => res.json())
-        .then((res) => setCarModels(res));
+        .then((res) => {
+          setValue('');
+          setCarModels(res);
+        });
     }
 
     if (activeTab === "engine-capacity") {
@@ -63,7 +69,10 @@ export default function AdminPanel() {
         },
       })
         .then((res) => res.json())
-        .then((res) => setEngineCapacity(res));
+        .then((res) => {
+          setValue('');
+          setEngineCapacity(res);
+        });
     }
 
     if (activeTab === "locations") {
@@ -74,7 +83,10 @@ export default function AdminPanel() {
         },
       })
         .then((res) => res.json())
-        .then((res) => setLocations(res));
+        .then((res) => {
+          setValue('');
+          setLocations(res);
+        });
     }
   };
 
@@ -163,54 +175,33 @@ export default function AdminPanel() {
     },
   ];
 
-  const handleClick = () => {
-    if (activeTab === "manufacturer") {
-      fetch(`http://localhost:3001/api/car-attributes/manufacturer`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ value }),
-      })
-        .then((res) => res.json())
-        .then((res) => setManufacturer(res));
-    }
+  const handleClick = (attributeType) => {
+    fetch(`http://localhost:3001/api/car-attributes/${attributeType}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ value }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setValue('');
+        if(attributeType === "manufacturer") {
+          setManufacturer(res);
+        }
 
-    if (activeTab === "carModel") {
-      fetch(`http://localhost:3001/api/car-attributes/carModel`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ value, madeByKey: selectedManufacturer }),
-      })
-        .then((res) => res.json())
-        .then((res) => setCarModels(res));
-    }
+        if(activeTab === "carModel") {
+          setCarModels(res);
+        }
 
-    if (activeTab === "engine-capacity") {
-      fetch(`http://localhost:3001/api/car-attributes/engine-capacity`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ value }),
-      })
-        .then((res) => res.json())
-        .then((res) => setEngineCapacity(res));
-    }
+        if(attributeType === "engine-capacity") {
+          setEngineCapacity(res);
+        }
 
-    if (activeTab === "locations") {
-      fetch(`http://localhost:3001/api/car-attributes/locations`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ value }),
-      })
-        .then((res) => res.json())
-        .then((res) => setLocations(res));
-    }
+        if(attributeType === "locations") {
+          setLocations(res);
+        }
+      });
   };
 
   return (
@@ -233,7 +224,7 @@ export default function AdminPanel() {
         <div className="p-4 border border-dark-white rounded-lg">
           {activeTab !== "carModel" && (
             <div className="flex items-center border border-gray-300 rounded-lg">
-              <div className="p-2" onClick={handleClick}>
+              <div className="p-2" onClick={() => handleClick(activeTab)}>
                 <FontAwesomeIcon icon={faPlus} />
               </div>
               <input
@@ -270,7 +261,7 @@ export default function AdminPanel() {
               </div>
               <div className="border-l border-gray-300 h-4"></div>
               <div className="ml-1 flex align-center items-center">
-                <div className="p-2" onClick={handleClick}>
+                <div className="p-2" onClick={() => handleClick(activeTab)}>
                   <FontAwesomeIcon icon={faPlus} />
                 </div>
                 <input
