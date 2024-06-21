@@ -129,7 +129,15 @@ export default function Admin() {
       })
         .then((res) => res.json())
         .then((res) => {
-          setCars(res);
+          const newCars = cars.map(item => {
+
+            if(item.id === res.id) {
+              return res;
+            } else {
+              return item
+            }
+          });
+          setCars(newCars);
         });
     }
   };

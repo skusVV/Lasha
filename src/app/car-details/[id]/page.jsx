@@ -48,7 +48,7 @@ export default function CarDetails({ params }) {
         setCar(res);
       })
       .catch(() => {
-        router.push("/");
+        // router.push("/");
       });
   }, []);
   return (
