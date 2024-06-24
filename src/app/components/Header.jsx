@@ -90,6 +90,16 @@ export const Header = () => {
           {user && (
             <div className="add-product mt-5 mr-5">
               <Link
+                href={`/messages`}
+                className="border rounded-md text-center px-3 py-3 dark-white"
+              >
+                Messages
+              </Link>
+            </div>
+          )}
+          {user && (
+            <div className="add-product mt-5 mr-5">
+              <Link
                 href={`/admin`}
                 className="border rounded-md text-center px-3 py-3 dark-white"
               >
