@@ -1,190 +1,194 @@
 "use client";
-import { PageWrapper } from '../components/PageWrapper';
+import { PageWrapper } from "../components/PageWrapper";
 import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
-
-export const StyledSection = styled.div`
-    width: 100%;
-    height: 700px;
-    display: flex;
-    justify-content: center;
-    padding: 20px 200px;
-    
-    .chats-list {
-        width: 25%;
-        border: 1px solid grey;
-    }
-    .chat {
-        width: 75%;
-        border: 1px solid grey;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .chat-item {
-        width: 100%;
-        height: 60px;
-        line-height: 60px;
-        padding-left: 12px;
-        transition: all 300ms ease;
-        color: #fff;
-
-        &:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-    }
-    
-    .no-chat {
-        color: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 18px;
-    }
-    
-    .chat-editor {
-        width: 100%;
-        height: 100%;
-        
-        &-header{
-            height: 10%;
-            background: red;
-        }
-        &-body{
-            height: 70%;
-            padding: 24px;
-            //background: blue;
-        }
-
-        &-footer {
-            height: 20%;
-            background: green;
-            padding: 8px;
-            
-            &-field {
-                width: 100%;
-                height: 100%;
-            }
-        }
-    }
-    
-    .message-wrapper {
-        width: 100%;
-        display: flex;
-
-        &-author {
-          justify-content: flex-end;
-        }
-    }
-    
-    .message {
-        height: 40px;
-        border-radius: 5px;
-        padding: 8px;
-        width: fit-content;
-        background: lavender;
-        margin-bottom: 12px;
-        
-        &-author {
-            background: green;
-        }
-        
-    }
-`;
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 const mockChats = [
-  {id: 1, name: 'Chat one', isSelected: false },
-  {id: 2, name: 'Chat tw0', isSelected: false }
+  { id: 1, name: "Chat one", isSelected: false },
+  { id: 2, name: "Chat tw0", isSelected: false },
 ];
 
 const mockChatHistory = {
-  '1': [
-    { id: 1, content: 'Message 1', createdAt: "2024-06-24T13:37:55.716Z", isAuthor: true },
-    { id: 2, content: 'Message 2', createdAt: "2024-06-24T13:39:55.716Z", isAuthor: false },
-    { id: 3, content: 'Message 3', createdAt: "2024-06-24T13:41:55.716Z", isAuthor: false },
-    { id: 4, content: 'Message 4', createdAt: "2024-06-24T13:45:55.716Z", isAuthor: true },
-    { id: 4, content: 'Message 4', createdAt: "2024-06-24T13:45:55.716Z", isAuthor: true },
+  1: [
+    {
+      id: 1,
+      content: "Message 1",
+      createdAt: "2024-06-24T13:37:55.716Z",
+      isAuthor: true,
+    },
+    {
+      id: 2,
+      content: "Message 2",
+      createdAt: "2024-06-24T13:39:55.716Z",
+      isAuthor: false,
+    },
+    {
+      id: 3,
+      content: "Message 3",
+      createdAt: "2024-06-24T13:41:55.716Z",
+      isAuthor: false,
+    },
+    {
+      id: 4,
+      content: "Message 4",
+      createdAt: "2024-06-24T13:45:55.716Z",
+      isAuthor: true,
+    },
+    {
+      id: 4,
+      content: "Message 4",
+      createdAt: "2024-06-24T13:45:55.716Z",
+      isAuthor: true,
+    },
   ],
-  '2': [
-    { id: 332, content: 'Mesfadsfdassage 1', createdAt: "2024-06-24T13:37:55.716Z", isAuthor: false },
-    { id: 2312, content: 'Messfdasfdaage 2', createdAt: "2024-06-24T13:39:55.716Z", isAuthor: true },
-    { id: 3312, content: 'Messfdasfadsage 3', createdAt: "2024-06-24T13:41:55.716Z", isAuthor: true },
-    { id: 3124, content: 'Messadsfasdage 4', createdAt: "2024-06-24T13:45:55.716Z", isAuthor: false },
-    { id: 4312, content: 'Message 4', createdAt: "2024-06-24T13:45:55.716Z", isAuthor: true },
-  ]
-}
+  2: [
+    {
+      id: 332,
+      content: "Mesfadsfdassage 1",
+      createdAt: "2024-06-24T13:37:55.716Z",
+      isAuthor: false,
+    },
+    {
+      id: 2312,
+      content: "Messfdasfdaage 2",
+      createdAt: "2024-06-24T13:39:55.716Z",
+      isAuthor: true,
+    },
+    {
+      id: 3312,
+      content: "Messfdasfadsage 3",
+      createdAt: "2024-06-24T13:41:55.716Z",
+      isAuthor: true,
+    },
+    {
+      id: 3124,
+      content: "Messadsfasdage 4",
+      createdAt: "2024-06-24T13:45:55.716Z",
+      isAuthor: false,
+    },
+    {
+      id: 4312,
+      content: "Message 4",
+      createdAt: "2024-06-24T13:45:55.716Z",
+      isAuthor: true,
+    },
+  ],
+};
 
-
-export default function Messages () {
-  const [ chats, setChats ] = useState(mockChats);
-  const [ selectedChatId, setSelectedChatId ] = useState(null);
-  const [ messages, setMessages ] = useState([]);
-  // const [fieldValue, setFieldValue] = useState('');
+export default function Messages() {
+  const [chats, setChats] = useState(mockChats);
+  const [selectedChatId, setSelectedChatId] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
-    if(selectedChatId) {
+    if (selectedChatId) {
       setMessages(mockChatHistory[selectedChatId]);
     }
-  }, [selectedChatId])
+  }, [selectedChatId]);
 
   const onKeyUpHandler = (e) => {
-    if (e.key === 'Enter') {
-      setMessages(
-        [
-          ...messages,
-          {
-            id: 332, content: e.target.value, createdAt: new Date(), isAuthor: true
-          },
-        ]
-      );
-      // setFieldValue('');
+    if (e.key === "Enter") {
+      setMessages([
+        ...messages,
+        {
+          id: 332,
+          content: e.target.value,
+          createdAt: new Date(),
+          isAuthor: true,
+        },
+      ]);
+      setInputValue("");
     } else {
       // console.log('das',e.target.value);
       // setFieldValue(e.target.value);
     }
-  }
+  };
 
   return (
     <PageWrapper>
-      <StyledSection>
-        <div className="chats-list">
-          {
-            chats.map((chat, index) => {
-              return <div key={index} className="chat-item" onClick={() => setSelectedChatId(chat.id)}>{chat.name}</div>;
-            })
-          }
-        </div>
-        <div className="chat">
-          {
-            !selectedChatId && <div className="no-chat">Please, select any chat from the list.</div>
-          }
-          {
-            selectedChatId && (
-              <div className="chat-editor">
-                <div className="chat-editor-header">header</div>
-                <div className="chat-editor-body">
-                  {
-                    messages.map((message, index) => {
-                      return (
-                        <div key={index} className={`message-wrapper ${message.isAuthor ? "message-wrapper-author" : ""}`}>
-                          <div className={`message ${message.isAuthor ? "message-author" : ""}`}>{message.content}</div>
+      <div className="flex items-center justify-center h-screen my-5">
+        <div className="flex flex-col w-full max-w-4xl h-full bg-white shadow-lg rounded-lg overflow-hidden">
+          <div className="py-4 px-5 bg-violet-600 text-white font-semibold">
+            Chats
+          </div>
+          <div className="flex-1 flex overflow-hidden">
+            <div className="w-1/4 bg-gray-100 border-r overflow-y-auto">
+              {mockChats.map((chat) => (
+                <div
+                  key={chat.id}
+                  className={`p-4 cursor-pointer hover:bg-gray-200 flex items-center ${
+                    selectedChatId === chat.id ? "bg-gray-200" : ""
+                  }`}
+                  onClick={() => setSelectedChatId(chat.id)}
+                >
+                  <img className="w-10 h-10 rounded-full mr-3" />
+                  {chat.name}
+                </div>
+              ))}
+            </div>
+            <div className="w-3/4 flex flex-col">
+              {!selectedChatId && (
+                <div className="flex-1 flex items-center justify-center">
+                  <p className="text-gray-500">Please select a chat</p>
+                </div>
+              )}
+              {selectedChatId && (
+                <>
+                  <div className="flex-1 p-4 overflow-y-auto">
+                    {messages.map((message) => (
+                      <div
+                        key={message.id}
+                        className={`flex mb-4 ${
+                          message.isAuthor ? "justify-end" : "justify-start"
+                        }`}
+                      >
+                        <div
+                          className={`p-3 rounded-lg max-w-xs ${
+                            message.isAuthor
+                              ? "bg-violet-500 text-white"
+                              : "bg-gray-300 text-black"
+                          }`}
+                        >
+                          {message.content}
                         </div>
-                      )
-                      // return <div key={index} className={`message ${message.isAuthor ? 'message-author' : ''}`}>{message.content}</div>
-                    })
-                  }
-                </div>
-                <div className="chat-editor-footer">
-                  <textarea className="chat-editor-footer-field"
-                            onKeyUp={onKeyUpHandler}
-                            placeholder="Type..."></textarea>
-                </div>
-              </div>
-            )
-          }
+                      </div>
+                    ))}
+                  </div>
+                  <div className="p-3 border-t bg-gray-200 flex items-center">
+                    <input
+                      className="w-full p-2 border rounded mr-2"
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      onKeyUp={onKeyUpHandler}
+                      placeholder="Type a message..."
+                    />
+                    <FontAwesomeIcon
+                      icon={faPaperPlane}
+                      className="text-violet-600 cursor-pointer"
+                      onClick={() => {
+                        if (inputValue.trim()) {
+                          setMessages([
+                            ...messages,
+                            {
+                              id: messages.length + 1,
+                              content: inputValue,
+                              isAuthor: true,
+                            },
+                          ]);
+                          setInputValue("");
+                        }
+                      }}
+                    />
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
         </div>
-      </StyledSection>
+      </div>
     </PageWrapper>
-  )
+  );
 }

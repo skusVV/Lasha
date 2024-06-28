@@ -118,7 +118,12 @@ export default function CarDetails({ params }) {
                       </div>
                       <button className="selected-car-sell-button rounded-lg text-white w-[150px] mt-2">
                         <div className="selected-car-sell-button justify-center mt-1 mb-1">
-                          {words.contactSeller}
+                          <Link
+                            href={`/messages`}
+                            className="border rounded-md text-center px-3 py-3 dark-white "
+                          >
+                            {words.contactSeller}
+                          </Link>
                         </div>
                       </button>
                     </div>
