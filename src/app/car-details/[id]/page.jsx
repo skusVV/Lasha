@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { PageWrapper } from "../../components/PageWrapper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getCarPrice } from "../../utils";
@@ -116,16 +117,17 @@ export default function CarDetails({ params }) {
                       <div className="selected-car-price text-white">
                         {getCarPrice(currency, car.price)}
                       </div>
-                      <button className="selected-car-sell-button rounded-lg text-white w-[150px] mt-2">
-                        <div className="selected-car-sell-button justify-center mt-1 mb-1">
+                      {
+                        car.userId !== user.id && (
                           <Link
-                            href={`/messages`}
+                            href={`/messages?contactId=${car.userId}`}
                             className="border rounded-md text-center px-3 py-3 dark-white "
                           >
                             {words.contactSeller}
                           </Link>
-                        </div>
-                      </button>
+                        )
+                      }
+
                     </div>
                   </div>
                 </div>
