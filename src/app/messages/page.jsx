@@ -86,8 +86,16 @@ export default function Messages() {
   const [inputValue, setInputValue] = useState("");
   const currentContactId = useSearchParams().get("contactId");
   const [user] = useLocalStorage("AUTH", null);
-  // console.log("params", params);
 
+  const getMessages = () => {
+    fetch(`http://localhost:3001/api/messages/${selectedChatId}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then(res => setMessages(res));
+  }
   const createNewChat = () => {
     fetch(`http://localhost:3001/api/chats`, {
       method: "POST",
@@ -101,50 +109,61 @@ export default function Messages() {
   }
 
   useEffect(() => {
+    // TODO we need to clear inteval
     if (selectedChatId) {
-      // const newMessages = mockChatHistory[selectedChatId] || [];
-      // setMessages(newMessages);
+      getMessages();
+
+      setInterval(getMessages, 2000);
     }
   }, [selectedChatId]);
+
+  // useEffect(() => {
+  //   console.log('chats222', chats);
+  // }, [chats]);
 
   useEffect(() => {
     fetch(`http://localhost:3001/api/chats?userId=${user.id}`)
       .then((res) => res.json())
-      .then(res => setChats(res));
+      .then(res => {
+        setChats(res);
+
+        // Double check why it is created twice.
+        if(currentContactId) {
+          const chat = res.find(chat => chat.participants.some(item => item === currentContactId));
+          if(chat) {
+            setSelectedChatId(chat.id);
+          } else {
+            createNewChat();
+          }
+        }
+      });
   }, []);
 
-  // useEffect(() => {
-  //   console.log('currentContactId')
-  //   if(currentContactId) {
-  //     const chat = chats.find(chat => chat.contactId === currentContactId);
-  //     if(chat) {
-  //       setSelectedChatId(chat.id);
-  //     } else {
-  //       console.log('Attempt to create');
-  //       createNewChat();
-  //       // const id = 'frg45';
-  //       // setChats([
-  //       //   ...chats,
-  //       //   { id: id, name: "New Chat", isSelected: false, contactId: "fagw3t432" },
-  //       // ]);
-  //       // setSelectedChatId(id);
-  //     }
-  //
-  //   }
-  // }, []);
 
   const onKeyUpHandler = (e) => {
     if (e.key === "Enter") {
-      setMessages([
-        ...messages,
-        {
-          id: 332,
-          content: e.target.value,
-          createdAt: new Date(),
-          isAuthor: true,
+      fetch(`http://localhost:3001/api/messages/${selectedChatId}?userId=${user.id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      ]);
-      setInputValue("");
+        body: JSON.stringify({ content: e.target.value }),
+      })
+        .then((res) => res.json())
+        .then(res => {
+          setMessages([...messages, res]);
+          setInputValue("");
+        });
+      // setMessages([
+      //   ...messages,
+      //   {
+      //     id: 332,
+      //     content: e.target.value,
+      //     createdAt: new Date(),
+      //     isAuthor: true,
+      //   },
+      // ]);
+      // setInputValue("");
     } else {
       // console.log('das',e.target.value);
       // setFieldValue(e.target.value);
@@ -186,12 +205,12 @@ export default function Messages() {
                       <div
                         key={message.id}
                         className={`flex mb-4 ${
-                          message.isAuthor ? "justify-end" : "justify-start"
+                          message.authorId === user.id ? "justify-end" : "justify-start"
                         }`}
                       >
                         <div
                           className={`p-3 rounded-lg max-w-xs ${
-                            message.isAuthor
+                            message.authorId === user.id
                               ? "bg-violet-500 text-white"
                               : "bg-gray-300 text-black"
                           }`}
